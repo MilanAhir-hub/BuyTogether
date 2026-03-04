@@ -1,0 +1,6 @@
+@BuyTogether.Server_HostAddress = http://localhost:5096
+
+GET {{BuyTogether.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
