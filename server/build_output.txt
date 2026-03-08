@@ -1,0 +1,72 @@
+Build started 07-03-2026 13:52:19.
+     1>Project "C:\Users\Milan Gagiya\Documents\PROJECT RESUME\BuyTogether\server\BuyTogether.Server.csproj" on node 1 (Restore target(s)).
+     1>_GetAllRestoreProjectPathItems:
+         Determining projects to restore...
+     1>Project "C:\Users\Milan Gagiya\Documents\PROJECT RESUME\BuyTogether\server\BuyTogether.Server.csproj" (1) is building "C:\Users\Milan Gagiya\Documents\PROJECT RESUME\BuyTogether\server\BuyTogether.Server.csproj" (1:6) on node 1 (_GenerateProjectRestoreGraph target(s)).
+     1>AddPrunePackageReferences:
+         Loading prune package data from PrunePackageData folder
+         Failed to load prune package data from PrunePackageData folder, loading from targeting packs instead
+         Looking for targeting packs in C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref
+         Pack directories found: C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.2
+         Found package overrides file C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.2\data\PackageOverrides.txt
+         Loading prune package data from PrunePackageData folder
+         Failed to load prune package data from PrunePackageData folder, loading from targeting packs instead
+         Looking for targeting packs in C:\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref
+         Pack directories found: C:\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\10.0.2
+         Found package overrides file C:\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\10.0.2\data\PackageOverrides.txt
+     1>Done Building Project "C:\Users\Milan Gagiya\Documents\PROJECT RESUME\BuyTogether\server\BuyTogether.Server.csproj" (_GenerateProjectRestoreGraph target(s)).
+     1>Restore:
+         X.509 certificate chain validation will use the default trust store selected by .NET for code signing.
+         X.509 certificate chain validation will use the default trust store selected by .NET for timestamping.
+         Assets file has not changed. Skipping assets file writing. Path: C:\Users\Milan Gagiya\Documents\PROJECT RESUME\BuyTogether\server\obj\project.assets.json
+         Restored C:\Users\Milan Gagiya\Documents\PROJECT RESUME\BuyTogether\server\BuyTogether.Server.csproj (in 82 ms).
+         
+         NuGet Config files used:
+             C:\Users\Milan Gagiya\AppData\Roaming\NuGet\NuGet.Config
+             C:\Program Files (x86)\NuGet\Config\Microsoft.VisualStudio.FallbackLocation.config
+             C:\Program Files (x86)\NuGet\Config\Microsoft.VisualStudio.Offline.config
+         
+         Feeds used:
+             https://api.nuget.org/v3/index.json
+             C:\Program Files (x86)\Microsoft SDKs\NuGetPackages\
+             C:\Program Files\dotnet\library-packs
+         All projects are up-to-date for restore.
+     1>Done Building Project "C:\Users\Milan Gagiya\Documents\PROJECT RESUME\BuyTogether\server\BuyTogether.Server.csproj" (Restore target(s)).
+   1:7>Project "C:\Users\Milan Gagiya\Documents\PROJECT RESUME\BuyTogether\server\BuyTogether.Server.csproj" on node 1 (default targets).
+     1>GenerateTargetFrameworkMonikerAttribute:
+       Skipping target "GenerateTargetFrameworkMonikerAttribute" because all output files are up-to-date with respect to the input files.
+       CoreGenerateAssemblyInfo:
+       Skipping target "CoreGenerateAssemblyInfo" because all output files are up-to-date with respect to the input files.
+       _DiscoverMvcApplicationParts:
+       Skipping target "_DiscoverMvcApplicationParts" because all output files are up-to-date with respect to the input files.
+       _GenerateSourceLinkFile:
+         Source Link file 'obj\Debug\net10.0\BuyTogether.Server.sourcelink.json' is up-to-date.
+       CoreCompile:
+       Skipping target "CoreCompile" because all output files are up-to-date with respect to the input files.
+       _CreateAppHost:
+       Skipping target "_CreateAppHost" because all output files are up-to-date with respect to the input files.
+       _ProcessScopedCssFiles:
+       Skipping target "_ProcessScopedCssFiles" because it has no outputs.
+       _ProcessScopedCssFiles:
+       Skipping target "_ProcessScopedCssFiles" because it has no outputs.
+       _BuildCopyStaticWebAssetsPreserveNewest:
+       Skipping target "_BuildCopyStaticWebAssetsPreserveNewest" because it has no outputs.
+       _CopyOutOfDateSourceItemsToOutputDirectory:
+       Building target "_CopyOutOfDateSourceItemsToOutputDirectory" partially, because some output files are out of date with respect to their input files.
+         Copying file from "C:\Users\Milan Gagiya\Documents\PROJECT RESUME\BuyTogether\server\obj\Debug\net10.0\apphost.exe" to "C:\Users\Milan Gagiya\Documents\PROJECT RESUME\BuyTogether\server\bin\Debug\net10.0\BuyTogether.Server.exe".
+       GenerateBuildDependencyFile:
+       Skipping target "GenerateBuildDependencyFile" because all output files are up-to-date with respect to the input files.
+       GenerateBuildRuntimeConfigurationFiles:
+       Skipping target "GenerateBuildRuntimeConfigurationFiles" because all output files are up-to-date with respect to the input files.
+       CopyFilesToOutputDirectory:
+         Copying file from "C:\Users\Milan Gagiya\Documents\PROJECT RESUME\BuyTogether\server\obj\Debug\net10.0\BuyTogether.Server.dll" to "C:\Users\Milan Gagiya\Documents\PROJECT RESUME\BuyTogether\server\bin\Debug\net10.0\BuyTogether.Server.dll".
+         Copying reference assembly from "obj\Debug\net10.0\refint\BuyTogether.Server.dll" to "C:\Users\Milan Gagiya\Documents\PROJECT RESUME\BuyTogether\server\obj\Debug\net10.0\ref\BuyTogether.Server.dll".
+         BuyTogether.Server -> C:\Users\Milan Gagiya\Documents\PROJECT RESUME\BuyTogether\server\bin\Debug\net10.0\BuyTogether.Server.dll
+         Copying file from "C:\Users\Milan Gagiya\Documents\PROJECT RESUME\BuyTogether\server\obj\Debug\net10.0\BuyTogether.Server.pdb" to "C:\Users\Milan Gagiya\Documents\PROJECT RESUME\BuyTogether\server\bin\Debug\net10.0\BuyTogether.Server.pdb".
+     1>Done Building Project "C:\Users\Milan Gagiya\Documents\PROJECT RESUME\BuyTogether\server\BuyTogether.Server.csproj" (default targets).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.95

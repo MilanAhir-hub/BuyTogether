@@ -1,13 +1,47 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import AuthLayout from '../../components/layout/AuthLayout';
 import InputField from '../../components/ui/InputField';
 import Button from '../../components/ui/Button';
+import { useAuth } from '../../hooks/useAuth';
 
 const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    
+    const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
+    const { signup } = useAuth();
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+
+        if (password !== confirmPassword) {
+            setError('Passwords do not match');
+            return;
+        }
+
+        setIsLoading(true);
+
+        const result = await signup({ username: name, email, password });
+        setIsLoading(false);
+
+        if (result.success) {
+            navigate('/home'); // Redirect to home on success
+        } else {
+            setError(result.message);
+        }
+    };
+
     return (
         <AuthLayout
             title="Create an account"
@@ -20,12 +54,20 @@ const Signup = () => {
                 </>
             }
         >
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6" onSubmit={handleSubmit}>
+                {error && (
+                    <div className="bg-red-50 text-red-600 p-3 rounded-md text-sm">
+                        {error}
+                    </div>
+                )}
+
                 <InputField
                     label="Full name"
                     id="name"
                     type="text"
                     autoComplete="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     required
                 />
 
@@ -34,6 +76,8 @@ const Signup = () => {
                     id="email"
                     type="email"
                     autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                 />
 
@@ -42,6 +86,8 @@ const Signup = () => {
                     id="password"
                     type={showPassword ? "text" : "password"}
                     autoComplete="new-password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                     rightIcon={
                         <button
@@ -63,6 +109,8 @@ const Signup = () => {
                     id="confirm-password"
                     type={showConfirmPassword ? "text" : "password"}
                     autoComplete="new-password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     required
                     rightIcon={
                         <button
@@ -100,8 +148,8 @@ const Signup = () => {
                 </div>
 
                 <div>
-                    <Button type="submit">
-                        Create account
+                    <Button type="submit" disabled={isLoading}>
+                        {isLoading ? 'Creating account...' : 'Create account'}
                     </Button>
                 </div>
             </form>
