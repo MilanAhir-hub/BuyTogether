@@ -22,11 +22,12 @@ export const AuthProvider = ({ children }) => {
                         handleLogout(); // Token expired
                     } else {
                         // Normally user info might be fetched from a /me endpoint or taken directly from payload
-                        setUser({
+                        setUser(normalizeUser({
                             id: decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'],
                             email: decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'],
-                            username: decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name']
-                        });
+                            username: decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
+                            role: decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] || 'User'
+                        }));
                         setToken(storedToken);
                     }
                 } catch (error) {
@@ -45,14 +46,17 @@ export const AuthProvider = ({ children }) => {
 
     const handleLogin = async (credentials) => {
         try {
-            const data = await authService.login(credentials);
-            if (data.token) {
-                Cookies.set('token', data.token, { expires: 1/12 }); // expires in 2 hours
-                setToken(data.token);
-                setUser(data.user);
+            const response = await authService.login(credentials);
+            
+            // The backend returns { success: true, message: "...", data: { token: "...", user: { ... } } }
+            if (response.success && response.data?.token) {
+                const { token, user } = response.data;
+                Cookies.set('token', token, { expires: 1/12 }); // expires in 2 hours
+                setToken(token);
+                setUser(normalizeUser(user));
                 return { success: true };
             }
-            return { success: false, message: data.message };
+            return { success: false, message: response.message || 'Login failed' };
         } catch (error) {
             return { success: false, message: error.response?.data?.message || 'Login failed' };
         }
@@ -60,14 +64,17 @@ export const AuthProvider = ({ children }) => {
 
     const handleSignup = async (userData) => {
         try {
-            const data = await authService.signup(userData);
-            if (data.token) {
-                Cookies.set('token', data.token, { expires: 1/12 });
-                setToken(data.token);
-                setUser(data.user);
+            const response = await authService.signup(userData);
+            
+            // The backend returns { success: true, message: "...", data: { token: "...", user: { ... } } }
+            if (response.success && response.data?.token) {
+                const { token, user } = response.data;
+                Cookies.set('token', token, { expires: 1/12 });
+                setToken(token);
+                setUser(normalizeUser(user));
                 return { success: true };
             }
-            return { success: false, message: data.message };
+            return { success: false, message: response.message || 'Signup failed' };
         } catch (error) {
             return { success: false, message: error.response?.data?.message || 'Signup failed' };
         }
@@ -98,7 +105,18 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={value}>
-            {!loading && children}
+            {children}
         </AuthContext.Provider>
     );
+};
+
+const normalizeUser = (userData) => {
+    if (!userData) {
+        return null;
+    }
+
+    return {
+        ...userData,
+        role: userData.role || 'User',
+    };
 };

@@ -1,6 +1,6 @@
 using BuyTogether.Server.Data;
+using BuyTogether.Server.Constants;
 using BuyTogether.Server.Interfaces;
-using BuyTogether.Server.Repositories;
 using BuyTogether.Server.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -48,18 +48,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(AuthorizationPolicies.BuyerOnly, policy =>
+        policy.RequireRole(UserRoles.Buyer, UserRoles.User));
+});
 
 // Register Custom Services
 builder.Services.AddScoped<IAuthService, AuthService>();
-
-// Register Repositories
-builder.Services.AddScoped<IPropertyRepository, PropertyRepository>();
-builder.Services.AddScoped<IGroupRepository, GroupRepository>();
-
-// Register Application Services
 builder.Services.AddScoped<IPropertyService, PropertyService>();
-builder.Services.AddScoped<IGroupService, GroupService>();
+builder.Services.AddScoped<IUserProfileService, UserProfileService>();
+builder.Services.AddScoped<IBuyerPropertyService, BuyerPropertyService>();
+builder.Services.AddScoped<IBuyerDealService, BuyerDealService>();
+builder.Services.AddScoped<IUserNotificationService, UserNotificationService>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

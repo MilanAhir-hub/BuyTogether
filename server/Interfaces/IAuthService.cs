@@ -1,4 +1,4 @@
-using BuyTogether.Server.DTOs;
+using BuyTogether.Server.DTOs.Auth;
 
 namespace BuyTogether.Server.Interfaces
 {

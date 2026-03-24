@@ -1,8 +1,7 @@
-using BuyTogether.Server.Data;
-using BuyTogether.Server.DTOs;
+using BuyTogether.Server.DTOs.Profile;
+using BuyTogether.Server.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace BuyTogether.Server.Controllers
@@ -11,42 +10,66 @@ namespace BuyTogether.Server.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IUserProfileService _userProfileService;
 
-        public UserController(AppDbContext context)
+        public UserController(IUserProfileService userProfileService)
         {
-            _context = context;
+            _userProfileService = userProfileService;
         }
 
         [Authorize]
         [HttpGet("me")]
         public async Task<IActionResult> GetUserProfile()
         {
-            // Extract the user ID from the claims
-            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            if (!TryGetUserId(out var userId))
             {
                 return Unauthorized(new { message = "Invalid user token." });
             }
 
-            // Fetch the user from the database
-            var user = await _context.Users.FindAsync(userId);
-            if (user == null)
+            var userProfile = await _userProfileService.GetProfileAsync(userId);
+            if (userProfile == null)
             {
                 return NotFound(new { message = "User not found." });
             }
 
-            // Map to DTO
-            var userProfile = new UserProfileDto
-            {
-                Id = user.Id,
-                Username = user.Username,
-                Email = user.Email,
-                Role = user.Role,
-                CreatedAt = user.CreatedAt
-            };
-
             return Ok(userProfile);
+        }
+
+        [Authorize]
+        [HttpPut("me")]
+        public async Task<IActionResult> UpdateUserProfile([FromBody] UpdateUserProfileDto updateDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            if (!TryGetUserId(out var userId))
+            {
+                return Unauthorized(new { message = "Invalid user token." });
+            }
+
+            if (updateDto.PreferredBudgetMin.HasValue &&
+                updateDto.PreferredBudgetMax.HasValue &&
+                updateDto.PreferredBudgetMin > updateDto.PreferredBudgetMax)
+            {
+                return BadRequest(new { message = "Minimum budget cannot exceed maximum budget." });
+            }
+
+            var updatedProfile = await _userProfileService.UpdateProfileAsync(userId, updateDto);
+            if (updatedProfile == null)
+            {
+                return NotFound(new { message = "User not found." });
+            }
+
+            return Ok(updatedProfile);
+        }
+
+        private bool TryGetUserId(out Guid userId)
+        {
+            userId = Guid.Empty;
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            return userIdClaim != null && Guid.TryParse(userIdClaim.Value, out userId);
         }
     }
 }

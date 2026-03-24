@@ -1,5 +1,6 @@
 using BuyTogether.Server.Data;
-using BuyTogether.Server.DTOs;
+using BuyTogether.Server.Constants;
+using BuyTogether.Server.DTOs.Auth;
 using BuyTogether.Server.Interfaces;
 using BuyTogether.Server.Models;
 using Microsoft.EntityFrameworkCore;
@@ -32,9 +33,11 @@ namespace BuyTogether.Server.Services
 
             var user = new User
             {
-                Username = signupDto.Username,
-                Email = signupDto.Email,
-                PasswordHash = passwordHash
+                Username = ResolveUsername(signupDto),
+                FullName = NormalizeName(signupDto),
+                Email = signupDto.Email.Trim(),
+                PasswordHash = passwordHash,
+                Role = UserRoles.User
             };
 
             _context.Users.Add(user);
@@ -58,11 +61,12 @@ namespace BuyTogether.Server.Services
             {
                 Token = token,
                 Message = "Login successful.",
-                User = new UserDto
+                User = new AuthenticatedUserDto
                 {
                     Id = user.Id,
                     Username = user.Username,
-                    Email = user.Email
+                    Email = user.Email,
+                    Role = user.Role
                 }
             };
         }
@@ -76,7 +80,8 @@ namespace BuyTogether.Server.Services
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Name, user.Username)
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Role, user.Role)
             };
 
             var token = new JwtSecurityToken(
@@ -87,6 +92,29 @@ namespace BuyTogether.Server.Services
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        private static string ResolveUsername(UserSignupDto signupDto)
+        {
+            var name = NormalizeName(signupDto);
+            if (!string.IsNullOrWhiteSpace(signupDto.Username))
+            {
+                return signupDto.Username.Trim();
+            }
+
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                return name;
+            }
+
+            return signupDto.Email.Trim().Split('@')[0];
+        }
+
+        private static string? NormalizeName(UserSignupDto signupDto)
+        {
+            return string.IsNullOrWhiteSpace(signupDto.Name)
+                ? null
+                : signupDto.Name.Trim();
         }
     }
 }

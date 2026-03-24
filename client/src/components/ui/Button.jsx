@@ -1,8 +1,25 @@
-const Button = ({ children, type = "button", className = "", ...props }) => {
+import React from 'react';
+
+const Button = ({ 
+    children, 
+    type = "button", 
+    variant = "primary", 
+    className = "", 
+    ...props 
+}) => {
+    const baseStyles = "w-40 py-3 active:scale-95 transition-all duration-200 text-sm font-medium rounded-full flex items-center justify-center cursor-pointer";
+    
+    const variants = {
+        primary: "bg-primary text-white hover:bg-primary-dark shadow-sm",
+        secondary: "bg-secondary text-white hover:bg-slate-800",
+        outline: "border-2 border-primary text-primary hover:bg-bg-light",
+        ghost: "text-primary hover:bg-bg-light"
+    };
+
     return (
         <button
             type={type}
-            className={`w-full flex justify-center py-2.5 px-4 border border-transparent rounded-sm shadow-sm text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 transition-colors ${className}`}
+            className={`${baseStyles} ${variants[variant]} ${className}`}
             {...props}
         >
             {children}
