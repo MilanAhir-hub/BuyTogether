@@ -12,5 +12,10 @@ namespace BuyTogether.Server.DTOs.Properties
         public Guid OwnerId { get; set; }
         public string OwnerName { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
+
+        public int MaxPeopleAllowed { get; set; }
+        public int RequiredGroupSize { get; set; }
+
+        public List<DiscountTierDto> DiscountTiers { get; set; } = new();
     }
 }

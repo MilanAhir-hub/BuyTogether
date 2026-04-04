@@ -13,6 +13,7 @@ const PropertyDetails = () => {
     const queryClient = useQueryClient();
     const { user, isAuthenticated } = useAuth();
     const [joining, setJoining] = useState(false);
+    const [leaving, setLeaving] = useState(false);
     
     // Real-time grouping data
     const { propertyGroupData } = useSignalR(null, id);
@@ -40,7 +41,7 @@ const PropertyDetails = () => {
         setJoining(true);
         try {
             const res = await propertyService.joinGroup(id);
-            if (res.GroupId) {
+            if (res.groupId || res.GroupId) {
                 toast.success('Successfully joined the group!');
                 // Refetch to update local state immediately
                 queryClient.invalidateQueries(['property', id]);
@@ -51,6 +52,21 @@ const PropertyDetails = () => {
             toast.error(err.response?.data?.message || 'Error joining group.');
         } finally {
             setJoining(false);
+        }
+    };
+
+    const handleLeaveGroup = async () => {
+        if (!property?.group?.groupId) return;
+
+        setLeaving(true);
+        try {
+            const res = await propertyService.leaveGroup(property.group.groupId);
+            toast.success('Successfully left the group!');
+            queryClient.invalidateQueries(['property', id]);
+        } catch (err) {
+            toast.error(err.response?.data?.message || 'Error leaving group.');
+        } finally {
+            setLeaving(false);
         }
     };
 
@@ -216,19 +232,24 @@ const PropertyDetails = () => {
 
                                 <button
                                     type="button"
-                                    onClick={handleJoinGroup}
-                                    disabled={joining || hasJoined || groupStatus !== 'Open' || isOwner}
-                                    className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-5 py-4 text-sm font-bold text-white transition hover:bg-primary-dark disabled:opacity-50 disabled:hover:bg-primary"
+                                    onClick={hasJoined ? handleLeaveGroup : handleJoinGroup}
+                                    disabled={
+                                        joining || 
+                                        leaving || 
+                                        isOwner || 
+                                        (!hasJoined && currentMembers >= requiredSize) ||
+                                        !['OPEN', 'Open'].includes(groupStatus)
+                                    }
+                                    className={`inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-4 text-sm font-bold text-white transition disabled:opacity-50 ${hasJoined ? 'bg-red-500 hover:bg-red-600 disabled:hover:bg-red-500' : 'bg-primary hover:bg-primary-dark disabled:hover:bg-primary'}`}
                                 >
-                                    {joining ? (
+                                    {joining || leaving ? (
                                         <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
                                     ) : hasJoined ? (
-                                        <>
-                                            <CheckCircle size={18} />
-                                            Already Joined
-                                        </>
+                                        'Leave Group'
                                     ) : isOwner ? (
                                         'Your Listing'
+                                    ) : (currentMembers >= requiredSize || ['FULL', 'Full', 'LOCKED', 'Locked'].includes(groupStatus)) ? (
+                                        'Group is Locked'
                                     ) : (
                                         'Join Group'
                                     )}

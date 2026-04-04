@@ -49,6 +49,7 @@ const DEFAULT_FORM_DATA = {
     location: '',
     bedrooms: '',
     imageUrl: '',
+    discountTiers: [],
 };
 
 const PropertyForm = ({
@@ -105,7 +106,34 @@ const PropertyForm = ({
             location: formData.location.trim() || null,
             bedrooms: Number(formData.bedrooms || 0),
             imageUrl: formData.imageUrl.trim() || null,
+            discountTiers: formData.discountTiers.map(tier => ({
+                minBuyers: Number(tier.minBuyers),
+                discountPercentage: Number(tier.discountPercentage)
+            })),
         });
+    };
+
+    const handleAddTier = () => {
+        setFormData(current => ({
+            ...current,
+            discountTiers: [...current.discountTiers, { minBuyers: '', discountPercentage: '' }]
+        }));
+    };
+
+    const handleRemoveTier = (index) => {
+        setFormData(current => ({
+            ...current,
+            discountTiers: current.discountTiers.filter((_, i) => i !== index)
+        }));
+    };
+
+    const handleTierChange = (index, field, value) => {
+        setFormData(current => ({
+            ...current,
+            discountTiers: current.discountTiers.map((tier, i) => 
+                i === index ? { ...tier, [field]: value } : tier
+            )
+        }));
     };
 
     return (
@@ -184,6 +212,73 @@ const PropertyForm = ({
                         labelClassName={styles.headingText}
                         className={styles.input}
                     />
+                </div>
+
+                {/* Discount Strategy Section */}
+                <div className="mt-10 border-t border-slate-100 pt-10">
+                    <div className="flex items-center justify-between mb-6">
+                        <div>
+                            <h3 className={`text-lg font-bold ${styles.headingText}`}>Discount Strategy</h3>
+                            <p className={`text-xs ${styles.supportingText}`}>Define bulk discounts based on group size.</p>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={handleAddTier}
+                            className="flex items-center gap-2 px-4 py-2 bg-primary/5 text-primary rounded-xl text-xs font-bold hover:bg-primary/10 transition-colors"
+                        >
+                            <span>Add Tier</span>
+                            <span className="text-lg">+</span>
+                        </button>
+                    </div>
+
+                    <div className="space-y-4">
+                        {formData.discountTiers.length === 0 ? (
+                            <div className="p-8 border border-dashed border-slate-200 rounded-[24px] text-center">
+                                <p className="text-sm text-slate-400 italic">No discount tiers added yet. Individual pricing will be applied.</p>
+                            </div>
+                        ) : (
+                            formData.discountTiers.map((tier, index) => (
+                                <div key={index} className="flex gap-4 items-end animate-in fade-in slide-in-from-top-1 duration-300">
+                                    <div className="flex-1">
+                                        <InputBlock
+                                            label="Min. Buyers"
+                                            value={tier.minBuyers}
+                                            onChange={(e) => handleTierChange(index, 'minBuyers', e.target.value)}
+                                            placeholder="e.g. 2"
+                                            type="number"
+                                            min="1"
+                                            labelClassName={styles.headingText}
+                                            className={styles.input}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="flex-1">
+                                        <InputBlock
+                                            label="Discount (%)"
+                                            value={tier.discountPercentage}
+                                            onChange={(e) => handleTierChange(index, 'discountPercentage', e.target.value)}
+                                            placeholder="e.g. 5"
+                                            type="number"
+                                            min="0"
+                                            max="100"
+                                            step="0.1"
+                                            labelClassName={styles.headingText}
+                                            className={styles.input}
+                                            required
+                                        />
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleRemoveTier(index)}
+                                        className="h-[46px] w-[46px] flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all mb-[1px]"
+                                        title="Remove tier"
+                                    >
+                                        <span className="text-xl">×</span>
+                                    </button>
+                                </div>
+                            ))
+                        )}
+                    </div>
                 </div>
 
                 {createPropertyMutation.isError ? (

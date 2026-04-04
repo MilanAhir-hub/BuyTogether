@@ -23,5 +23,7 @@ namespace BuyTogether.Server.DTOs.Properties
         [Url]
         [MaxLength(1000)]
         public string? ImageUrl { get; set; }
+
+        public List<DiscountTierDto> DiscountTiers { get; set; } = new();
     }
 }

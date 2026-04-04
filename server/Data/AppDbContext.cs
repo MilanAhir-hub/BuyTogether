@@ -21,6 +21,7 @@ namespace BuyTogether.Server.Data
         public DbSet<DealGroup> DealGroups { get; set; }
         public DbSet<DealGroupMember> DealGroupMembers { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<PropertyDiscountTier> PropertyDiscountTiers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -127,6 +128,12 @@ namespace BuyTogether.Server.Data
                 .WithMany()
                 .HasForeignKey(o => o.DealId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PropertyDiscountTier>()
+                .HasOne(pdt => pdt.Property)
+                .WithMany(p => p.DiscountTiers)
+                .HasForeignKey(pdt => pdt.PropertyId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

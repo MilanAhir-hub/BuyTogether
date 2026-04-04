@@ -21,6 +21,7 @@ namespace BuyTogether.Server.Services
             var properties = await _context.Properties
                 .AsNoTracking()
                 .Include(property => property.Owner)
+                .Include(property => property.DiscountTiers)
                 .OrderByDescending(property => property.CreatedAt)
                 .ToListAsync();
 
@@ -32,6 +33,7 @@ namespace BuyTogether.Server.Services
             var properties = await _context.Properties
                 .AsNoTracking()
                 .Include(property => property.Owner)
+                .Include(property => property.DiscountTiers)
                 .Where(property => property.OwnerId == ownerId)
                 .OrderByDescending(property => property.CreatedAt)
                 .ToListAsync();
@@ -44,6 +46,7 @@ namespace BuyTogether.Server.Services
             var property = await _context.Properties
                 .AsNoTracking()
                 .Include(item => item.Owner)
+                .Include(item => item.DiscountTiers)
                 .SingleOrDefaultAsync(item => item.Id == id);
 
             return property == null ? null : MapToResponse(property);
@@ -77,7 +80,12 @@ namespace BuyTogether.Server.Services
                 RequiredGroupSize = Math.Max(dto.Bedrooms, 1),
                 Status = PropertyStatuses.Available,
                 OwnerId = userId,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
+                DiscountTiers = dto.DiscountTiers.Select(t => new PropertyDiscountTier
+                {
+                    MinBuyers = t.MinBuyers,
+                    DiscountPercentage = t.DiscountPercentage
+                }).ToList()
             };
 
             _context.Properties.Add(property);
@@ -129,7 +137,14 @@ namespace BuyTogether.Server.Services
                 ImageUrl = property.ImageUrl ?? string.Empty,
                 OwnerId = property.OwnerId,
                 OwnerName = ResolveOwnerName(property.Owner),
-                CreatedAt = property.CreatedAt
+                CreatedAt = property.CreatedAt,
+                MaxPeopleAllowed = property.MaxPeopleAllowed,
+                RequiredGroupSize = property.RequiredGroupSize,
+                DiscountTiers = property.DiscountTiers.Select(t => new DiscountTierDto
+                {
+                    MinBuyers = t.MinBuyers,
+                    DiscountPercentage = t.DiscountPercentage
+                }).ToList()
             };
         }
 

@@ -75,5 +75,6 @@ namespace BuyTogether.Server.Models
 
         // Relationships (Future Expansion)
         public ICollection<Group> Groups { get; set; } = new List<Group>();
+        public ICollection<PropertyDiscountTier> DiscountTiers { get; set; } = new List<PropertyDiscountTier>();
     }
 }
