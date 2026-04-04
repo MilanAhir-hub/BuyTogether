@@ -4,11 +4,11 @@ export const getDashboardRouteByRole = (role) => {
     const normalizedRole = normalizeRole(role);
 
     if (normalizedRole === 'seller') {
-        return '/dashboard';
+        return '/seller';
     }
 
-    if (normalizedRole === 'user') {
-        return '/user-dashboard';
+    if (normalizedRole === 'user' || normalizedRole === 'buyer') {
+        return '/buyer';
     }
 
     return null;
@@ -21,8 +21,8 @@ export const getDashboardLabelByRole = (role) => {
         return 'Seller Dashboard';
     }
 
-    if (normalizedRole === 'user') {
-        return 'User Dashboard';
+    if (normalizedRole === 'user' || normalizedRole === 'buyer') {
+        return 'Buyer Dashboard';
     }
 
     return 'Dashboard';
@@ -35,7 +35,7 @@ export const getDashboardDescriptionByRole = (role) => {
         return 'Manage your listings';
     }
 
-    if (normalizedRole === 'user') {
+    if (normalizedRole === 'user' || normalizedRole === 'buyer') {
         return 'Browse properties and groups';
     }
 
@@ -51,5 +51,5 @@ export const hasRequiredRole = (role, allowedRoles = []) => {
 };
 
 export const isDashboardPath = (pathname) => {
-    return pathname.startsWith('/dashboard') || pathname.startsWith('/user-dashboard');
+    return pathname.startsWith('/seller') || pathname.startsWith('/buyer');
 };

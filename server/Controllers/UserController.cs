@@ -11,10 +11,12 @@ namespace BuyTogether.Server.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserProfileService _userProfileService;
+        private readonly IAuthService _authService;
 
-        public UserController(IUserProfileService userProfileService)
+        public UserController(IUserProfileService userProfileService, IAuthService authService)
         {
             _userProfileService = userProfileService;
+            _authService = authService;
         }
 
         [Authorize]
@@ -63,6 +65,24 @@ namespace BuyTogether.Server.Controllers
             }
 
             return Ok(updatedProfile);
+        }
+
+        [Authorize]
+        [HttpPost("become-seller")]
+        public async Task<IActionResult> BecomeSeller()
+        {
+            if (!TryGetUserId(out var userId))
+            {
+                return Unauthorized(new { message = "Invalid user token." });
+            }
+
+            var result = await _authService.UpgradeToSellerAsync(userId);
+            if (string.IsNullOrEmpty(result.Token))
+            {
+                return BadRequest(new { message = result.Message });
+            }
+
+            return Ok(result);
         }
 
         private bool TryGetUserId(out Guid userId)

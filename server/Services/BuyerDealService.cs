@@ -5,7 +5,9 @@ using BuyTogether.Server.DTOs.Buyer;
 using BuyTogether.Server.Helpers;
 using BuyTogether.Server.Interfaces;
 using BuyTogether.Server.Models;
+using BuyTogether.Server.Hubs;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.SignalR;
 
 namespace BuyTogether.Server.Services
 {
@@ -14,10 +16,12 @@ namespace BuyTogether.Server.Services
         private const int PaymentWindowHours = 24;
 
         private readonly AppDbContext _context;
+        private readonly IHubContext<GroupHub> _hubContext;
 
-        public BuyerDealService(AppDbContext context)
+        public BuyerDealService(AppDbContext context, IHubContext<GroupHub> hubContext)
         {
             _context = context;
+            _hubContext = hubContext;
         }
 
         public async Task<BuyerGroupDetailDto> JoinPropertyGroupAsync(Guid propertyId, Guid buyerId)
@@ -107,6 +111,9 @@ namespace BuyTogether.Server.Services
             await _context.SaveChangesAsync();
             await transaction.CommitAsync();
 
+            // Broadcast real-time update
+            await _hubContext.Clients.All.SendAsync("PropertyGroupUpdated", propertyId, group.CurrentMembers, group.MaxMembers, group.Status);
+
             return await GetGroupRequiredAsync(group.Id, buyerId);
         }
 
@@ -144,8 +151,16 @@ namespace BuyTogether.Server.Services
                 _context.Groups.Remove(group);
             }
 
+            var propertyId = group.PropertyId;
+            var currentMembers = group.CurrentMembers;
+            var maxMembers = group.MaxMembers;
+            var status = group.Status;
+
             await _context.SaveChangesAsync();
             await transaction.CommitAsync();
+
+            // Broadcast real-time update
+            await _hubContext.Clients.All.SendAsync("PropertyGroupUpdated", propertyId, currentMembers, maxMembers, status);
         }
 
         public async Task<IReadOnlyCollection<BuyerGroupSummaryDto>> GetBuyerGroupsAsync(Guid buyerId)

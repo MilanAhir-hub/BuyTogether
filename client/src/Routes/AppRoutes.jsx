@@ -11,14 +11,16 @@ import Profile from "../pages/user/Profile"
 import EditProfile from "../pages/user/EditProfile"
 import ProtectedRoute from "../components/auth/ProtectedRoute"
 import RoleProtectedRoute from "../components/auth/RoleProtectedRoute"
-import SellerDashboard from "../pages/SellerDashboard"
-import DashboardHome from "../pages/dashboard/DashboardHome"
-import MyProperties from "../pages/dashboard/MyProperties"
-import DashboardAddProperty from "../pages/dashboard/DashboardAddProperty"
-import UserDashboard from "../pages/UserDashboard"
-import UserDashboardHome from "../pages/user-dashboard/UserDashboardHome"
-import UserDashboardPropertyDetails from "../pages/user-dashboard/UserDashboardPropertyDetails"
-import UserDashboardGroups from "../pages/user-dashboard/UserDashboardGroups"
+import CreateDeal from "../pages/deals/CreateDeal"
+import DealsList from "../pages/deals/DealsList"
+import DealDetail from "../pages/deals/DealDetail"
+import MyDeals from "../pages/deals/MyDeals"
+import BuyerLayout from "../pages/buyer/BuyerLayout"
+import BuyerHome from "../pages/buyer/BuyerHome"
+import SellerLayout from "../pages/seller/SellerLayout"
+import SellerHome from "../pages/seller/SellerHome"
+import MyProperties from "../pages/seller/MyProperties"
+import AddProperty from "../pages/AddProperty"
 
 const AppRoutes = () => {
     return (
@@ -28,35 +30,29 @@ const AppRoutes = () => {
             <Route path="/how-it-works" element={<HowItWorks />} />
             <Route path="/properties" element={<PropertyList />} />
             <Route path="/properties/:id" element={<PropertyDetails />} />
+            <Route path="/deals" element={<DealsList />} />
+            <Route path="/deals/:id" element={<DealDetail />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/profile/edit" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
-            <Route
-                path="/dashboard"
-                element={
-                    <RoleProtectedRoute allowedRoles={['Seller']}>
-                        <SellerDashboard />
-                    </RoleProtectedRoute>
-                }
-            >
-                <Route index element={<DashboardHome />} />
-                <Route path="properties" element={<MyProperties />} />
-                <Route path="add-property" element={<DashboardAddProperty />} />
+            <Route path="/my-deals" element={<ProtectedRoute><MyDeals /></ProtectedRoute>} />
+            <Route path="/deals/create" element={<RoleProtectedRoute allowedRoles={['Seller', 'Admin']}><CreateDeal /></RoleProtectedRoute>} />
+            
+            <Route path="/buyer" element={<RoleProtectedRoute allowedRoles={['User', 'Buyer']}><BuyerLayout /></RoleProtectedRoute>}>
+                <Route index element={<BuyerHome />} />
+                <Route path="properties" element={<PropertyList />} />
+                <Route path="activity" element={<MyDeals />} />
+                <Route path="profile" element={<Profile />} />
             </Route>
-            <Route
-                path="/user-dashboard"
-                element={
-                    <RoleProtectedRoute allowedRoles={['User']}>
-                        <UserDashboard />
-                    </RoleProtectedRoute>
-                }
-            >
-                <Route index element={<UserDashboardHome />} />
-                <Route path="property/:id" element={<UserDashboardPropertyDetails />} />
-                <Route path="groups" element={<UserDashboardGroups />} />
+
+            <Route path="/seller" element={<RoleProtectedRoute allowedRoles={['Seller', 'Admin']}><SellerLayout /></RoleProtectedRoute>}>
+                <Route index element={<SellerHome />} />
+                <Route path="properties" element={<MyProperties />} />
+                <Route path="add-property" element={<AddProperty />} />
+                <Route path="profile" element={<Profile />} />
             </Route>
         </Routes>
     )

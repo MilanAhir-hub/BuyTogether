@@ -17,16 +17,16 @@ const AddProperty = () => {
                     </div>
 
                     <Link
-                        to="/properties"
-                        className="inline-flex items-center justify-center rounded-full border border-primary/15 bg-white px-5 py-3 text-sm font-semibold text-primary transition hover:border-primary hover:bg-primary hover:text-white"
+                        to="/seller"
+                        className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-secondary transition hover:border-secondary hover:bg-secondary hover:text-white"
                     >
-                        Back to listings
+                        Back to Dashboard
                     </Link>
                 </div>
 
                 <PropertyForm
-                    cancelPath="/properties"
-                    successRedirectPath={(createdProperty) => `/properties/${createdProperty.id}`}
+                    cancelPath="/seller"
+                    successRedirectPath={(createdProperty) => `/seller/properties`}
                 />
             </div>
         </div>

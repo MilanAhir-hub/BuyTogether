@@ -1,13 +1,22 @@
-import { useQuery } from '@tanstack/react-query';
-import { ArrowLeft, BedDouble, Building2, CalendarDays, MapPin, Users } from 'lucide-react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { ArrowLeft, BedDouble, Building2, CalendarDays, MapPin, Users, CheckCircle, AlertCircle, Clock } from 'lucide-react';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { propertyService } from '../services/propertyService';
+import { useSignalR } from '../hooks/useSignalR';
 
 const PropertyDetails = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
     const { user, isAuthenticated } = useAuth();
+    const [joining, setJoining] = useState(false);
+    
+    // Real-time grouping data
+    const { propertyGroupData } = useSignalR(null, id);
+
     const {
         data: property,
         isLoading,
@@ -15,11 +24,35 @@ const PropertyDetails = () => {
         error,
     } = useQuery({
         queryKey: ['property', id],
-        queryFn: () => propertyService.getById(id),
+        queryFn: () => propertyService.getBuyerPropertyById(id),
         enabled: Boolean(id),
     });
 
     const isOwner = user?.id === property?.ownerId;
+
+    const handleJoinGroup = async () => {
+        if (!isAuthenticated) {
+            toast.error('Please login to join a group.');
+            navigate('/login');
+            return;
+        }
+
+        setJoining(true);
+        try {
+            const res = await propertyService.joinGroup(id);
+            if (res.GroupId) {
+                toast.success('Successfully joined the group!');
+                // Refetch to update local state immediately
+                queryClient.invalidateQueries(['property', id]);
+            } else {
+                toast.error(res.message || 'Failed to join group.');
+            }
+        } catch (err) {
+            toast.error(err.response?.data?.message || 'Error joining group.');
+        } finally {
+            setJoining(false);
+        }
+    };
 
     if (isLoading) {
         return (
@@ -49,6 +82,13 @@ const PropertyDetails = () => {
             </div>
         );
     }
+
+    // Merge static and real-time data
+    const currentMembers = propertyGroupData?.currentCount ?? property.group?.currentMembers ?? 0;
+    const requiredSize = propertyGroupData?.maxCount ?? property.group?.requiredGroupSize ?? property.requiredGroupSize;
+    const groupStatus = propertyGroupData?.status ?? property.group?.status ?? 'Open';
+    const progressPercent = Math.min((currentMembers / requiredSize) * 100, 100);
+    const hasJoined = property.group?.hasJoined;
 
     return (
         <div className="min-h-screen bg-[linear-gradient(180deg,#fffaf7_0%,#ffffff_34%,#fff7f2_100%)]">
@@ -87,7 +127,7 @@ const PropertyDetails = () => {
                             <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                                 <div>
                                     <p className="text-sm font-semibold uppercase tracking-[0.28em] text-primary/80">
-                                        {property.ownerName}
+                                        {property.ownerName || 'Verified Seller'}
                                     </p>
                                     <h1 className="mt-3 text-3xl font-semibold tracking-tight text-secondary sm:text-4xl">
                                         {property.title}
@@ -100,7 +140,7 @@ const PropertyDetails = () => {
 
                                 <div className="rounded-[28px] bg-primary px-6 py-5 text-white shadow-lg shadow-primary/20">
                                     <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/80">Listing price</p>
-                                    <p className="mt-2 text-3xl font-semibold">{formatCurrency(property.price)}</p>
+                                    <p className="mt-2 text-3xl font-semibold">{formatCurrency(property.totalPrice || property.price)}</p>
                                 </div>
                             </div>
 
@@ -117,7 +157,7 @@ const PropertyDetails = () => {
                                 />
                                 <MetricCard
                                     label="Owner"
-                                    value={property.ownerName}
+                                    value={property.ownerName || 'Seller'}
                                     icon={<Users size={18} />}
                                 />
                             </div>
@@ -136,40 +176,75 @@ const PropertyDetails = () => {
                     <aside className="space-y-6">
                         <div className="rounded-[36px] border border-white/70 bg-white p-7 shadow-[0_24px_70px_rgba(15,23,42,0.06)]">
                             <p className="text-sm font-semibold uppercase tracking-[0.28em] text-primary/80">
-                                Next Step
+                                Together Buy Status
                             </p>
                             <h2 className="mt-4 text-2xl font-semibold text-secondary">
-                                Interested in buying this property together?
+                                Join this buyer group
                             </h2>
-                            <p className="mt-3 text-sm leading-6 text-text-secondary">
-                                Group joining is the next workflow for this module. The button is ready in the UI so we can wire the real flow in a later pass.
-                            </p>
+                            
+                            <div className="mt-6 space-y-5">
+                                {/* Real-time Group Info */}
+                                <div className="space-y-3">
+                                    <div className="flex justify-between items-end text-sm">
+                                        <div className="font-semibold text-secondary">
+                                            <span className="text-2xl text-primary">{currentMembers}</span>
+                                            <span className="text-slate-400"> / {requiredSize} buyers</span>
+                                        </div>
+                                        <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                                            {groupStatus}
+                                        </div>
+                                    </div>
 
-                            <button
-                                type="button"
-                                onClick={() => toast.success('Join Group is UI-only for now.')}
-                                className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:bg-primary-dark"
-                            >
-                                Join Group
-                            </button>
+                                    {/* Progress Bar */}
+                                    <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-100">
+                                        <div 
+                                            className="h-full bg-primary transition-all duration-1000 ease-out" 
+                                            style={{ width: `${progressPercent}%` }}
+                                        />
+                                    </div>
 
-                            <div className="mt-4 grid gap-3">
-                                {isAuthenticated ? (
-                                    <Link
-                                        to="/add-property"
-                                        className="inline-flex items-center justify-center rounded-full border border-primary/15 px-5 py-3 text-sm font-semibold text-primary transition hover:border-primary hover:bg-primary hover:text-white"
-                                    >
-                                        Add another property
-                                    </Link>
-                                ) : (
-                                    <Link
-                                        to="/login"
-                                        className="inline-flex items-center justify-center rounded-full border border-primary/15 px-5 py-3 text-sm font-semibold text-primary transition hover:border-primary hover:bg-primary hover:text-white"
-                                    >
-                                        Login to list a property
-                                    </Link>
+                                    {currentMembers < requiredSize ? (
+                                        <p className="text-xs text-slate-500 font-medium">
+                                            {requiredSize - currentMembers} more buyers needed to unlock group discount.
+                                        </p>
+                                    ) : (
+                                        <p className="text-xs text-emerald-600 font-bold flex items-center gap-1">
+                                            <CheckCircle size={14} /> Group is full! Moving to payment phase.
+                                        </p>
+                                    )}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={handleJoinGroup}
+                                    disabled={joining || hasJoined || groupStatus !== 'Open' || isOwner}
+                                    className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-5 py-4 text-sm font-bold text-white transition hover:bg-primary-dark disabled:opacity-50 disabled:hover:bg-primary"
+                                >
+                                    {joining ? (
+                                        <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                                    ) : hasJoined ? (
+                                        <>
+                                            <CheckCircle size={18} />
+                                            Already Joined
+                                        </>
+                                    ) : isOwner ? (
+                                        'Your Listing'
+                                    ) : (
+                                        'Join Group'
+                                    )}
+                                </button>
+
+                                {hasJoined && (
+                                    <div className="rounded-2xl bg-emerald-50 border border-emerald-100 p-4 flex items-start gap-3">
+                                        <CheckCircle className="text-emerald-500 shrink-0" size={18} />
+                                        <p className="text-[13px] text-emerald-700 leading-snug">
+                                            You've successfully joined this group. We'll notify you when the target of {requiredSize} is reached!
+                                        </p>
+                                    </div>
                                 )}
                             </div>
+
+                            
                         </div>
 
                         <div className="rounded-[36px] border border-white/70 bg-white p-7 shadow-[0_24px_70px_rgba(15,23,42,0.06)]">
@@ -177,10 +252,9 @@ const PropertyDetails = () => {
                                 Listing Summary
                             </p>
                             <div className="mt-5 space-y-4">
-                                <SummaryRow label="Title" value={property.title} />
                                 <SummaryRow label="Location" value={property.location || 'Not specified'} />
                                 <SummaryRow label="Bedrooms" value={`${property.bedrooms || 0}`} />
-                                <SummaryRow label="Owner" value={property.ownerName} />
+                                <SummaryRow label="Price Share" value={formatCurrency((property.totalPrice || property.price) / requiredSize) + " / buyer"} />
                                 <SummaryRow label="Created" value={formatDate(property.createdAt)} />
                             </div>
                         </div>

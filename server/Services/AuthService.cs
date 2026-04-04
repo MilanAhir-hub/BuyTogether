@@ -71,6 +71,33 @@ namespace BuyTogether.Server.Services
             };
         }
 
+        public async Task<AuthResponseDto> UpgradeToSellerAsync(Guid userId)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+            {
+                return new AuthResponseDto { Message = "User not found." };
+            }
+
+            user.Role = UserRoles.Seller;
+            user.UpdatedAt = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+
+            var token = GenerateJwtToken(user);
+            return new AuthResponseDto
+            {
+                Token = token,
+                Message = "User upgraded to Seller successfully.",
+                User = new AuthenticatedUserDto
+                {
+                    Id = user.Id,
+                    Username = user.Username,
+                    Email = user.Email,
+                    Role = user.Role
+                }
+            };
+        }
+
         private string GenerateJwtToken(User user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));

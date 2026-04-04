@@ -24,5 +24,15 @@ export const propertyService = {
     remove: async (id) => {
         const response = await apiClient.delete(`/properties/${id}`);
         return response.data;
+    },
+
+    getBuyerPropertyById: async (id) => {
+        const response = await apiClient.get(`/buyer/properties/${id}`);
+        return response.data;
+    },
+
+    joinGroup: async (propertyId) => {
+        const response = await apiClient.post(`/buyer/properties/${propertyId}/join`);
+        return response.data;
     }
 };

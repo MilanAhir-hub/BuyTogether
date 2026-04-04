@@ -120,10 +120,11 @@ const AuthForm = ({ initialMode = "login" }) => {
                     <input 
                         type={showPassword ? "text" : "password"} 
                         name="password" 
-                        placeholder="Password" 
+                        placeholder="Password (min 6 characters)" 
                         className="w-full border-none outline-none ring-0 text-gray-700 bg-transparent" 
                         value={formData.password} 
                         onChange={handleChange} 
+                        minLength={6}
                         required 
                     />
                     <button 

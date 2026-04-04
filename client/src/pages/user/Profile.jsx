@@ -1,4 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-hot-toast';
+import Cookies from 'js-cookie';
 import {
     BadgePercent,
     Building2,
@@ -31,6 +33,30 @@ const Profile = () => {
         queryKey: ['userProfile'],
         queryFn: userService.getProfile,
     });
+
+    const queryClient = useQueryClient();
+
+    const becomeSellerMutation = useMutation({
+        mutationFn: userService.becomeSeller,
+        onSuccess: (response) => {
+            if (response.success && response.data.token) {
+                // Save new token
+                Cookies.set('token', response.data.token);
+                toast.success('Congratulations! You are now a Seller.');
+                // Hard refresh to update auth state and redirect properly
+                window.location.href = '/seller';
+            }
+        },
+        onError: (err) => {
+            toast.error(err.response?.data?.message || 'Failed to upgrade account');
+        }
+    });
+
+    const handleBecomeSeller = () => {
+        if (window.confirm('Do you want to upgrade your account to Seller? This will allow you to list and manage properties.')) {
+            becomeSellerMutation.mutate();
+        }
+    };
 
     if (isLoading) {
         return (
@@ -204,6 +230,27 @@ const Profile = () => {
                             />
                         ))}
                     </section>
+
+                    {/* Become a Seller CTA */}
+                    {(userProfile?.role === 'User' || userProfile?.role === 'Buyer') && (
+                        <section className="rounded-[34px] border border-primary/20 bg-[linear-gradient(135deg,#fffbf8_0%,#fff5f0_100%)] p-8 shadow-sm">
+                            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                                <div className="space-y-2">
+                                    <h3 className="text-2xl font-bold text-secondary">Start Selling on TogetherBuy</h3>
+                                    <p className="text-text-secondary max-w-xl">
+                                        Upgrade your account to list your own properties and start building group deals today.
+                                    </p>
+                                </div>
+                                <button
+                                    onClick={handleBecomeSeller}
+                                    disabled={becomeSellerMutation.isPending}
+                                    className="whitespace-nowrap rounded-full bg-primary px-8 py-4 text-lg font-bold text-white shadow-xl shadow-primary/20 transition hover:bg-primary-dark disabled:opacity-50"
+                                >
+                                    {becomeSellerMutation.isPending ? 'Upgrading...' : 'Become a Seller'}
+                                </button>
+                            </div>
+                        </section>
+                    )}
 
                     <section className="grid gap-6 2xl:grid-cols-[1.15fr_0.85fr]">
                         <article className="rounded-[34px] border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.05)]">

@@ -9,8 +9,10 @@ namespace BuyTogether.Server.Constants
 
         public static readonly string[] BuyerEquivalentRoles =
         [
-            Buyer,
-            User
+            Buyer, // Role "Buyer"
+            User,  // Role "User"
+            Seller, // Allow Sellers to join groups too
+            Admin   // Allow Admins to join groups too
         ];
     }
 }

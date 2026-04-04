@@ -15,6 +15,9 @@ apiClient.interceptors.request.use(
         const token = Cookies.get('token');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
+            console.log(`[apiClient] Attaching token to ${config.url}`);
+        } else {
+            console.log(`[apiClient] No token found for ${config.url}`);
         }
         return config;
     },
@@ -28,9 +31,8 @@ apiClient.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response?.status === 401) {
-            // Token might be expired or invalid
-            Cookies.remove('token');
-            // could redirect to login here, but usually best handled in context or components
+            console.warn('[apiClient] 401 Unauthorized detected! Not clearing token to debug.');
+            // Cookies.remove('token');
         }
         return Promise.reject(error);
     }

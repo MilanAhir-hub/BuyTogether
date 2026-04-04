@@ -2,12 +2,12 @@ import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
 import { UserIcon, Logout01Icon, Settings02Icon } from 'hugeicons-react';
-import { LayoutDashboard } from 'lucide-react';
+import { LayoutDashboard, ShoppingBag, Plus } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import {
-    getDashboardDescriptionByRole,
-    getDashboardLabelByRole,
     getDashboardRouteByRole,
+    getDashboardLabelByRole,
+    getDashboardDescriptionByRole
 } from '../../utils/dashboardRoutes';
 
 const Navbar = () => {
@@ -18,8 +18,7 @@ const Navbar = () => {
     const { user, isAuthenticated, logout } = useAuth();
     const profileRef = useRef(null);
     const dashboardRoute = getDashboardRouteByRole(user?.role);
-    const dashboardLabel = getDashboardLabelByRole(user?.role);
-    const dashboardDescription = getDashboardDescriptionByRole(user?.role);
+    const isSeller = user?.role === 'Seller' || user?.role === 'Admin';
     
     // Hide navbar logic moved to the bottom before return to avoid Hook Order Violation
 
@@ -39,6 +38,7 @@ const Navbar = () => {
         { name: 'Home', path: '/', scrollId: 'hero' },
         { name: 'How it works', path: '/how-it-works', scrollId: 'how-it-works' },
         { name: 'Properties', path: '/properties', scrollId: 'properties' },
+        { name: 'Group Deals', path: '/deals' },
         { name: 'About us', path: '/about', scrollId: 'about' },
         { name: 'Contact us', path: '/contact', scrollId: 'contact' }
     ];
@@ -125,8 +125,8 @@ const Navbar = () => {
                                             <LayoutDashboard size={22} />
                                         </div>
                                         <div>
-                                            <p className="text-sm font-semibold">{dashboardLabel}</p>
-                                            <p className="text-xs text-text-secondary">{dashboardDescription}</p>
+                                            <p className="text-sm font-semibold">{getDashboardLabelByRole(user?.role)}</p>
+                                            <p className="text-xs text-text-secondary">{getDashboardDescriptionByRole(user?.role)}</p>
                                         </div>
                                     </Link>
                                 ) : null}
@@ -247,9 +247,18 @@ const Navbar = () => {
                                                 className="flex items-center gap-3.5 px-6 py-3 text-[15px] text-text-secondary hover:text-primary hover:bg-primary/5 transition-colors"
                                             >
                                                 <LayoutDashboard size={18} />
-                                                <span className="font-semibold">{dashboardLabel}</span>
+                                                <span className="font-semibold">{getDashboardLabelByRole(user?.role)}</span>
                                             </Link>
                                         ) : null}
+
+                                        <Link 
+                                            to="/my-deals" 
+                                            onClick={() => setIsProfileOpen(false)}
+                                            className="flex items-center gap-3.5 px-6 py-3 text-[15px] text-text-secondary hover:text-emerald-500 hover:bg-emerald-50 transition-colors"
+                                        >
+                                            <ShoppingBag size={18} />
+                                            <span className="font-semibold">My Deals</span>
+                                        </Link>
 
                                         <Link 
                                             to="/profile" 
@@ -271,7 +280,7 @@ const Navbar = () => {
                                 </>
                             ) : (
                                 <Link to="/login">
-                                    <Button className="w-32! py-2.5 text-[15px]">Login</Button>
+                                    <Button className="w-32 py-2.5 text-[15px]">Login</Button>
                                 </Link>
                             )}
                         </div>

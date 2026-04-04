@@ -17,6 +17,10 @@ namespace BuyTogether.Server.Data
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Ownership> Ownerships { get; set; }
         public DbSet<UserNotification> UserNotifications { get; set; }
+        public DbSet<Deal> Deals { get; set; }
+        public DbSet<DealGroup> DealGroups { get; set; }
+        public DbSet<DealGroupMember> DealGroupMembers { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -94,6 +98,35 @@ namespace BuyTogether.Server.Data
 
             modelBuilder.Entity<UserNotification>()
                 .HasIndex(notification => new { notification.UserId, notification.CreatedAt });
+
+            // Group Buying Configurations
+            modelBuilder.Entity<DealGroupMember>()
+                .HasOne(dgm => dgm.User)
+                .WithMany()
+                .HasForeignKey(dgm => dgm.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<DealGroupMember>()
+                .HasIndex(dgm => new { dgm.DealGroupId, dgm.UserId })
+                .IsUnique();
+
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.User)
+                .WithMany()
+                .HasForeignKey(o => o.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.DealGroup)
+                .WithMany()
+                .HasForeignKey(o => o.DealGroupId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.Deal)
+                .WithMany()
+                .HasForeignKey(o => o.DealId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -61,6 +61,107 @@ namespace BuyTogether.Server.Migrations
                     b.ToTable("Bookings");
                 });
 
+            modelBuilder.Entity("BuyTogether.Server.Models.Deal", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<int>("ExpiryDurationHours")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("GroupPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("MaxBuyers")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MinBuyers")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("OriginalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Deals");
+                });
+
+            modelBuilder.Entity("BuyTogether.Server.Models.DealGroup", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CurrentCount")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("DealId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DealId");
+
+                    b.ToTable("DealGroups");
+                });
+
+            modelBuilder.Entity("BuyTogether.Server.Models.DealGroupMember", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DealGroupId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("JoinedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("DealGroupId", "UserId")
+                        .IsUnique();
+
+                    b.ToTable("DealGroupMembers");
+                });
+
             modelBuilder.Entity("BuyTogether.Server.Models.Group", b =>
                 {
                     b.Property<Guid>("Id")
@@ -150,6 +251,45 @@ namespace BuyTogether.Server.Migrations
                         .IsUnique();
 
                     b.ToTable("GroupMembers");
+                });
+
+            modelBuilder.Entity("BuyTogether.Server.Models.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DealGroupId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DealId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PaymentStatus")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DealGroupId");
+
+                    b.HasIndex("DealId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("BuyTogether.Server.Models.Ownership", b =>
@@ -444,6 +584,36 @@ namespace BuyTogether.Server.Migrations
                     b.Navigation("Property");
                 });
 
+            modelBuilder.Entity("BuyTogether.Server.Models.DealGroup", b =>
+                {
+                    b.HasOne("BuyTogether.Server.Models.Deal", "Deal")
+                        .WithMany()
+                        .HasForeignKey("DealId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Deal");
+                });
+
+            modelBuilder.Entity("BuyTogether.Server.Models.DealGroupMember", b =>
+                {
+                    b.HasOne("BuyTogether.Server.Models.DealGroup", "DealGroup")
+                        .WithMany("Members")
+                        .HasForeignKey("DealGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BuyTogether.Server.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DealGroup");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("BuyTogether.Server.Models.Group", b =>
                 {
                     b.HasOne("BuyTogether.Server.Models.Property", "Property")
@@ -470,6 +640,33 @@ namespace BuyTogether.Server.Migrations
                         .IsRequired();
 
                     b.Navigation("Group");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BuyTogether.Server.Models.Order", b =>
+                {
+                    b.HasOne("BuyTogether.Server.Models.DealGroup", "DealGroup")
+                        .WithMany()
+                        .HasForeignKey("DealGroupId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BuyTogether.Server.Models.Deal", "Deal")
+                        .WithMany()
+                        .HasForeignKey("DealId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BuyTogether.Server.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Deal");
+
+                    b.Navigation("DealGroup");
 
                     b.Navigation("User");
                 });
@@ -540,6 +737,11 @@ namespace BuyTogether.Server.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BuyTogether.Server.Models.DealGroup", b =>
+                {
+                    b.Navigation("Members");
                 });
 
             modelBuilder.Entity("BuyTogether.Server.Models.Group", b =>

@@ -1,8 +1,13 @@
 import React from "react";
 import Button from "../ui/Button";
-import { ArrowRight01Icon } from "hugeicons-react";
+import { ArrowRight01Icon, PlusSignIcon } from "hugeicons-react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 const Hero = () => {
+  const { isAuthenticated, user } = useAuth();
+  const isSeller = user?.role === 'Seller' || user?.role === 'Admin';
+
   return (
     <section className="relative flex flex-col items-center justify-center text-center bg-[url('https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/hero/gradientBg.svg')] bg-cover text-gray-800 pb-24 px-4 overflow-hidden">
 
@@ -41,11 +46,15 @@ const Hero = () => {
         discounts that you simply can’t get alone.
       </p>
 
-      {/* CTA BUTTON */}
-      <Button className="mt-10 w-80 px-8 py-3 flex items-center justify-between! text-base shadow-lg hover:scale-105 transition-all duration-300">
-        <span className="flex-1 text-center font-medium">Find Your Group & Save</span>
-        <ArrowRight01Icon size={22} variant="stroke" strokeWidth={2} />
-      </Button>
+      {/* CTA BUTTONS */}
+      <div className="mt-10 flex flex-wrap justify-center gap-4">
+        <Link to="/properties">
+          <Button className="w-80 px-8 py-3 flex items-center justify-between! text-base shadow-lg hover:scale-105 transition-all duration-300">
+            <span className="flex-1 text-center font-medium">Find Your Group & Save</span>
+            <ArrowRight01Icon size={22} variant="stroke" strokeWidth={2} />
+          </Button>
+        </Link>
+      </div>
 
       {/* INFO BOX */}
       <div className="bg-gradient-to-r from-primary/20 to-primary-light/20 p-[1px] rounded-lg mt-10 shadow-sm">

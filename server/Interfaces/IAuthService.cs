@@ -6,5 +6,6 @@ namespace BuyTogether.Server.Interfaces
     {
         Task<AuthResponseDto> SignupAsync(UserSignupDto signupDto);
         Task<AuthResponseDto> LoginAsync(UserLoginDto loginDto);
+        Task<AuthResponseDto> UpgradeToSellerAsync(Guid userId);
     }
 }

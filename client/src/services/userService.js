@@ -9,5 +9,10 @@ export const userService = {
     updateProfile: async (profileData) => {
         const response = await apiClient.put('/user/me', profileData);
         return response.data;
+    },
+
+    becomeSeller: async () => {
+        const response = await apiClient.post('/user/become-seller');
+        return response.data;
     }
 };

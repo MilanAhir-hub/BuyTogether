@@ -23,6 +23,7 @@ namespace BuyTogether.Server.Services
             var properties = await _context.Properties
                 .AsNoTracking()
                 .Where(property => property.Status == PropertyStatuses.Available)
+                .Include(property => property.Owner)
                 .Include(property => property.Groups!)
                     .ThenInclude(group => group.Members)
                 .OrderByDescending(property => property.CreatedAt)
@@ -38,6 +39,7 @@ namespace BuyTogether.Server.Services
             var nowUtc = DateTime.UtcNow;
             var property = await _context.Properties
                 .AsNoTracking()
+                .Include(item => item.Owner)
                 .Include(item => item.Groups!)
                     .ThenInclude(group => group.Members)
                 .SingleOrDefaultAsync(item => item.Id == propertyId && item.Status == PropertyStatuses.Available);
@@ -70,6 +72,11 @@ namespace BuyTogether.Server.Services
                 RequiredGroupSize = requiredGroupSize,
                 DiscountType = BuyerPricingCalculator.NormalizeDiscountType(property.DiscountType),
                 DiscountValue = property.DiscountValue,
+                ImageUrl = property.ImageUrl,
+                Bedrooms = property.Bedrooms,
+                CreatedAt = property.CreatedAt,
+                OwnerId = property.OwnerId,
+                OwnerName = property.Owner?.FullName ?? property.Owner?.Username,
                 Group = new BuyerActiveGroupSummaryDto
                 {
                     GroupId = groupId,

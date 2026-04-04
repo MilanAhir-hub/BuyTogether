@@ -7,7 +7,7 @@ import { propertyService } from '../services/propertyService';
 
 const PropertyList = () => {
     const [searchTerm, setSearchTerm] = useState('');
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, user } = useAuth();
     const {
         data: properties = [],
         isLoading,
@@ -67,13 +67,7 @@ const PropertyList = () => {
                                     {filteredProperties.length} {filteredProperties.length === 1 ? 'property' : 'properties'} ready to explore
                                 </p>
 
-                                <Link
-                                    to={isAuthenticated ? '/add-property' : '/login'}
-                                    className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:bg-primary-dark"
-                                >
-                                    <Plus size={16} />
-                                    {isAuthenticated ? 'Add Property' : 'Login to Add'}
-                                </Link>
+                                
                             </div>
                         </div>
                     </div>
@@ -105,21 +99,14 @@ const PropertyList = () => {
 
                 {!isLoading && !isError && filteredProperties.length === 0 ? (
                     <div className="rounded-[36px] border border-dashed border-slate-300 bg-white/80 px-8 py-16 text-center shadow-sm">
-                        <div className="mx-auto flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-[28px] bg-bg-light text-primary">
+                        <div className="mx-auto flex h-18 w-18 items-center justify-center rounded-[28px] bg-bg-light text-primary">
                             <Building2 size={30} />
                         </div>
                         <h2 className="mt-6 text-2xl font-semibold text-secondary">No properties matched your search</h2>
                         <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-text-secondary">
                             Try a different keyword or add a fresh listing to start building momentum inside the marketplace.
                         </p>
-                        <div className="mt-8">
-                            <Link
-                                to={isAuthenticated ? '/add-property' : '/login'}
-                                className="inline-flex items-center justify-center rounded-full border border-primary/15 px-5 py-3 text-sm font-semibold text-primary transition hover:border-primary hover:bg-primary hover:text-white"
-                            >
-                                {isAuthenticated ? 'Create a listing' : 'Login to create a listing'}
-                            </Link>
-                        </div>
+                        
                     </div>
                 ) : null}
 

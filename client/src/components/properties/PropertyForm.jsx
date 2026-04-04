@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ImagePlus, MapPinHouse, PencilLine } from 'lucide-react';
+import { ImagePlus, MapPin, PencilLine } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { propertyService } from '../../services/propertyService';
@@ -253,7 +253,7 @@ const PropertyForm = ({
                 </PreviewCard>
 
                 <PreviewCard
-                    icon={<MapPinHouse size={22} />}
+                    icon={<MapPin size={22} />}
                     title="What happens next"
                     description="After saving, your listing is stored under your authenticated seller account."
                     className={styles.infoCard}
