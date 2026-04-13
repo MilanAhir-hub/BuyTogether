@@ -38,15 +38,25 @@ const Navbar = () => {
         { name: 'Home', path: '/', scrollId: 'hero' },
         { name: 'How it works', path: '/how-it-works', scrollId: 'how-it-works' },
         { name: 'Properties', path: '/properties', scrollId: 'properties' },
-        { name: 'Group Deals', path: '/deals' },
-        { name: 'About us', path: '/about', scrollId: 'about' },
-        { name: 'Contact us', path: '/contact', scrollId: 'contact' }
+        { name: 'About us', path: '/', scrollId: 'about' },
+        { name: 'Contact us', path: '/', scrollId: 'contact' }
     ];
 
+    // Handle cross-page scrolling after navigation
+    useEffect(() => {
+        if (location.state?.scrollId) {
+            const element = document.getElementById(location.state.scrollId);
+            if (element) {
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
+        }
+    }, [location]);
+
     const handleNavClick = (e, link) => {
-        setIsMenuOpen(false); // Close mobile menu on click
+        setIsMenuOpen(false);
         
-        // If we're on the landing page and the link has a scroll target, just scroll
         const isLandingPage = location.pathname === '/' || location.pathname === '/home';
         
         if (isLandingPage && link.scrollId) {
@@ -55,8 +65,11 @@ const Navbar = () => {
                 e.preventDefault();
                 element.scrollIntoView({ behavior: 'smooth' });
             }
+        } else if (link.scrollId) {
+            // If navigating from another page to home, pass the scrollId in state
+            e.preventDefault();
+            navigate(link.path, { state: { scrollId: link.scrollId } });
         }
-        // Otherwise, let the Link handle navigation
     };
 
     const handleLogout = async () => {
@@ -93,8 +106,8 @@ const Navbar = () => {
                             onClick={() => setIsMenuOpen(false)}
                             className="w-10 h-10 flex flex-col items-center justify-center gap-1.5 transition-all focus:outline-none"
                         >
-                            <div className="w-6 h-0.5 bg-secondary rounded-full transition-all duration-300 rotate-45 translate-y-1"></div>
-                            <div className="w-6 h-0.5 bg-secondary rounded-full transition-all duration-300 -rotate-45 -translate-y-1"></div>
+                            <div className="w-6 h-0.5 bg-secondary rounded-none transition-all duration-300 rotate-45 translate-y-1"></div>
+                            <div className="w-6 h-0.5 bg-secondary rounded-none transition-all duration-300 -rotate-45 -translate-y-1"></div>
                         </button>
                     </div>
 
@@ -104,9 +117,9 @@ const Navbar = () => {
                                 <Link 
                                     to="/profile" 
                                     onClick={() => setIsMenuOpen(false)}
-                                    className="flex items-center gap-4 mb-4 p-4 bg-bg-light rounded-[32px] group"
+                                    className="flex items-center gap-4 mb-4 p-4 bg-bg-light rounded-none group"
                                 >
-                                    <div className="w-12 h-12 bg-primary/10 text-primary rounded-2xl flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
+                                    <div className="w-12 h-12 bg-primary/10 text-primary rounded-none flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
                                         <UserIcon size={24} />
                                     </div>
                                     <div>
@@ -119,9 +132,9 @@ const Navbar = () => {
                                     <Link
                                         to={dashboardRoute}
                                         onClick={() => setIsMenuOpen(false)}
-                                        className="mb-4 flex items-center gap-4 rounded-[28px] border border-primary/10 bg-white px-4 py-4 text-secondary transition hover:border-primary/20 hover:bg-primary/5 hover:text-primary"
+                                        className="mb-4 flex items-center gap-4 rounded-none border border-primary/10 bg-white px-4 py-4 text-secondary transition hover:border-primary/20 hover:bg-primary/5 hover:text-primary"
                                     >
-                                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                                        <div className="flex h-12 w-12 items-center justify-center rounded-none bg-primary/10 text-primary">
                                             <LayoutDashboard size={22} />
                                         </div>
                                         <div>
@@ -133,33 +146,38 @@ const Navbar = () => {
                             </>
                         )}
 
-                        {navLinks.map((link) => (
-                            <Link 
-                                key={link.name} 
-                                to={link.path}
-                                onClick={(e) => handleNavClick(e, link)}
-                                className={`text-lg font-semibold text-left transition-colors ${
-                                    location.pathname === link.path 
-                                    ? 'text-primary' 
-                                    : 'text-secondary hover:text-primary'
-                                }`}
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
+                        {navLinks.map((link) => {
+                            const isActive = location.pathname === link.path && 
+                                           (link.scrollId ? (link.name === 'Home' || location.pathname !== '/') : true);
+                            
+                            return (
+                                <Link 
+                                    key={link.name} 
+                                    to={link.path}
+                                    onClick={(e) => handleNavClick(e, link)}
+                                    className={`text-lg font-bold text-left px-4 py-3 border-l-4 transition-all ${
+                                        isActive 
+                                        ? 'bg-primary/5 border-primary text-primary' 
+                                        : 'border-transparent text-secondary hover:text-primary hover:bg-gray-50'
+                                    }`}
+                                >
+                                    {link.name}
+                                </Link>
+                            );
+                        })}
                     </div>
 
                     <div className="mt-auto pt-10 border-t border-gray-100 flex flex-col gap-4">
                         {isAuthenticated ? (
                             <Button 
                                 onClick={handleLogout}
-                                className="w-full py-4 rounded-2xl bg-secondary hover:bg-black"
+                                className="w-full py-4 rounded-none bg-secondary hover:bg-black"
                             >
                                 Logout
                             </Button>
                         ) : (
                             <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                                <Button className="w-full py-4 rounded-2xl">Login Now</Button>
+                                <Button className="w-full py-4 rounded-none">Login Now</Button>
                             </Link>
                         )}
                     </div>
@@ -177,8 +195,8 @@ const Navbar = () => {
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                                 className="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 transition-all relative z-50 focus:outline-none"
                             >
-                                <div className={`w-6 h-0.5 bg-secondary rounded-full transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-1' : ''}`}></div>
-                                <div className={`w-6 h-0.5 bg-secondary rounded-full transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-1' : ''}`}></div>
+                                <div className={`w-6 h-0.5 bg-secondary rounded-none transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-1' : ''}`}></div>
+                                <div className={`w-6 h-0.5 bg-secondary rounded-none transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-1' : ''}`}></div>
                             </button>
 
                             {/* Logo Section */}
@@ -187,9 +205,6 @@ const Navbar = () => {
                                 onClick={(e) => handleNavClick(e, { path: '#hero', type: 'scroll' })}
                                 className="flex items-center gap-2.5 group"
                             >
-                                <div className="w-10 h-10 bg-primary rounded-2xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform">
-                                    T
-                                </div>
                                 <span className="text-2xl font-bold text-secondary tracking-tight hidden sm:block">
                                     Together<span className="text-primary">Buy</span>
                                 </span>
@@ -197,21 +212,26 @@ const Navbar = () => {
                         </div>
 
                         {/* Desktop Navigation */}
-                        <div className="hidden md:flex items-center gap-10">
-                            {navLinks.map((link) => (
-                                <Link 
-                                    key={link.name} 
-                                    to={link.path}
-                                    onClick={(e) => handleNavClick(e, link)}
-                                    className={`text-[15px] font-medium transition-all duration-200 border-b-2 cursor-pointer ${
-                                        location.pathname === link.path 
-                                        ? 'text-primary border-primary' 
-                                        : 'text-text-secondary border-transparent hover:text-primary'
-                                    }`}
-                                >
-                                    {link.name}
-                                </Link>
-                            ))}
+                        <div className="hidden md:flex items-center gap-6">
+                            {navLinks.map((link) => {
+                                const isActive = location.pathname === link.path && 
+                                               (link.scrollId ? (link.name === 'Home' || location.pathname !== '/') : true);
+                                
+                                return (
+                                    <Link 
+                                        key={link.name} 
+                                        to={link.path}
+                                        onClick={(e) => handleNavClick(e, link)}
+                                        className={`px-5 py-2 text-[15px] font-semibold transition-all duration-300 rounded-none cursor-pointer ${
+                                            isActive 
+                                            ? 'bg-primary text-white shadow-lg shadow-primary/25 -translate-y-px' 
+                                            : 'text-text-secondary hover:text-primary hover:bg-primary/5'
+                                        }`}
+                                    >
+                                        {link.name}
+                                    </Link>
+                                );
+                            })}
                         </div>
 
                         {/* Action Column */}
@@ -220,7 +240,7 @@ const Navbar = () => {
                                 <>
                                     <button 
                                         onClick={() => setIsProfileOpen(!isProfileOpen)}
-                                        className={`w-11 h-11 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+                                        className={`w-11 h-11 rounded-none flex items-center justify-center transition-all duration-300 ${
                                             isProfileOpen 
                                             ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-105' 
                                             : 'bg-bg-light text-secondary hover:text-primary hover:bg-primary/10'
@@ -230,7 +250,7 @@ const Navbar = () => {
                                     </button>
 
                                     {/* Profile Dropdown */}
-                                    <div className={`absolute top-full right-0 mt-3 w-64 bg-white border border-gray-100 rounded-[32px] shadow-2xl shadow-primary/10 py-3 transition-all duration-300 origin-top-right ${
+                                    <div className={`absolute top-full right-0 mt-3 w-64 bg-white border border-gray-100 rounded-none shadow-2xl shadow-primary/10 py-3 transition-all duration-300 origin-top-right ${
                                         isProfileOpen 
                                         ? 'opacity-100 scale-100 translate-y-0' 
                                         : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'

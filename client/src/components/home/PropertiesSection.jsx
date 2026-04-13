@@ -58,20 +58,33 @@ const PropertiesSection = () => {
     const latestProperties = properties.slice(0, 6);
 
     const calculateDiscountInfo = (property) => {
+        const currentMembers = property.group?.currentMembers || property.membersJoined || 0;
+
         if (!property.discountTiers || property.discountTiers.length === 0) {
-            return { discount: "0%", groupPrice: property.price };
+            return { discount: "0%", activePrice: property.price, hasDiscount: false };
         }
         
-        // Use the highest discount tier for display
-        const maxTier = [...property.discountTiers].sort((a, b) => b.discountPercentage - a.discountPercentage)[0];
-        const discountPercentage = maxTier.discountPercentage;
-        const discountAmount = (property.price * discountPercentage) / 100;
-        const groupPrice = property.price - discountAmount;
+        const sortedTiers = [...property.discountTiers].sort((a, b) => a.minBuyers - b.minBuyers);
+        let activeTier = null;
+        for (const tier of sortedTiers) {
+            if (currentMembers >= tier.minBuyers) {
+                activeTier = tier;
+            }
+        }
 
-        return {
-            discount: `${discountPercentage}%`,
-            groupPrice: groupPrice
-        };
+        if (activeTier) {
+            const discountPercentage = activeTier.discountPercentage;
+            const discountAmount = (property.price * discountPercentage) / 100;
+            const activePrice = property.price - discountAmount;
+
+            return {
+                discount: `${discountPercentage}%`,
+                activePrice: activePrice,
+                hasDiscount: true
+            };
+        }
+
+        return { discount: "0%", activePrice: property.price, hasDiscount: false };
     };
 
     if (isLoading && (!realProperties || realProperties.length === 0)) {
@@ -84,7 +97,7 @@ const PropertiesSection = () => {
             >
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {[1, 2, 3].map((n) => (
-                        <div key={n} className="h-[500px] bg-slate-100 animate-pulse rounded-[32px]" />
+                        <div key={n} className="h-[500px] bg-slate-100 animate-pulse rounded-none" />
                     ))}
                 </div>
             </Section>
@@ -100,7 +113,7 @@ const PropertiesSection = () => {
         >
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {latestProperties.map((property) => {
-                    const { discount, groupPrice } = calculateDiscountInfo(property);
+                    const { discount, activePrice, hasDiscount } = calculateDiscountInfo(property);
                     return (
                         <Card key={property.id} className="group flex flex-col overflow-hidden hover:border-primary/20 transition-all duration-500 cursor-pointer" onClick={() => navigate(`/properties/${property.id}`)}>
                             {/* Image Container */}
@@ -111,11 +124,11 @@ const PropertiesSection = () => {
                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                                 />
                                 <div className="absolute top-4 left-4 flex gap-2">
-                                    <span className="bg-white/90 backdrop-blur-md px-3 py-1 rounded-lg text-[10px] font-bold text-secondary uppercase tracking-wider">
+                                    <span className="bg-white/90 backdrop-blur-md px-3 py-1 rounded-none text-[10px] font-bold text-secondary uppercase tracking-wider">
                                         Residential
                                     </span>
-                                    {discount !== "0%" && (
-                                        <span className="bg-primary px-3 py-1 rounded-lg text-[10px] font-bold text-white uppercase tracking-wider">
+                                    {discount !== "0%" && hasDiscount && (
+                                        <span className="bg-primary px-3 py-1 rounded-none text-[10px] font-bold text-white uppercase tracking-wider">
                                             Save {discount}
                                         </span>
                                     )}
@@ -133,23 +146,23 @@ const PropertiesSection = () => {
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4 mb-6">
-                                    <div className="bg-slate-50 rounded-xl p-3 border border-slate-100">
+                                    <div className="bg-slate-50 rounded-none p-3 border border-slate-100">
                                         <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">Total Price</p>
-                                        <p className="text-secondary font-bold text-sm tracking-tight">{formatCurrency(property.price)}</p>
+                                        <p className={`text-sm tracking-tight ${hasDiscount ? 'text-slate-400 font-bold line-through' : 'text-secondary font-bold'}`}>{formatCurrency(property.price)}</p>
                                     </div>
-                                    <div className="bg-primary/5 rounded-xl p-3 border border-primary/10">
-                                        <p className="text-[10px] text-primary uppercase font-bold tracking-wider mb-1">Group Price</p>
-                                        <p className="text-primary font-bold text-sm tracking-tight">{formatCurrency(groupPrice)}</p>
+                                    <div className="bg-primary/5 rounded-none p-3 border border-primary/10">
+                                        <p className="text-[10px] text-primary uppercase font-bold tracking-wider mb-1">Active Price</p>
+                                        <p className="text-primary font-bold text-sm tracking-tight">{formatCurrency(activePrice)}</p>
                                     </div>
                                 </div>
 
                                 <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-50">
                                     <div className="flex items-center gap-2">
-                                        <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-primary">
+                                        <div className="w-8 h-8 rounded-none bg-orange-50 flex items-center justify-center text-primary">
                                             <UserGroupIcon size={16} />
                                         </div>
                                         <p className="text-xs font-semibold text-slate-600">
-                                            <span className="text-primary">1/{property.maxPeopleAllowed}</span> joined
+                                            <span className="text-primary">{property.group?.currentMembers || property.membersJoined || 0}/{property.maxPeopleAllowed}</span> joined
                                         </p>
                                     </div>
                                     <Button className="w-fit! h-10 px-6 text-xs transition-transform hover:scale-105" onClick={() => navigate(`/properties/${property.id}`)}>

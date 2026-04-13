@@ -17,26 +17,29 @@ const navItems = [
     {
         label: 'Dashboard',
         description: 'Sales & performance',
-        path: '/seller',
-        end: true,
+        path: '/seller#dashboard',
+        scrollId: 'dashboard',
         icon: LayoutDashboard,
     },
     {
         label: 'My Properties',
         description: 'Manage your listings',
-        path: '/seller/properties',
+        path: '/seller#properties',
+        scrollId: 'properties',
         icon: Building2,
     },
     {
         label: 'Add Property',
         description: 'Create new listing',
-        path: '/seller/add-property',
+        path: '/seller#add-property',
+        scrollId: 'add-property',
         icon: PlusCircle,
     },
     {
-        label: 'Profile',
+        label: 'Account Profile',
         description: 'Your account info',
-        path: '/seller/profile',
+        path: '/seller#profile',
+        scrollId: 'profile',
         icon: UserCircle,
     },
 ];
@@ -66,6 +69,21 @@ const SellerLayout = () => {
         setIsSidebarOpen(false);
     };
 
+    const handleNavClick = (e, item) => {
+        setIsSidebarOpen(false);
+        
+        // If we are on the seller home page, just scroll
+        if (location.pathname === '/seller' || location.pathname === '/seller/') {
+            const element = document.getElementById(item.scrollId);
+            if (element) {
+                e.preventDefault();
+                element.scrollIntoView({ behavior: 'smooth' });
+                // Update URL hash without reload or push state overflow
+                window.history.replaceState(null, '', `#${item.scrollId}`);
+            }
+        }
+    };
+
     return (
         <div className="min-h-screen bg-neutral-50 font-sans text-secondary flex">
             {/* Mobile Sidebar Backdrop */}
@@ -85,9 +103,6 @@ const SellerLayout = () => {
                 {/* Brand / Logo */}
                 <div className="flex items-center justify-between px-6 py-6 border-b border-slate-100">
                     <Link to="/" className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary text-white shadow-lg shadow-secondary/20">
-                            <span className="font-bold text-lg">T</span>
-                        </div>
                         <div>
                             <p className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">Seller Portal</p>
                             <h1 className="text-xl font-bold tracking-tight text-secondary">Together<span className="text-primary">Buy</span></h1>
@@ -96,7 +111,7 @@ const SellerLayout = () => {
 
                     <button
                         onClick={handleCloseSidebar}
-                        className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-slate-600 lg:hidden"
+                        className="flex h-8 w-8 items-center justify-center rounded-none bg-slate-100 text-slate-600 lg:hidden"
                     >
                         <X size={18} />
                     </button>
@@ -105,7 +120,7 @@ const SellerLayout = () => {
                 {/* User Info */}
                 <div className="px-6 py-6 border-b border-slate-100">
                     <div className="flex items-start gap-3">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-secondary/10 text-secondary">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-none bg-secondary/10 text-secondary">
                             <UserCircle size={24} />
                         </div>
                         <div className="min-w-0">
@@ -121,35 +136,32 @@ const SellerLayout = () => {
                 <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
                     {navItems.map((item) => {
                         const Icon = item.icon;
+                        const isActive = location.hash === `#${item.scrollId}` || (!location.hash && item.scrollId === 'dashboard');
+                        
                         return (
                             <NavLink
-                                key={item.path}
+                                key={item.scrollId}
                                 to={item.path}
-                                end={item.end}
-                                onClick={handleCloseSidebar}
-                                className={({ isActive }) =>
-                                    `group flex items-center gap-3 rounded-2xl px-4 py-3.5 transition-all ${
-                                        isActive
-                                            ? 'bg-secondary text-white shadow-md shadow-secondary/20'
-                                            : 'text-slate-600 hover:bg-slate-100'
-                                    }`
-                                }
+                                onClick={(e) => handleNavClick(e, item)}
+                                className={`group flex items-center gap-3 rounded-none px-4 py-3.5 transition-all ${
+                                    isActive
+                                        ? 'bg-secondary text-white shadow-md shadow-secondary/20'
+                                        : 'text-slate-600 hover:bg-slate-100'
+                                }`}
                             >
-                                {({ isActive }) => (
-                                    <>
-                                        <div
-                                            className={`flex h-10 w-10 items-center justify-center rounded-xl transition-all ${
-                                                isActive ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500 group-hover:bg-white'
-                                            }`}
-                                        >
-                                            <Icon size={20} />
-                                        </div>
-                                        <div>
-                                            <p className={`text-sm font-bold ${isActive ? 'text-white' : 'text-slate-700'}`}>{item.label}</p>
-                                            <p className={`text-[11px] ${isActive ? 'text-white/80' : 'text-slate-400'}`}>{item.description}</p>
-                                        </div>
-                                    </>
-                                )}
+                                <>
+                                    <div
+                                        className={`flex h-10 w-10 items-center justify-center rounded-none transition-all ${
+                                            isActive ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500 group-hover:bg-white'
+                                        }`}
+                                    >
+                                        <Icon size={20} />
+                                    </div>
+                                    <div>
+                                        <p className={`text-sm font-bold ${isActive ? 'text-white' : 'text-slate-700'}`}>{item.label}</p>
+                                        <p className={`text-[11px] ${isActive ? 'text-white/80' : 'text-slate-400'}`}>{item.description}</p>
+                                    </div>
+                                </>
                             </NavLink>
                         );
                     })}
@@ -159,14 +171,14 @@ const SellerLayout = () => {
                 <div className="p-4 border-t border-slate-100 space-y-2">
                     <Link
                         to="/"
-                        className="flex items-center justify-center gap-2 rounded-xl bg-slate-50 border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+                        className="flex items-center justify-center gap-2 rounded-none bg-slate-50 border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
                     >
                         <ArrowLeft size={16} />
                         Exit to Marketplace
                     </Link>
                     <button
                         onClick={handleLogout}
-                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-100"
+                        className="flex w-full items-center justify-center gap-2 rounded-none bg-red-50 px-4 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-100"
                     >
                         <LogOut size={16} />
                         Sign Out
@@ -180,7 +192,7 @@ const SellerLayout = () => {
                 <header className="sticky top-0 z-20 flex h-16 items-center border-b border-slate-200 bg-white px-4 lg:hidden">
                     <button
                         onClick={() => setIsSidebarOpen(true)}
-                        className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-600"
+                        className="flex h-10 w-10 items-center justify-center rounded-none border border-slate-200 text-slate-600"
                     >
                         <Menu size={20} />
                     </button>

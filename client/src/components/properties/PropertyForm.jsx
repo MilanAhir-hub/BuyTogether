@@ -7,35 +7,35 @@ import { propertyService } from '../../services/propertyService';
 
 const FORM_VARIANTS = {
     default: {
-        formCard: 'rounded-[38px] border border-white/70 bg-white p-7 shadow-[0_28px_90px_rgba(15,23,42,0.08)] sm:p-8',
-        infoCard: 'rounded-[36px] border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.06)]',
-        listTile: 'rounded-[22px] bg-bg-light/70 px-4 py-3',
-        input: 'mt-2 w-full rounded-[24px] border border-slate-200 px-4 py-3 text-sm text-secondary outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10',
-        submitButton: 'inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-70',
-        cancelButton: 'inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-sm font-semibold text-secondary transition hover:border-secondary hover:bg-secondary hover:text-white',
-        iconWrap: 'flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10',
+        formCard: 'rounded-none border border-white/70 bg-white p-7 shadow-[0_28px_90px_rgba(15,23,42,0.08)] sm:p-8',
+        infoCard: 'rounded-none border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.06)]',
+        listTile: 'rounded-none bg-bg-light/70 px-4 py-3',
+        input: 'mt-2 w-full rounded-none border border-slate-200 px-4 py-3 text-sm text-secondary outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10',
+        submitButton: 'inline-flex items-center justify-center rounded-none bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-70',
+        cancelButton: 'inline-flex items-center justify-center rounded-none border border-slate-200 px-6 py-3 text-sm font-semibold text-secondary transition hover:border-secondary hover:bg-secondary hover:text-white',
+        iconWrap: 'flex h-12 w-12 items-center justify-center rounded-none bg-primary/10',
         iconText: 'text-primary',
         titleText: 'text-secondary',
         bodyText: 'text-text-secondary',
         previewBg: 'flex h-48 items-center justify-center bg-[linear-gradient(135deg,#f7d9cf_0%,#fff4ef_50%,#eef3ff_100%)]',
-        previewIcon: 'rounded-[24px] border border-white/70 bg-white/75 p-5 text-primary/75 shadow-sm',
+        previewIcon: 'rounded-none border border-white/70 bg-white/75 p-5 text-primary/75 shadow-sm',
         priceText: 'text-primary',
         headingText: 'text-secondary',
         supportingText: 'text-text-secondary',
     },
     dashboard: {
-        formCard: 'rounded-[32px] border border-slate-200 bg-white p-6 shadow-[0_24px_80px_rgba(15,23,42,0.06)] sm:p-8',
-        infoCard: 'rounded-[30px] border border-slate-200 bg-white p-6 shadow-[0_20px_70px_rgba(15,23,42,0.05)]',
-        listTile: 'rounded-[20px] bg-bg-light px-4 py-3',
-        input: 'mt-2 w-full rounded-[24px] border border-slate-200 px-4 py-3 text-sm text-secondary outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10',
-        submitButton: 'inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-70',
-        cancelButton: 'inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-sm font-semibold text-secondary transition hover:border-secondary hover:bg-secondary hover:text-white',
-        iconWrap: 'flex h-12 w-12 items-center justify-center rounded-2xl bg-bg-light',
+        formCard: 'rounded-none border border-slate-200 bg-white p-6 shadow-[0_24px_80px_rgba(15,23,42,0.06)] sm:p-8',
+        infoCard: 'rounded-none border border-slate-200 bg-white p-6 shadow-[0_20px_70px_rgba(15,23,42,0.05)]',
+        listTile: 'rounded-none bg-bg-light px-4 py-3',
+        input: 'mt-2 w-full rounded-none border border-slate-200 px-4 py-3 text-sm text-secondary outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10',
+        submitButton: 'inline-flex items-center justify-center rounded-none bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-70',
+        cancelButton: 'inline-flex items-center justify-center rounded-none border border-slate-200 px-6 py-3 text-sm font-semibold text-secondary transition hover:border-secondary hover:bg-secondary hover:text-white',
+        iconWrap: 'flex h-12 w-12 items-center justify-center rounded-none bg-bg-light',
         iconText: 'text-primary',
         titleText: 'text-secondary',
         bodyText: 'text-text-secondary',
         previewBg: 'flex h-48 items-center justify-center bg-[linear-gradient(135deg,#f7d9cf_0%,#fff4ef_50%,#eef3ff_100%)]',
-        previewIcon: 'rounded-[24px] border border-white/70 bg-white/80 p-5 text-primary shadow-sm',
+        previewIcon: 'rounded-none border border-white/70 bg-white/80 p-5 text-primary shadow-sm',
         priceText: 'text-primary',
         headingText: 'text-secondary',
         supportingText: 'text-text-secondary',
@@ -224,7 +224,7 @@ const PropertyForm = ({
                         <button
                             type="button"
                             onClick={handleAddTier}
-                            className="flex items-center gap-2 px-4 py-2 bg-primary/5 text-primary rounded-xl text-xs font-bold hover:bg-primary/10 transition-colors"
+                            className="flex items-center gap-2 px-4 py-2 bg-primary/5 text-primary rounded-none text-xs font-bold hover:bg-primary/10 transition-colors"
                         >
                             <span>Add Tier</span>
                             <span className="text-lg">+</span>
@@ -233,7 +233,7 @@ const PropertyForm = ({
 
                     <div className="space-y-4">
                         {formData.discountTiers.length === 0 ? (
-                            <div className="p-8 border border-dashed border-slate-200 rounded-[24px] text-center">
+                            <div className="p-8 border border-dashed border-slate-200 rounded-none text-center">
                                 <p className="text-sm text-slate-400 italic">No discount tiers added yet. Individual pricing will be applied.</p>
                             </div>
                         ) : (
@@ -270,7 +270,7 @@ const PropertyForm = ({
                                     <button
                                         type="button"
                                         onClick={() => handleRemoveTier(index)}
-                                        className="h-[46px] w-[46px] flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all mb-[1px]"
+                                        className="h-[46px] w-[46px] flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-none transition-all mb-[1px]"
                                         title="Remove tier"
                                     >
                                         <span className="text-xl">×</span>
@@ -282,7 +282,7 @@ const PropertyForm = ({
                 </div>
 
                 {createPropertyMutation.isError ? (
-                    <div className="mt-6 rounded-[24px] border border-red-100 bg-red-50/70 px-4 py-3 text-sm text-red-600">
+                    <div className="mt-6 rounded-none border border-red-100 bg-red-50/70 px-4 py-3 text-sm text-red-600">
                         {getErrorMessage(createPropertyMutation.error)}
                     </div>
                 ) : null}
@@ -315,7 +315,7 @@ const PropertyForm = ({
                     headingClassName={styles.headingText}
                     descriptionClassName={styles.supportingText}
                 >
-                    <div className="overflow-hidden rounded-[30px] border border-slate-100 bg-white">
+                    <div className="overflow-hidden rounded-none border border-slate-100 bg-white">
                         <div className={styles.previewBg}>
                             {formData.imageUrl ? (
                                 <img

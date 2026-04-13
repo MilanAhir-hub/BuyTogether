@@ -15,6 +15,12 @@ namespace BuyTogether.Server.Models
         [Required]
         public Guid UserId { get; set; }
 
+        public Guid? PaymentId { get; set; }
+
+        [Required]
+        [MaxLength(20)]
+        public string Status { get; set; } = "Pending";
+
         public DateTime JoinedAt { get; set; } = DateTime.UtcNow;
 
         // Navigation Properties

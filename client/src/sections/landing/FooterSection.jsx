@@ -10,7 +10,7 @@ const FooterSection = () => {
                     {/* Column 1: Logo & Description */}
                     <div className="md:col-span-12 lg:col-span-5">
                         <Link to="/" className="text-2xl font-bold text-slate-900 tracking-tight inline-block mb-6">
-                            TogetherBuying
+                            TogetherBuy
                         </Link>
                         <p className="text-slate-600 leading-relaxed max-w-md">
                             Revolutionizing real estate by bringing homebuyers together to unlock exclusive builder discounts and transparent group purchasing power.
@@ -56,7 +56,7 @@ const FooterSection = () => {
                 {/* Bottom Bar */}
                 <div className="pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-slate-500 font-medium text-sm">
-                        &copy; 2026 TogetherBuying. All rights reserved.
+                        &copy; 2026 TogetherBuy. All rights reserved.
                     </p>
                     <div className="flex space-x-6">
                         <a href="#" className="text-slate-400 hover:text-slate-900 transition-colors">

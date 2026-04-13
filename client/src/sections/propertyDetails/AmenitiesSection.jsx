@@ -21,9 +21,9 @@ const AmenitiesSection = () => {
         {amenities.map((amenity, index) => (
           <div 
             key={index} 
-            className="flex items-center p-4 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group"
+            className="flex items-center p-4 rounded-none bg-white border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group"
           >
-            <div className={`p-3 rounded-xl mr-4 ${amenity.bg} ${amenity.color} group-hover:scale-110 transition-transform duration-300`}>
+            <div className={`p-3 rounded-none ${amenity.bg} ${amenity.color} group-hover:scale-110 transition-transform duration-300`}>
               {amenity.icon}
             </div>
             <span className="font-medium text-gray-700 text-sm sm:text-base">{amenity.label}</span>

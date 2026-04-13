@@ -17,13 +17,13 @@ const HeroSection = () => {
                         <div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-4 pt-4">
                             <a
                                 href="#properties"
-                                className="w-full sm:w-auto px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white text-lg font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                                className="w-full sm:w-auto px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white text-lg font-medium rounded-none shadow-lg hover:shadow-xl transition-all duration-300"
                             >
                                 Browse Properties
                             </a>
                             <a
                                 href="#how-it-works"
-                                className="w-full sm:w-auto px-8 py-4 bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-900 text-lg font-medium rounded-xl shadow-sm transition-all duration-300"
+                                className="w-full sm:w-auto px-8 py-4 bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-900 text-lg font-medium rounded-none shadow-sm transition-all duration-300"
                             >
                                 How It Works
                             </a>
@@ -32,7 +32,7 @@ const HeroSection = () => {
 
                     {/* Right side image */}
                     <div className="w-full lg:w-1/2">
-                        <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
+                        <div className="relative rounded-none overflow-hidden shadow-2xl group">
                             <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
                             <img
                                 src="https://images.unsplash.com/photo-1560518883-ce09059eeefa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"

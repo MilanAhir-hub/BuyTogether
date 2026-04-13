@@ -23,12 +23,12 @@ const PropertyInfo = () => {
 
         {/* Right Side: Quick Info Card */}
         <div className="lg:col-span-1">
-          <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] sticky top-24 transition-all hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
+          <div className="bg-white rounded-none p-6 border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] sticky top-24 transition-all hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
             <h3 className="text-lg font-bold text-gray-900 mb-6 border-b border-gray-100 pb-4">Key Specifications</h3>
             
             <ul className="space-y-5">
               <li className="flex items-start">
-                <div className="bg-indigo-50 p-2.5 rounded-xl mr-4 flex-shrink-0 text-indigo-600">
+                <div className="bg-indigo-50 p-2.5 rounded-none mr-4 shrink-0 text-indigo-600">
                   <Home className="h-5 w-5" />
                 </div>
                 <div>
@@ -38,7 +38,7 @@ const PropertyInfo = () => {
               </li>
               
               <li className="flex items-start">
-                <div className="bg-blue-50 p-2.5 rounded-xl mr-4 flex-shrink-0 text-blue-600">
+                <div className="bg-blue-50 p-2.5 rounded-none mr-4 shrink-0 text-blue-600">
                   <Bed className="h-5 w-5" />
                 </div>
                 <div>
@@ -48,7 +48,7 @@ const PropertyInfo = () => {
               </li>
               
               <li className="flex items-start">
-                <div className="bg-emerald-50 p-2.5 rounded-xl mr-4 flex-shrink-0 text-emerald-600">
+                <div className="bg-emerald-50 p-2.5 rounded-none mr-4 shrink-0 text-emerald-600">
                   <Maximize className="h-5 w-5" />
                 </div>
                 <div>
@@ -58,7 +58,7 @@ const PropertyInfo = () => {
               </li>
 
               <li className="flex items-start">
-                <div className="bg-amber-50 p-2.5 rounded-xl mr-4 flex-shrink-0 text-amber-600">
+                <div className="bg-amber-50 p-2.5 rounded-none mr-4 shrink-0 text-amber-600">
                   <HardHat className="h-5 w-5" />
                 </div>
                 <div>
@@ -68,7 +68,7 @@ const PropertyInfo = () => {
               </li>
 
               <li className="flex items-start">
-                <div className="bg-rose-50 p-2.5 rounded-xl mr-4 flex-shrink-0 text-rose-600">
+                <div className="bg-rose-50 p-2.5 rounded-none mr-4 shrink-0 text-rose-600">
                   <CalendarCheck className="h-5 w-5" />
                 </div>
                 <div>

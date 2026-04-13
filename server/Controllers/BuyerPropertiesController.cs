@@ -43,28 +43,9 @@ namespace BuyTogether.Server.Controllers
         [HttpPost("{propertyId:guid}/join")]
         public async Task<IActionResult> JoinGroup(Guid propertyId)
         {
-            if (!User.TryGetUserId(out var buyerId))
-            {
-                return Unauthorized(new { message = "Invalid user token." });
-            }
-
-            try
-            {
-                var group = await _buyerDealService.JoinPropertyGroupAsync(propertyId, buyerId);
-                return Ok(group);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(new { message = ex.Message });
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return StatusCode(StatusCodes.Status403Forbidden, new { message = ex.Message });
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            // Payment functionality is now mandatory. This endpoint handles free joins, so it is disabled.
+            // Joining is now completed via the PaymentController flow.
+            return BadRequest(new { message = "Joining a group requires a commitment payment. Please use the secure checkout." });
         }
     }
 }

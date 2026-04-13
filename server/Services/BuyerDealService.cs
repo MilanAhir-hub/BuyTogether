@@ -302,7 +302,7 @@ namespace BuyTogether.Server.Services
             }
 
             payment.Amount = expectedAmount;
-            payment.TransactionId = request.TransactionId?.Trim();
+            payment.RazorpayPaymentId = request.TransactionId?.Trim();
             payment.PaymentDate = nowUtc;
             payment.UpdatedAt = nowUtc;
 
@@ -786,7 +786,7 @@ namespace BuyTogether.Server.Services
                 PaymentId = payment?.Id,
                 Amount = payment?.Amount ?? group.FinalPricePerBuyer,
                 Status = payment?.PaymentStatus ?? PaymentStatuses.Pending,
-                TransactionId = payment?.TransactionId,
+                TransactionId = payment?.RazorpayPaymentId,
                 PaymentDate = payment?.PaymentDate,
                 PaymentDueAt = group.PaymentDueAt,
                 CanPay = canPay,

@@ -4,7 +4,7 @@ import { formatCurrency, formatDate } from '../../utils/propertyFormatters';
 
 const BuyerPropertyCard = ({ property }) => {
     return (
-        <article className="group overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_80px_rgba(15,23,42,0.10)]">
+        <article className="group overflow-hidden rounded-none border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_80px_rgba(15,23,42,0.10)]">
             <div className="relative h-56 overflow-hidden bg-[linear-gradient(135deg,#dbeafe_0%,#eef2ff_50%,#f8fafc_100%)]">
                 {property.imageUrl ? (
                     <img
@@ -14,13 +14,13 @@ const BuyerPropertyCard = ({ property }) => {
                     />
                 ) : (
                     <div className="flex h-full items-center justify-center text-primary">
-                        <div className="rounded-[28px] border border-white/70 bg-white/80 p-6 shadow-sm">
+                        <div className="rounded-none border border-white/70 bg-white/80 p-6 shadow-sm">
                             <Building2 size={42} />
                         </div>
                     </div>
                 )}
 
-                <div className="absolute left-5 top-5 inline-flex rounded-full bg-white/92 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-slate-700 shadow-sm">
+                <div className="absolute left-5 top-5 inline-flex rounded-none bg-white/92 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-slate-700 shadow-sm">
                     Listed {formatDate(property.createdAt)}
                 </div>
             </div>
@@ -37,7 +37,7 @@ const BuyerPropertyCard = ({ property }) => {
                         </p>
                     </div>
 
-                    <div className="rounded-[20px] bg-orange-50 px-4 py-3 text-right">
+                    <div className="rounded-none bg-orange-50 px-4 py-3 text-right">
                         <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary">
                             Price
                         </p>

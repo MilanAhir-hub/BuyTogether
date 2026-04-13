@@ -1,6 +1,7 @@
 using BuyTogether.Server.Constants;
 using BuyTogether.Server.Data;
 using BuyTogether.Server.DTOs.Buyer;
+using BuyTogether.Server.DTOs.Properties;
 using BuyTogether.Server.Helpers;
 using BuyTogether.Server.Interfaces;
 using BuyTogether.Server.Models;
@@ -24,6 +25,7 @@ namespace BuyTogether.Server.Services
                 .AsNoTracking()
                 .Where(property => property.Status == PropertyStatuses.Available)
                 .Include(property => property.Owner)
+                .Include(property => property.DiscountTiers)
                 .Include(property => property.Groups!)
                     .ThenInclude(group => group.Members)
                 .OrderByDescending(property => property.CreatedAt)
@@ -40,6 +42,7 @@ namespace BuyTogether.Server.Services
             var property = await _context.Properties
                 .AsNoTracking()
                 .Include(item => item.Owner)
+                .Include(item => item.DiscountTiers)
                 .Include(item => item.Groups!)
                     .ThenInclude(group => group.Members)
                 .SingleOrDefaultAsync(item => item.Id == propertyId && item.Status == PropertyStatuses.Available);
@@ -90,7 +93,12 @@ namespace BuyTogether.Server.Services
                     CanJoin = !hasJoined && string.Equals(groupStatus, GroupStatuses.Open, StringComparison.OrdinalIgnoreCase) && currentMembers < requiredGroupSize,
                     CanLeave = hasJoined && string.Equals(groupStatus, GroupStatuses.Open, StringComparison.OrdinalIgnoreCase),
                     HasJoined = hasJoined
-                }
+                },
+                DiscountTiers = property.DiscountTiers?.Select(t => new DiscountTierDto
+                {
+                    MinBuyers = t.MinBuyers,
+                    DiscountPercentage = t.DiscountPercentage
+                }).ToList() ?? new List<DiscountTierDto>()
             };
         }
 

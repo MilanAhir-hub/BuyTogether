@@ -102,6 +102,50 @@ namespace BuyTogether.Server.Services
             }
         }
 
+        public async Task<(bool Success, string Message)> LeaveDealAsync(Guid userId, Guid dealId)
+        {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                var membership = await _context.DealGroupMembers
+                    .Include(m => m.DealGroup)
+                    .ThenInclude(g => g!.Deal)
+                    .FirstOrDefaultAsync(m => m.UserId == userId && m.DealGroup!.DealId == dealId && m.Status == "Active");
+
+                if (membership == null)
+                {
+                    return (false, "You are not an active member of this deal.");
+                }
+
+                if (membership.DealGroup?.Status == "completed" || membership.DealGroup?.Status == "expired")
+                {
+                    return (false, $"Cannot leave because the group is already {membership.DealGroup.Status}.");
+                }
+
+                membership.Status = "Left";
+                
+                if (membership.DealGroup != null)
+                {
+                    membership.DealGroup.CurrentCount = Math.Max(0, membership.DealGroup.CurrentCount - 1);
+                    
+                    if (membership.DealGroup.CurrentCount < membership.DealGroup.Deal?.MinBuyers)
+                    {
+                        membership.DealGroup.Status = "waiting";
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return (true, "You successfully left the deal.");
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                return (false, "An error occurred while leaving the deal: " + ex.Message);
+            }
+        }
+
         public async Task<DealGroupDto?> GetGroupStatusAsync(Guid groupId)
         {
             var group = await _context.DealGroups

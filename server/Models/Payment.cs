@@ -15,8 +15,9 @@ namespace BuyTogether.Server.Models
         [Required]
         public Guid UserId { get; set; }
 
-        [Required]
-        public Guid GroupId { get; set; }
+        public Guid? GroupId { get; set; }
+
+        public Guid? DealGroupId { get; set; }
 
         // Payment Details
         [Required]
@@ -28,9 +29,15 @@ namespace BuyTogether.Server.Models
         [MaxLength(20)]
         public string PaymentStatus { get; set; } = PaymentStatuses.Pending;
 
-        // Optional external transaction ID
+        // Razorpay Details
         [MaxLength(100)]
-        public string? TransactionId { get; set; }
+        public string? RazorpayOrderId { get; set; }
+
+        [MaxLength(100)]
+        public string? RazorpayPaymentId { get; set; }
+
+        [MaxLength(200)]
+        public string? RazorpaySignature { get; set; }
 
         // Timestamp
         public DateTime PaymentDate { get; set; } = DateTime.UtcNow;
@@ -42,5 +49,8 @@ namespace BuyTogether.Server.Models
 
         [ForeignKey("GroupId")]
         public Group? Group { get; set; }
+
+        [ForeignKey("DealGroupId")]
+        public DealGroup? DealGroup { get; set; }
     }
 }

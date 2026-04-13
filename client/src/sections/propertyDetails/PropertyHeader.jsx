@@ -12,7 +12,7 @@ const PropertyHeader = () => {
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
               Skyline Residency
             </h1>
-            <div className="hidden sm:flex items-center bg-green-50 px-2.5 py-1 rounded-full border border-green-100">
+            <div className="hidden sm:flex items-center bg-green-50 px-2.5 py-1 rounded-none border border-green-100">
               <Star className="h-3.5 w-3.5 text-green-600 fill-current mr-1" />
               <span className="text-sm font-semibold text-green-700">4.8</span>
             </div>

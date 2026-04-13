@@ -16,13 +16,13 @@ const ImageGallery = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         
         {/* Main large image */}
-        <div className="md:col-span-3 h-[300px] md:h-[500px] rounded-2xl overflow-hidden shadow-sm relative group">
+        <div className="md:col-span-3 h-[300px] md:h-[500px] rounded-none overflow-hidden shadow-sm relative group">
           <img
             src={images[activeImageIndex]}
             alt="Property Main View"
             className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 via-transparent to-transparent opacity-60"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-gray-900/40 via-transparent to-transparent opacity-60"></div>
           
           {/* Mobile indicator dots */}
           <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 md:hidden">
@@ -30,7 +30,7 @@ const ImageGallery = () => {
               <button
                 key={index}
                 onClick={() => setActiveImageIndex(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                className={`w-2 h-2 rounded-none transition-all duration-300 ${
                   activeImageIndex === index ? 'bg-white w-4' : 'bg-white/50 hover:bg-white/80'
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
@@ -47,7 +47,7 @@ const ImageGallery = () => {
               <button
                 key={actualIndex}
                 onClick={() => setActiveImageIndex(actualIndex)}
-                className={`relative flex-1 rounded-2xl overflow-hidden focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 group ${
+                className={`relative flex-1 rounded-none overflow-hidden focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 group ${
                   activeImageIndex === actualIndex 
                     ? 'ring-2 ring-indigo-500 ring-offset-2' 
                     : 'hover:opacity-90'

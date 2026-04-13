@@ -34,7 +34,7 @@ const ScrollToTop = () => {
                 type="button"
                 onClick={scrollToTop}
                 className={`
-                    w-14 h-14 rounded-full bg-primary text-white shadow-2xl shadow-primary/40 
+                    w-14 h-14 rounded-none bg-primary text-white shadow-2xl shadow-primary/40 
                     flex items-center justify-center transition-all duration-500 transform
                     hover:scale-110 active:scale-95 focus:outline-none focus:ring-4 focus:ring-primary/30
                     ${isVisible ? "translate-y-0 opacity-100 scale-100" : "translate-y-20 opacity-0 scale-50 pointer-events-none"}

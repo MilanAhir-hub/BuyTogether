@@ -19,7 +19,7 @@ const TestimonialsSection = () => {
             name: "Amit Patel",
             city: "Gurgaon",
             image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
-            text: "\"The TogetherBuying team handled all negotiations with the builder. I just joined the group and secured a 12% discount on my new home.\""
+            text: "\"The TogetherBuy team handled all negotiations with the builder. I just joined the group and secured a 12% discount on my new home.\""
         }
     ];
 
@@ -39,13 +39,13 @@ const TestimonialsSection = () => {
                     {testimonials.map((testimonial) => (
                         <div 
                             key={testimonial.id} 
-                            className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                            className="bg-white p-8 rounded-none shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                         >
                             <div className="flex items-center mb-6">
                                 <img 
                                     src={testimonial.image} 
                                     alt={testimonial.name} 
-                                    className="w-14 h-14 rounded-full object-cover mr-4"
+                                    className="w-14 h-14 rounded-none object-cover mr-4"
                                 />
                                 <div>
                                     <h4 className="text-lg font-bold text-slate-900">{testimonial.name}</h4>

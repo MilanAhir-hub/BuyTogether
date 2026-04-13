@@ -9,7 +9,7 @@ export default function FooterSection() {
           {/* Column 1: Brand & Description */}
           <div className="space-y-4">
             <div className="text-2xl font-bold text-white tracking-tight">
-              TogetherBuying
+              TogetherBuy
             </div>
             <p className="text-gray-400 max-w-sm leading-relaxed font-medium">
               Helping home buyers save money through group purchasing. Unlock exclusive discounts by buying together with others.
@@ -67,7 +67,7 @@ export default function FooterSection() {
       {/* Bottom bar */}
       <div className="bg-gray-950 border-t border-gray-800 text-center py-6 px-4">
         <p className="text-gray-500 font-medium text-sm">
-          © 2026 TogetherBuying. All rights reserved.
+          © 2026 TogetherBuy. All rights reserved.
         </p>
       </div>
     </footer>

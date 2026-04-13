@@ -1,3 +1,5 @@
+using BuyTogether.Server.DTOs.Properties;
+
 namespace BuyTogether.Server.DTOs.Buyer
 {
     public class BuyerPropertyDto
@@ -16,5 +18,6 @@ namespace BuyTogether.Server.DTOs.Buyer
         public Guid OwnerId { get; set; }
         public string? OwnerName { get; set; }
         public BuyerActiveGroupSummaryDto Group { get; set; } = new();
+        public List<DiscountTierDto> DiscountTiers { get; set; } = new();
     }
 }

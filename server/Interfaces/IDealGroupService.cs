@@ -8,6 +8,7 @@ namespace BuyTogether.Server.Interfaces
     public interface IDealGroupService
     {
         Task<(bool Success, string Message, DealGroupDto? Group)> JoinDealAsync(Guid userId, Guid dealId);
+        Task<(bool Success, string Message)> LeaveDealAsync(Guid userId, Guid dealId);
         Task<DealGroupDto?> GetGroupStatusAsync(Guid groupId);
         Task<IEnumerable<DealGroupDto>> GetMyGroupsAsync(Guid userId);
     }

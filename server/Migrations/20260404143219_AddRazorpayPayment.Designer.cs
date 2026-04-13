@@ -4,6 +4,7 @@ using BuyTogether.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuyTogether.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260404143219_AddRazorpayPayment")]
+    partial class AddRazorpayPayment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -342,10 +345,7 @@ namespace BuyTogether.Server.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid?>("DealGroupId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("GroupId")
+                    b.Property<Guid>("GroupId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("PaymentDate")
@@ -376,13 +376,10 @@ namespace BuyTogether.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DealGroupId");
-
                     b.HasIndex("UserId");
 
                     b.HasIndex("GroupId", "UserId")
-                        .IsUnique()
-                        .HasFilter("[GroupId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Payments");
                 });
@@ -744,21 +741,17 @@ namespace BuyTogether.Server.Migrations
 
             modelBuilder.Entity("BuyTogether.Server.Models.Payment", b =>
                 {
-                    b.HasOne("BuyTogether.Server.Models.DealGroup", "DealGroup")
-                        .WithMany()
-                        .HasForeignKey("DealGroupId");
-
                     b.HasOne("BuyTogether.Server.Models.Group", "Group")
                         .WithMany("Payments")
-                        .HasForeignKey("GroupId");
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BuyTogether.Server.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("DealGroup");
 
                     b.Navigation("Group");
 

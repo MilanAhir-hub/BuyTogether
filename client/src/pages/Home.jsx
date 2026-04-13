@@ -51,11 +51,13 @@ const Home = () => {
                 <ArrowRight01Icon size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-            <Link to="/contact">
-              <Button variant="outline" className="w-fit! px-10 py-4 text-base font-bold text-white border-white hover:bg-white hover:text-secondary shadow-none">
-                Contact Support
-              </Button>
-            </Link>
+            <Button 
+              variant="outline" 
+              className="w-fit! px-10 py-4 text-base font-bold text-white border-white hover:bg-white hover:text-secondary shadow-none"
+              onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}
+            >
+              Contact Support
+            </Button>
           </div>
         </div>
       </Section>

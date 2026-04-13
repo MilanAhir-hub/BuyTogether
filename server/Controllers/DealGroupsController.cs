@@ -25,7 +25,14 @@ namespace BuyTogether.Server.Controllers
 
         // POST /api/dealgroups/join/{dealId}
         [HttpPost("join/{dealId}")]
-        public async Task<IActionResult> JoinDeal(Guid dealId)
+        public IActionResult JoinDeal(Guid dealId)
+        {
+            return BadRequest(new { success = false, message = "Direct joining is disabled. Please complete the commitment payment first." });
+        }
+
+        // POST /api/dealgroups/leave/{dealId}
+        [HttpPost("leave/{dealId}")]
+        public async Task<IActionResult> LeaveDeal(Guid dealId)
         {
             var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userIdStr) || !Guid.TryParse(userIdStr, out var userId))
@@ -33,27 +40,18 @@ namespace BuyTogether.Server.Controllers
                 return Unauthorized(new { success = false, message = "Invalid token." });
             }
 
-            var result = await _dealGroupService.JoinDealAsync(userId, dealId);
+            var result = await _dealGroupService.LeaveDealAsync(userId, dealId);
 
             if (!result.Success)
             {
                 return BadRequest(new { success = false, message = result.Message });
             }
 
-            // SignalR broadcast
-            if (result.Group != null)
-            {
-                await _hubContext.Clients.Group(dealId.ToString())
-                   .SendAsync("GroupUpdated", new { dealId = dealId, newCount = result.Group.CurrentCount, status = result.Group.Status });
+            // SignalR broadcast assuming we need to update clients upon leaving
+            await _hubContext.Clients.Group(dealId.ToString())
+                .SendAsync("GroupMemberLeft", new { dealId = dealId, userId = userId });
 
-                if (result.Group.Status == "active")
-                {
-                    await _hubContext.Clients.Group(dealId.ToString())
-                       .SendAsync("GroupActivated", new { dealId = dealId });
-                }
-            }
-
-            return Ok(new { success = true, message = result.Message, data = result.Group });
+            return Ok(new { success = true, message = result.Message });
         }
 
         // GET /api/dealgroups/{groupId}

@@ -53,7 +53,7 @@ const ContactSection = () => {
                 <div className="grid grid-cols-1 gap-6">
                     {contactInfo.map((info, index) => (
                         <Card key={index} className="flex items-center gap-6 p-6 hover:border-primary/20 hover:-translate-y-1">
-                            <div className={`w-14 h-14 ${info.bg} ${info.color} rounded-xl flex items-center justify-center shrink-0`}>
+                            <div className={`w-14 h-14 ${info.bg} ${info.color} rounded-none flex items-center justify-center shrink-0`}>
                                 {info.icon}
                             </div>
                             <div>
@@ -93,7 +93,7 @@ const ContactSection = () => {
                             </label>
                             <textarea 
                                 rows="4"
-                                className="block w-full px-5 py-4 bg-slate-50 border border-slate-100 rounded-xl text-sm text-secondary placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300 resize-none"
+                                className="block w-full px-5 py-4 bg-slate-50 border border-slate-100 rounded-none text-sm text-secondary placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300 resize-none"
                                 placeholder="Tell us more about your requirements..."
                             ></textarea>
                         </div>

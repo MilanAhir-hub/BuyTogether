@@ -18,7 +18,7 @@ const AddProperty = () => {
 
                     <Link
                         to="/seller"
-                        className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-secondary transition hover:border-secondary hover:bg-secondary hover:text-white"
+                        className="inline-flex items-center justify-center rounded-none border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-secondary transition hover:border-secondary hover:bg-secondary hover:text-white"
                     >
                         Back to Dashboard
                     </Link>

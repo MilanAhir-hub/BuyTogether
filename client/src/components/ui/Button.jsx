@@ -7,7 +7,7 @@ const Button = ({
     className = "", 
     ...props 
 }) => {
-    const baseStyles = "w-40 py-3 active:scale-95 transition-all duration-200 text-sm font-medium rounded-xl flex items-center justify-center cursor-pointer";
+    const baseStyles = "w-40 py-3 active:scale-95 transition-all duration-200 text-sm font-medium rounded-none flex items-center justify-center cursor-pointer";
     
     const variants = {
         primary: "bg-primary text-white hover:bg-primary-dark shadow-sm",

@@ -19,7 +19,7 @@ const NavbarSection = () => {
                 <div className="flex justify-between items-center h-20">
                     <div className="shrink-0 flex items-center">
                         <Link to="/" className="text-2xl font-bold text-slate-900 tracking-tight">
-                            TogetherBuying
+                            Together<span className="text-primary">Buy</span>
                         </Link>
                     </div>
 
@@ -45,7 +45,7 @@ const NavbarSection = () => {
                         </Link>
                         <Link
                             to="/signup"
-                            className="bg-slate-900 hover:bg-slate-800 text-white font-medium px-5 py-2.5 rounded-lg transition-colors shadow-sm"
+                            className="bg-slate-900 hover:bg-slate-800 text-white font-medium px-5 py-2.5 rounded-none transition-colors shadow-sm"
                         >
                             Sign Up
                         </Link>
@@ -71,7 +71,7 @@ const NavbarSection = () => {
                             <a
                                 key={link.name}
                                 href={link.href}
-                                className="block px-3 py-3 text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-md"
+                                className="block px-3 py-3 text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-none"
                                 onClick={() => setIsOpen(false)}
                             >
                                 {link.name}
@@ -80,14 +80,14 @@ const NavbarSection = () => {
                         <div className="pt-4 flex flex-col space-y-3 px-3">
                             <Link
                                 to="/login"
-                                className="w-full text-center text-slate-700 hover:text-slate-900 font-medium py-3 border border-slate-200 rounded-lg"
+                                className="w-full text-center text-slate-700 hover:text-slate-900 font-medium py-3 border border-slate-200 rounded-none"
                                 onClick={() => setIsOpen(false)}
                             >
                                 Login
                             </Link>
                             <Link
                                 to="/signup"
-                                className="w-full text-center bg-slate-900 hover:bg-slate-800 text-white font-medium py-3 rounded-lg"
+                                className="w-full text-center bg-slate-900 hover:bg-slate-800 text-white font-medium py-3 rounded-none"
                                 onClick={() => setIsOpen(false)}
                             >
                                 Sign Up

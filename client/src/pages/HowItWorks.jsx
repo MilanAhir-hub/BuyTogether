@@ -47,8 +47,8 @@ const HowItWorks = () => {
             <div className="max-w-7xl mx-auto px-6 mt-20">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                     {steps.map((step, index) => (
-                        <div key={index} className="relative group p-8 rounded-3xl border border-gray-100 hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 bg-white">
-                            <div className={`w-16 h-16 ${step.bg} rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform`}>
+                        <div key={index} className="relative group p-8 rounded-none border border-gray-100 hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 bg-white">
+                            <div className={`w-16 h-16 ${step.bg} rounded-none flex items-center justify-center mb-8 group-hover:scale-110 transition-transform`}>
                                 {step.icon}
                             </div>
                             <h3 className="text-xl font-bold text-secondary mb-4">{step.title}</h3>
@@ -68,7 +68,7 @@ const HowItWorks = () => {
 
             {/* Why it Works / FAQ Preview */}
             <div className="max-w-5xl mx-auto px-6 mt-32 text-center">
-                <div className="bg-secondary text-white rounded-[40px] p-12 md:p-20 overflow-hidden relative">
+                <div className="bg-secondary text-white rounded-none p-12 md:p-20 overflow-hidden relative">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 blur-[100px] -mr-32 -mt-32"></div>
                     <div className="relative z-10">
                         <h2 className="text-3xl md:text-4xl font-bold mb-8 italic">"Buy together, win together."</h2>

@@ -37,11 +37,11 @@ const About = () => {
         <div className="min-h-screen bg-white pb-20">
             {/* Hero Section */}
             <div className="relative pt-24 pb-32 px-6 overflow-hidden bg-bg-light">
-                <div className="absolute top-20 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px] -z-10"></div>
-                <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-primary-light/10 rounded-full blur-[100px] -z-10"></div>
+                <div className="absolute top-20 left-1/4 w-96 h-96 bg-primary/10 rounded-none blur-[120px] -z-10"></div>
+                <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-primary-light/10 rounded-none blur-[100px] -z-10"></div>
                 
                 <div className="max-w-7xl mx-auto text-center relative z-10">
-                    <span className="bg-primary/10 text-primary px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6 inline-block">
+                    <span className="bg-primary/10 text-primary px-4 py-1.5 rounded-none text-xs font-bold uppercase tracking-widest mb-6 inline-block">
                         Our Mission
                     </span>
                     <h1 className="text-4xl md:text-6xl font-bold text-secondary max-w-4xl mx-auto leading-tight mb-8">
@@ -57,8 +57,8 @@ const About = () => {
             <div className="max-w-7xl mx-auto px-6 -mt-16">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {stats.map((stat, index) => (
-                        <div key={index} className="bg-white p-8 rounded-[32px] shadow-xl shadow-primary/5 border border-gray-100 text-center">
-                            <div className="w-12 h-12 bg-bg-light rounded-2xl flex items-center justify-center text-primary mx-auto mb-4">
+                        <div key={index} className="bg-white p-8 rounded-none shadow-xl shadow-primary/5 border border-gray-100 text-center">
+                            <div className="w-12 h-12 bg-bg-light rounded-none flex items-center justify-center text-primary mx-auto mb-4">
                                 {stat.icon}
                             </div>
                             <h2 className="text-3xl font-bold text-secondary mb-1">{stat.value}</h2>
@@ -78,7 +78,7 @@ const About = () => {
                         <div className="space-y-8">
                             {values.map((value, index) => (
                                 <div key={index} className="flex gap-6">
-                                    <div className="shrink-0 w-14 h-14 bg-secondary text-white rounded-2xl flex items-center justify-center">
+                                    <div className="shrink-0 w-14 h-14 bg-secondary text-white rounded-none flex items-center justify-center">
                                         {value.icon}
                                     </div>
                                     <div>
@@ -93,14 +93,14 @@ const About = () => {
                     </div>
                     
                     <div className="relative">
-                        <div className="aspect-square rounded-[40px] overflow-hidden shadow-2xl">
+                        <div className="aspect-square rounded-none overflow-hidden shadow-2xl">
                             <img 
                                 src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=800" 
                                 alt="Modern building"
                                 className="w-full h-full object-cover"
                             />
                         </div>
-                        <div className="absolute -bottom-10 -left-10 bg-primary p-10 rounded-3xl shadow-xl shadow-primary/30 max-w-[280px] hidden md:block">
+                        <div className="absolute -bottom-10 -left-10 bg-primary p-10 rounded-none shadow-xl shadow-primary/30 max-w-[280px] hidden md:block">
                             <p className="text-white text-lg font-bold leading-tight">
                                 "Our goal is to save 10,000+ families over ₹10 Lakhs each on their first home."
                             </p>
@@ -111,8 +111,8 @@ const About = () => {
 
             {/* CTA Final */}
             <div className="max-w-7xl mx-auto px-6 mt-40">
-                <div className="bg-linear-to-r from-primary to-primary-light p-1 rounded-[40px]">
-                    <div className="bg-white rounded-[40px] p-12 md:p-20 text-center">
+                <div className="bg-linear-to-r from-primary to-primary-light p-1 rounded-none">
+                    <div className="bg-white rounded-none p-12 md:p-20 text-center">
                         <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-6">Ready to join the movement?</h2>
                         <p className="text-text-secondary mb-10 text-lg">
                             Be part of the next group purchase and secure your financial future today.

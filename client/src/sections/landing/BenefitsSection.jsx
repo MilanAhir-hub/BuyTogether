@@ -15,11 +15,11 @@ const BenefitsSection = () => {
                 <div className="flex flex-col lg:flex-row items-center gap-16">
                     {/* Left: Illustration Image */}
                     <div className="w-full lg:w-1/2 relative">
-                        <div className="absolute inset-0 bg-blue-100 rounded-3xl transform -rotate-3 scale-105 z-0"></div>
+                        <div className="absolute inset-0 bg-blue-100 rounded-none transform -rotate-3 scale-105 z-0"></div>
                         <img 
                             src="https://images.unsplash.com/photo-1556912167-f556f1f39fdf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
                             alt="People discussing real estate" 
-                            className="relative z-10 rounded-2xl shadow-xl w-full object-cover h-[400px] lg:h-[500px]"
+                            className="relative z-10 rounded-none shadow-xl w-full object-cover h-[400px] lg:h-[500px]"
                         />
                     </div>
 

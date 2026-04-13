@@ -53,7 +53,7 @@ export default function FeaturedProperties() {
         {properties.map((property) => {
           const progressPercentage = (property.buyersJoined / property.totalNeeded) * 100;
           return (
-            <div key={property.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group flex flex-col h-full">
+            <div key={property.id} className="bg-white rounded-none overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group flex flex-col h-full">
               
               <div className="relative h-48 sm:h-56 overflow-hidden">
                 <img 
@@ -61,7 +61,7 @@ export default function FeaturedProperties() {
                   alt={property.name} 
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-green-600 shadow-sm">
+                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-none text-xs font-bold text-green-600 shadow-sm">
                   Available
                 </div>
               </div>
@@ -71,7 +71,7 @@ export default function FeaturedProperties() {
                   {property.name}
                 </h3>
                 <div className="flex items-center text-gray-500 mb-4 text-sm">
-                  <MapPin className="h-4 w-4 mr-1 flex-shrink-0" />
+                  <MapPin className="h-4 w-4 mr-1 shrink-0" />
                   <span className="truncate">{property.city}</span>
                 </div>
 
@@ -84,18 +84,18 @@ export default function FeaturedProperties() {
                     <span className="flex items-center"><Users className="h-3.5 w-3.5 mr-1 text-blue-500"/> Buyers Joined</span>
                     <span>{property.buyersJoined} / {property.totalNeeded}</span>
                   </div>
-                  <div className="w-full bg-gray-100 rounded-full h-2 mb-5 overflow-hidden">
+                  <div className="w-full bg-gray-100 rounded-none h-2 mb-5 overflow-hidden">
                     <div 
-                      className="bg-blue-500 h-2 rounded-full transition-all duration-1000 ease-in-out" 
+                      className="bg-blue-500 h-2 rounded-none transition-all duration-1000 ease-in-out" 
                       style={{ width: `${progressPercentage}%` }}
                     ></div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
-                    <button className="py-2.5 px-3 border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all text-center">
+                    <button className="py-2.5 px-3 border border-gray-200 rounded-none text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all text-center">
                       View Details
                     </button>
-                    <button className="py-2.5 px-3 bg-blue-600 text-white rounded-xl text-sm font-semibold hover:bg-blue-700 hover:shadow-md transition-all text-center">
+                    <button className="py-2.5 px-3 bg-blue-600 text-white rounded-none text-sm font-semibold hover:bg-blue-700 hover:shadow-md transition-all text-center">
                       Join Group
                     </button>
                   </div>

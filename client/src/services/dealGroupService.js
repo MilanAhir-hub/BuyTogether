@@ -5,6 +5,11 @@ export const joinDealGroup = async (dealId) => {
     return response.data;
 };
 
+export const leaveDealGroup = async (dealId) => {
+    const response = await apiClient.post(`/dealgroups/leave/${dealId}`);
+    return response.data;
+};
+
 export const getGroupStatus = async (groupId) => {
     const response = await apiClient.get(`/dealgroups/${groupId}`);
     return response.data;

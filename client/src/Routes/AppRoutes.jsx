@@ -50,9 +50,9 @@ const AppRoutes = () => {
 
             <Route path="/seller" element={<RoleProtectedRoute allowedRoles={['Seller', 'Admin']}><SellerLayout /></RoleProtectedRoute>}>
                 <Route index element={<SellerHome />} />
-                <Route path="properties" element={<MyProperties />} />
-                <Route path="add-property" element={<AddProperty />} />
-                <Route path="profile" element={<Profile />} />
+                <Route path="properties" element={<SellerHome />} />
+                <Route path="add-property" element={<SellerHome />} />
+                <Route path="profile" element={<SellerHome />} />
             </Route>
         </Routes>
     )

@@ -1,11 +1,12 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { ArrowLeft, BedDouble, Building2, CalendarDays, MapPin, Users, CheckCircle, AlertCircle, Clock } from 'lucide-react';
+import { ArrowLeft, BedDouble, Building2, CalendarDays, MapPin, Users, CheckCircle, AlertCircle, Clock, Tag } from 'lucide-react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { propertyService } from '../services/propertyService';
 import { useSignalR } from '../hooks/useSignalR';
+import PaymentModal from '../components/payment/PaymentModal';
 
 const PropertyDetails = () => {
     const { id } = useParams();
@@ -14,6 +15,7 @@ const PropertyDetails = () => {
     const { user, isAuthenticated } = useAuth();
     const [joining, setJoining] = useState(false);
     const [leaving, setLeaving] = useState(false);
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
     
     // Real-time grouping data
     const { propertyGroupData } = useSignalR(null, id);
@@ -37,22 +39,13 @@ const PropertyDetails = () => {
             navigate('/login');
             return;
         }
+        setShowPaymentModal(true);
+    };
 
-        setJoining(true);
-        try {
-            const res = await propertyService.joinGroup(id);
-            if (res.groupId || res.GroupId) {
-                toast.success('Successfully joined the group!');
-                // Refetch to update local state immediately
-                queryClient.invalidateQueries(['property', id]);
-            } else {
-                toast.error(res.message || 'Failed to join group.');
-            }
-        } catch (err) {
-            toast.error(err.response?.data?.message || 'Error joining group.');
-        } finally {
-            setJoining(false);
-        }
+    const handlePaymentSuccess = (groupData) => {
+        setShowPaymentModal(false);
+        toast.success('Successfully joined the group!');
+        queryClient.invalidateQueries(['property', id]);
     };
 
     const handleLeaveGroup = async () => {
@@ -73,7 +66,7 @@ const PropertyDetails = () => {
     if (isLoading) {
         return (
             <div className="flex min-h-[70vh] items-center justify-center bg-[linear-gradient(180deg,#fff7f2_0%,#ffffff_100%)] px-6">
-                <div className="h-14 w-14 animate-spin rounded-full border-4 border-primary/15 border-t-primary" />
+                <div className="h-14 w-14 animate-spin rounded-none border-4 border-primary/15 border-t-primary" />
             </div>
         );
     }
@@ -81,7 +74,7 @@ const PropertyDetails = () => {
     if (isError || !property) {
         return (
             <div className="min-h-screen bg-[linear-gradient(180deg,#fff7f2_0%,#ffffff_100%)] px-6 py-20">
-                <div className="mx-auto max-w-3xl rounded-[36px] border border-white/70 bg-white p-8 shadow-[0_24px_70px_rgba(15,23,42,0.08)]">
+                <div className="mx-auto max-w-3xl rounded-none border border-white/70 bg-white p-8 shadow-[0_24px_70px_rgba(15,23,42,0.08)]">
                     <p className="text-sm font-semibold uppercase tracking-[0.28em] text-primary/80">Property Details</p>
                     <h1 className="mt-4 text-3xl font-semibold text-secondary">We could not find that property</h1>
                     <p className="mt-3 text-sm leading-6 text-text-secondary">
@@ -89,7 +82,7 @@ const PropertyDetails = () => {
                     </p>
                     <Link
                         to="/properties"
-                        className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:bg-primary-dark"
+                        className="mt-8 inline-flex items-center gap-2 rounded-none bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:bg-primary-dark"
                     >
                         <ArrowLeft size={16} />
                         Back to properties
@@ -106,19 +99,39 @@ const PropertyDetails = () => {
     const progressPercent = Math.min((currentMembers / requiredSize) * 100, 100);
     const hasJoined = property.group?.hasJoined;
 
+    // Price calculation
+    const originalPrice = property.totalPrice || property.price;
+    const sortedTiers = [...(property.discountTiers || [])].sort((a, b) => a.minBuyers - b.minBuyers);
+    
+    // Find highest unlocked tier
+    let activeTier = null;
+    let currentPrice = originalPrice;
+    
+    for (const tier of sortedTiers) {
+        if (currentMembers >= tier.minBuyers) {
+            activeTier = tier;
+        }
+    }
+    
+    if (activeTier) {
+        const discountAmount = (originalPrice * activeTier.discountPercentage) / 100;
+        currentPrice = originalPrice - discountAmount;
+    }
+
+
     return (
         <div className="min-h-screen bg-[linear-gradient(180deg,#fffaf7_0%,#ffffff_34%,#fff7f2_100%)]">
             <section className="mx-auto max-w-7xl px-6 py-10 sm:px-8 lg:px-10">
                 <Link
                     to="/properties"
-                    className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-white px-4 py-2 text-sm font-semibold text-primary transition hover:border-primary hover:bg-primary hover:text-white"
+                    className="inline-flex items-center gap-2 rounded-none border border-primary/15 bg-white px-4 py-2 text-sm font-semibold text-primary transition hover:border-primary hover:bg-primary hover:text-white"
                 >
                     <ArrowLeft size={16} />
                     Back to properties
                 </Link>
 
                 <div className="mt-6 grid gap-8 xl:grid-cols-[minmax(0,1.2fr)_420px]">
-                    <article className="overflow-hidden rounded-[40px] border border-white/70 bg-white shadow-[0_32px_90px_rgba(15,23,42,0.08)]">
+                    <article className="overflow-hidden rounded-none border border-white/70 bg-white shadow-[0_32px_90px_rgba(15,23,42,0.08)]">
                         <div className="relative h-[360px] overflow-hidden bg-[linear-gradient(135deg,#f9d7c8_0%,#fff3ec_55%,#eef3ff_100%)] md:h-[460px]">
                             {property.imageUrl ? (
                                 <img
@@ -128,13 +141,13 @@ const PropertyDetails = () => {
                                 />
                             ) : (
                                 <div className="flex h-full items-center justify-center text-primary/70">
-                                    <div className="rounded-[34px] border border-white/70 bg-white/75 p-7 shadow-sm backdrop-blur">
+                                    <div className="rounded-none border border-white/70 bg-white/75 p-7 shadow-sm backdrop-blur">
                                         <Building2 size={64} />
                                     </div>
                                 </div>
                             )}
 
-                            <div className="absolute left-6 top-6 inline-flex rounded-full bg-white/92 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-secondary shadow-sm">
+                            <div className="absolute left-6 top-6 inline-flex rounded-none bg-white/92 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-secondary shadow-sm">
                                 {isOwner ? 'Your listing' : 'Property listing'}
                             </div>
                         </div>
@@ -154,9 +167,18 @@ const PropertyDetails = () => {
                                     </p>
                                 </div>
 
-                                <div className="rounded-[28px] bg-primary px-6 py-5 text-white shadow-lg shadow-primary/20">
-                                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/80">Listing price</p>
-                                    <p className="mt-2 text-3xl font-semibold">{formatCurrency(property.totalPrice || property.price)}</p>
+                                <div className="rounded-none bg-primary px-6 py-5 text-white shadow-lg shadow-primary/20 min-w-[200px]">
+                                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/80">
+                                        {activeTier ? `Active Price (-${activeTier.discountPercentage}%)` : 'Listing Price'}
+                                    </p>
+                                    <div className="mt-2 flex items-baseline gap-3">
+                                        <p className="text-3xl font-semibold">{formatCurrency(currentPrice)}</p>
+                                        {activeTier && (
+                                            <p className="text-base font-medium line-through text-white/60">
+                                                {formatCurrency(originalPrice)}
+                                            </p>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
 
@@ -178,7 +200,7 @@ const PropertyDetails = () => {
                                 />
                             </div>
 
-                            <div className="mt-8 rounded-[30px] bg-bg-light/70 p-6">
+                            <div className="mt-8 rounded-none bg-bg-light/70 p-6">
                                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-text-secondary">
                                     Description
                                 </p>
@@ -190,9 +212,9 @@ const PropertyDetails = () => {
                     </article>
 
                     <aside className="space-y-6">
-                        <div className="rounded-[36px] border border-white/70 bg-white p-7 shadow-[0_24px_70px_rgba(15,23,42,0.06)]">
+                        <div className="rounded-none border border-white/70 bg-white p-7 shadow-[0_24px_70px_rgba(15,23,42,0.06)]">
                             <p className="text-sm font-semibold uppercase tracking-[0.28em] text-primary/80">
-                                Together Buy Status
+                                TogetherBuy Status
                             </p>
                             <h2 className="mt-4 text-2xl font-semibold text-secondary">
                                 Join this buyer group
@@ -212,7 +234,7 @@ const PropertyDetails = () => {
                                     </div>
 
                                     {/* Progress Bar */}
-                                    <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-100">
+                                    <div className="h-2.5 w-full overflow-hidden rounded-none bg-slate-100">
                                         <div 
                                             className="h-full bg-primary transition-all duration-1000 ease-out" 
                                             style={{ width: `${progressPercent}%` }}
@@ -240,10 +262,10 @@ const PropertyDetails = () => {
                                         (!hasJoined && currentMembers >= requiredSize) ||
                                         !['OPEN', 'Open'].includes(groupStatus)
                                     }
-                                    className={`inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-4 text-sm font-bold text-white transition disabled:opacity-50 ${hasJoined ? 'bg-red-500 hover:bg-red-600 disabled:hover:bg-red-500' : 'bg-primary hover:bg-primary-dark disabled:hover:bg-primary'}`}
+                                    className={`inline-flex w-full items-center justify-center gap-2 rounded-none px-5 py-4 text-sm font-bold text-white transition disabled:opacity-50 ${hasJoined ? 'bg-red-500 hover:bg-red-600 disabled:hover:bg-red-500' : 'bg-primary hover:bg-primary-dark disabled:hover:bg-primary'}`}
                                 >
                                     {joining || leaving ? (
-                                        <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                                        <div className="h-5 w-5 animate-spin rounded-none border-2 border-white/30 border-t-white" />
                                     ) : hasJoined ? (
                                         'Leave Group'
                                     ) : isOwner ? (
@@ -256,7 +278,7 @@ const PropertyDetails = () => {
                                 </button>
 
                                 {hasJoined && (
-                                    <div className="rounded-2xl bg-emerald-50 border border-emerald-100 p-4 flex items-start gap-3">
+                                    <div className="rounded-none bg-emerald-50 border border-emerald-100 p-4 flex items-start gap-3">
                                         <CheckCircle className="text-emerald-500 shrink-0" size={18} />
                                         <p className="text-[13px] text-emerald-700 leading-snug">
                                             You've successfully joined this group. We'll notify you when the target of {requiredSize} is reached!
@@ -268,7 +290,66 @@ const PropertyDetails = () => {
                             
                         </div>
 
-                        <div className="rounded-[36px] border border-white/70 bg-white p-7 shadow-[0_24px_70px_rgba(15,23,42,0.06)]">
+                        {sortedTiers.length > 0 && (
+                            <div className="rounded-none border border-white/70 bg-white p-7 shadow-[0_24px_70px_rgba(15,23,42,0.06)]">
+                                <div className="flex items-center gap-3">
+                                    <div className="rounded-none bg-orange-50 p-2 text-orange-500">
+                                        <Tag size={20} />
+                                    </div>
+                                    <p className="text-sm font-semibold uppercase tracking-[0.24em] text-secondary">
+                                        Group Discount Tiers
+                                    </p>
+                                </div>
+                                <div className="mt-6 space-y-4">
+                                    {sortedTiers.map((tier, index) => {
+                                        const isUnlocked = currentMembers >= tier.minBuyers;
+                                        const discountAmount = (originalPrice * tier.discountPercentage) / 100;
+                                        const tierPrice = originalPrice - discountAmount;
+                                        const isNextTarget = !isUnlocked && (index === 0 || currentMembers >= sortedTiers[index - 1].minBuyers);
+                                        
+                                        return (
+                                            <div 
+                                                key={tier.id} 
+                                                className={`relative flex items-center justify-between rounded-none p-4 transition-all ${
+                                                    isUnlocked 
+                                                        ? 'bg-primary/5 border border-primary/20 border-l-4 border-l-primary' 
+                                                        : isNextTarget 
+                                                            ? 'bg-slate-50 border border-slate-200 border-l-4 border-l-orange-400' 
+                                                            : 'bg-slate-50 opacity-70 border border-slate-100'
+                                                }`}
+                                            >
+                                                <div>
+                                                    <p className={`font-bold ${isUnlocked ? 'text-primary' : 'text-slate-700'}`}>
+                                                        {tier.minBuyers}+ Buyers
+                                                    </p>
+                                                    <p className={`text-xs mt-0.5 ${isUnlocked ? 'text-primary/70 font-semibold' : 'text-slate-500'}`}>
+                                                        Get {tier.discountPercentage}% off
+                                                    </p>
+                                                </div>
+                                                <div className="text-right">
+                                                    <p className={`font-bold ${isUnlocked ? 'text-primary' : 'text-slate-700'}`}>
+                                                        {formatCurrency(tierPrice)}
+                                                    </p>
+                                                    <p className="text-xs text-slate-400 line-through mt-0.5">
+                                                        {formatCurrency(originalPrice)}
+                                                    </p>
+                                                </div>
+                                                {isUnlocked && (
+                                                    <div className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-none bg-primary text-white shadow-sm">
+                                                        <CheckCircle size={14} />
+                                                    </div>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                                <p className="mt-5 text-center text-xs font-medium text-slate-500 flex items-center justify-center gap-1.5">
+                                    <Users size={14} /> Invite friends to unlock better prices!
+                                </p>
+                            </div>
+                        )}
+
+                        <div className="rounded-none border border-white/70 bg-white p-7 shadow-[0_24px_70px_rgba(15,23,42,0.06)]">
                             <p className="text-sm font-semibold uppercase tracking-[0.28em] text-primary/80">
                                 Listing Summary
                             </p>
@@ -282,13 +363,23 @@ const PropertyDetails = () => {
                     </aside>
                 </div>
             </section>
+
+            {property && (
+                <PaymentModal 
+                    isOpen={showPaymentModal}
+                    onClose={() => setShowPaymentModal(false)}
+                    item={property}
+                    type="property"
+                    onSuccess={handlePaymentSuccess}
+                />
+            )}
         </div>
     );
 };
 
 const MetricCard = ({ label, value, icon }) => {
     return (
-        <div className="rounded-[26px] border border-slate-100 bg-slate-50/80 p-5">
+        <div className="rounded-none border border-slate-100 bg-slate-50/80 p-5">
             <div className="flex items-center gap-2 text-primary">
                 {icon}
                 <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-text-secondary">{label}</p>
@@ -300,7 +391,7 @@ const MetricCard = ({ label, value, icon }) => {
 
 const SummaryRow = ({ label, value }) => {
     return (
-        <div className="rounded-[24px] bg-bg-light/70 p-4">
+        <div className="rounded-none bg-bg-light/70 p-4">
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-text-secondary">{label}</p>
             <p className="mt-2 text-sm font-medium text-secondary">{value}</p>
         </div>

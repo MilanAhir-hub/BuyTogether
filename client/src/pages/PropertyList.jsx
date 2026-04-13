@@ -50,8 +50,8 @@ const PropertyList = () => {
                             </p>
                         </div>
 
-                        <div className="rounded-[32px] border border-white/70 bg-white/90 p-5 shadow-[0_24px_80px_rgba(215,59,11,0.12)] backdrop-blur">
-                            <div className="flex items-center gap-3 rounded-[24px] border border-slate-200 px-4 py-3 focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/10">
+                        <div className="rounded-none border border-white/70 bg-white/90 p-5 shadow-[0_24px_80px_rgba(215,59,11,0.12)] backdrop-blur">
+                            <div className="flex items-center gap-3 rounded-none border border-slate-200 px-4 py-3 focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/10">
                                 <Search size={18} className="text-text-secondary" />
                                 <input
                                     type="text"
@@ -77,14 +77,14 @@ const PropertyList = () => {
             <section className="mx-auto max-w-7xl px-6 py-12 sm:px-8 lg:px-10">
                 {isLoading ? (
                     <div className="flex min-h-[45vh] items-center justify-center">
-                        <div className="h-14 w-14 animate-spin rounded-full border-4 border-primary/15 border-t-primary" />
+                        <div className="h-14 w-14 animate-spin rounded-none border-4 border-primary/15 border-t-primary" />
                     </div>
                 ) : null}
 
                 {isError ? (
-                    <div className="mx-auto max-w-3xl rounded-[32px] border border-red-100 bg-white p-8 shadow-sm">
+                    <div className="mx-auto max-w-3xl rounded-none border border-red-100 bg-white p-8 shadow-sm">
                         <div className="flex items-start gap-4">
-                            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-red-50 text-red-500">
+                            <div className="flex h-12 w-12 items-center justify-center rounded-none bg-red-50 text-red-500">
                                 <AlertCircle size={22} />
                             </div>
                             <div>
@@ -98,8 +98,8 @@ const PropertyList = () => {
                 ) : null}
 
                 {!isLoading && !isError && filteredProperties.length === 0 ? (
-                    <div className="rounded-[36px] border border-dashed border-slate-300 bg-white/80 px-8 py-16 text-center shadow-sm">
-                        <div className="mx-auto flex h-18 w-18 items-center justify-center rounded-[28px] bg-bg-light text-primary">
+                    <div className="rounded-none border border-dashed border-slate-300 bg-white/80 px-8 py-16 text-center shadow-sm">
+                        <div className="mx-auto flex h-18 w-18 items-center justify-center rounded-none bg-bg-light text-primary">
                             <Building2 size={30} />
                         </div>
                         <h2 className="mt-6 text-2xl font-semibold text-secondary">No properties matched your search</h2>
@@ -116,7 +116,7 @@ const PropertyList = () => {
                             <Link
                                 key={property.id}
                                 to={`/properties/${property.id}`}
-                                className="group overflow-hidden rounded-[34px] border border-white/70 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_32px_90px_rgba(215,59,11,0.14)]"
+                                className="group overflow-hidden rounded-none border border-white/70 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_32px_90px_rgba(215,59,11,0.14)]"
                             >
                                 <div className="relative h-64 overflow-hidden bg-[linear-gradient(135deg,#f7d9cf_0%,#fff4ef_48%,#f6f8fb_100%)]">
                                     {property.imageUrl ? (
@@ -127,13 +127,13 @@ const PropertyList = () => {
                                         />
                                     ) : (
                                         <div className="flex h-full items-center justify-center text-primary/70">
-                                            <div className="rounded-[28px] border border-white/70 bg-white/70 p-6 shadow-sm backdrop-blur">
+                                            <div className="rounded-none border border-white/70 bg-white/70 p-6 shadow-sm backdrop-blur">
                                                 <Building2 size={46} />
                                             </div>
                                         </div>
                                     )}
 
-                                    <div className="absolute left-5 top-5 inline-flex rounded-full bg-white/92 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-secondary shadow-sm">
+                                    <div className="absolute left-5 top-5 inline-flex rounded-none bg-white/92 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-secondary shadow-sm">
                                         Listed {formatDate(property.createdAt)}
                                     </div>
                                 </div>
@@ -149,7 +149,7 @@ const PropertyList = () => {
                                                 {property.location || 'Location coming soon'}
                                             </p>
                                         </div>
-                                        <div className="rounded-[20px] bg-primary/8 px-4 py-3 text-right">
+                                        <div className="rounded-none bg-primary/8 px-4 py-3 text-right">
                                             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/80">
                                                 Price
                                             </p>
@@ -184,7 +184,7 @@ const PropertyList = () => {
 
 const InfoTile = ({ label, value, icon }) => {
     return (
-        <div className="rounded-[22px] bg-bg-light/70 p-4">
+        <div className="rounded-none bg-bg-light/70 p-4">
             <div className="flex items-center gap-2 text-primary">
                 {icon}
                 <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-text-secondary">{label}</p>

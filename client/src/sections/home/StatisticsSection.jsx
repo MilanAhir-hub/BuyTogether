@@ -45,8 +45,8 @@ export default function StatisticsSection() {
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {stats.map((stat) => (
-            <div key={stat.id} className="text-center p-6 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
-              <div className={`mx-auto w-16 h-16 flex items-center justify-center rounded-2xl mb-4 ${stat.bgClass}`}>
+            <div key={stat.id} className="text-center p-6 rounded-none bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+              <div className={`mx-auto w-16 h-16 flex items-center justify-center rounded-none mb-4 ${stat.bgClass}`}>
                 {stat.icon}
               </div>
               <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-2">{stat.number}</h3>

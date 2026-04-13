@@ -70,8 +70,8 @@ const EditProfile = () => {
                 title="Edit your profile"
                 description="Loading the current account information so you can make accurate updates."
             >
-                <div className="flex min-h-[40vh] items-center justify-center rounded-[36px] border border-white/70 bg-white/80">
-                    <div className="h-14 w-14 animate-spin rounded-full border-4 border-primary/20 border-t-primary" />
+                <div className="flex min-h-[40vh] items-center justify-center rounded-none border border-white/70 bg-white/80">
+                    <div className="h-14 w-14 animate-spin rounded-none border-4 border-primary/20 border-t-primary" />
                 </div>
             </ProfileShell>
         );
@@ -83,7 +83,7 @@ const EditProfile = () => {
                 title="Edit your profile"
                 description="We could not load the current profile values."
             >
-                <div className="rounded-[32px] border border-red-100 bg-white p-8 shadow-sm">
+                <div className="rounded-none border border-red-100 bg-white p-8 shadow-sm">
                     <p className="text-lg font-semibold text-secondary">Editor unavailable</p>
                     <p className="mt-2 text-sm text-text-secondary">
                         {error?.response?.data?.message || 'Something went wrong while opening the editor.'}
@@ -103,15 +103,15 @@ const EditProfile = () => {
         >
             <div className="grid gap-6 xl:grid-cols-[340px_minmax(0,1fr)]">
                 <aside className="space-y-6">
-                    <article className="overflow-hidden rounded-[34px] border border-white/70 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.08)]">
+                    <article className="overflow-hidden rounded-none border border-white/70 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.08)]">
                         <div className="bg-[linear-gradient(135deg,#1f2937_0%,#374151_48%,#f26a3d_100%)] px-6 pb-8 pt-7 text-white">
-                            <div className="flex h-20 w-20 items-center justify-center rounded-[28px] border border-white/20 bg-white/10 text-2xl font-semibold backdrop-blur">
+                            <div className="flex h-20 w-20 items-center justify-center rounded-none border border-white/20 bg-white/10 text-2xl font-semibold backdrop-blur">
                                 {getInitials(displayName)}
                             </div>
                             <h2 className="mt-5 text-2xl font-semibold">{displayName}</h2>
                             <p className="mt-2 text-sm text-white/80">{userProfile?.email}</p>
 
-                            <div className="mt-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-sm font-medium">
+                            <div className="mt-5 inline-flex items-center gap-2 rounded-none bg-white/10 px-3 py-1.5 text-sm font-medium">
                                 <BadgeCheck size={16} />
                                 Profile owner
                             </div>
@@ -125,7 +125,7 @@ const EditProfile = () => {
                         </div>
                     </article>
 
-                    <article className="rounded-[34px] border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.05)]">
+                    <article className="rounded-none border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.05)]">
                         <p className="text-lg font-semibold text-secondary">What changes here?</p>
                         <p className="mt-3 text-sm leading-7 text-text-secondary">
                             These fields are saved on your account and are used to populate the profile overview with real information. Username and email stay read-only so authentication remains stable.
@@ -133,7 +133,7 @@ const EditProfile = () => {
                     </article>
                 </aside>
 
-                <form onSubmit={handleSubmit} className="rounded-[34px] border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.05)] sm:p-8">
+                <form onSubmit={handleSubmit} className="rounded-none border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.05)] sm:p-8">
                     <div className="grid gap-8">
                         <section className="grid gap-5 md:grid-cols-2">
                             <FormField
@@ -199,7 +199,7 @@ const EditProfile = () => {
                                 onChange={handleChange}
                                 placeholder="2 to 20 buyers"
                             />
-                            <div className="rounded-[28px] border border-dashed border-primary/20 bg-bg-light/60 p-5">
+                            <div className="rounded-none border border-dashed border-primary/20 bg-bg-light/60 p-5">
                                 <p className="text-sm font-semibold text-secondary">Read-only account fields</p>
                                 <p className="mt-4 text-sm text-text-secondary">Username: @{userProfile?.username}</p>
                                 <p className="mt-2 text-sm text-text-secondary">Email: {userProfile?.email}</p>
@@ -217,7 +217,7 @@ const EditProfile = () => {
                                 value={formValues.bio}
                                 onChange={handleChange}
                                 placeholder="Tell buyers what kind of house, city, or co-buying arrangement you are looking for."
-                                className="mt-3 w-full rounded-[28px] border border-slate-200 bg-slate-50 px-5 py-4 text-sm text-secondary outline-none transition focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10"
+                                className="mt-3 w-full rounded-none border border-slate-200 bg-slate-50 px-5 py-4 text-sm text-secondary outline-none transition focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10"
                             />
                         </section>
 
@@ -233,7 +233,7 @@ const EditProfile = () => {
                             <div className="flex flex-col gap-3 sm:flex-row">
                                 <Link
                                     to="/profile"
-                                    className="inline-flex items-center justify-center rounded-full border border-slate-200 px-5 py-3 text-sm font-semibold text-secondary transition hover:border-secondary hover:bg-secondary hover:text-white"
+                                    className="inline-flex items-center justify-center rounded-none border border-slate-200 px-5 py-3 text-sm font-semibold text-secondary transition hover:border-secondary hover:bg-secondary hover:text-white"
                                 >
                                     Cancel
                                 </Link>
@@ -263,7 +263,7 @@ const FormField = ({ label, icon, ...props }) => {
             </span>
             <input
                 {...props}
-                className="w-full rounded-[24px] border border-slate-200 bg-slate-50 px-5 py-4 text-sm text-secondary outline-none transition focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10"
+                className="w-full rounded-none border border-slate-200 bg-slate-50 px-5 py-4 text-sm text-secondary outline-none transition focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10"
             />
         </label>
     );
@@ -271,7 +271,7 @@ const FormField = ({ label, icon, ...props }) => {
 
 const EditorInfoRow = ({ label, value }) => {
     return (
-        <div className="rounded-[24px] border border-slate-100 p-4">
+        <div className="rounded-none border border-slate-100 p-4">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-text-secondary">{label}</p>
             <p className="mt-2 text-sm font-medium text-secondary">{value}</p>
         </div>
