@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const apiClient = axios.create({
-    baseURL: 'http://localhost:5096/api',
+    baseURL: 'http://localhost:8085/api',
     withCredentials: true, // Important for CORS to send/receive cookies if set by backend, but we manage JWT manually in cookie for now
     headers: {
         'Content-Type': 'application/json'

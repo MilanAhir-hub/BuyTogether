@@ -13,11 +13,14 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const initializeAuth = () => {
             const storedToken = Cookies.get('token');
-            console.log('[AuthContext] Initializing. Stored token:', storedToken ? 'YES (truncated...)' : 'NO');
+            const allCookies = document.cookie;
+            console.log('[AuthContext] Initializing. Raw document.cookie:', allCookies);
+            console.log('[AuthContext] Stored token retrieved:', storedToken ? 'YES' : 'NO');
+
             if (storedToken) {
                 try {
                     const decoded = jwtDecode(storedToken);
-                    console.log('[AuthContext] Decoded token:', decoded);
+                    console.log('[AuthContext] Decoded token payload:', decoded);
                     // Check token expiration
                     const currentTime = Date.now() / 1000;
                     if (decoded.exp < currentTime) {
@@ -49,9 +52,12 @@ export const AuthProvider = ({ children }) => {
     const handleLogin = async (credentials) => {
         try {
             const response = await authService.login(credentials);
-            if (response.success && response.data?.token) {
-                const { token, user } = response.data;
-                Cookies.set('token', token, { expires: 1/12, path: '/' });
+            console.log('[AuthContext] Login response:', response);
+            if (response.success && (response.data?.token || response.data?.Token)) {
+                const token = response.data.token || response.data.Token;
+                const user = response.data.user || response.data.User;
+                
+                Cookies.set('token', token, { expires: 7, path: '/', sameSite: 'lax' });
                 setToken(token);
                 setUser(normalizeUser(user));
                 return { success: true };
@@ -77,9 +83,12 @@ export const AuthProvider = ({ children }) => {
     const handleSignup = async (userData) => {
         try {
             const response = await authService.signup(userData);
-            if (response.success && response.data?.token) {
-                const { token, user } = response.data;
-                Cookies.set('token', token, { expires: 1/12, path: '/' });
+            console.log('[AuthContext] Signup response:', response);
+            if (response.success && (response.data?.token || response.data?.Token)) {
+                const token = response.data.token || response.data.Token;
+                const user = response.data.user || response.data.User;
+                
+                Cookies.set('token', token, { expires: 7, path: '/', sameSite: 'lax' });
                 setToken(token);
                 setUser(normalizeUser(user));
                 return { success: true };
