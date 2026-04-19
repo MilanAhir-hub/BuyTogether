@@ -47,14 +47,14 @@ const SellerHome = () => {
     if (isLoading) {
         return (
             <div className="flex h-[80vh] items-center justify-center">
-                <div className="h-12 w-12 animate-spin rounded-none border-4 border-primary/20 border-t-primary" />
+                <div className="h-12 w-12 animate-spin rounded-xl border-4 border-primary/20 border-t-primary" />
             </div>
         );
     }
 
     if (isError) {
         return (
-            <div className="rounded-none bg-red-50 p-8 border border-red-100 flex items-start gap-4 max-w-2xl mx-auto mt-12">
+            <div className="rounded-xl bg-red-50 p-8 border border-red-100 flex items-start gap-4 max-w-2xl mx-auto mt-12">
                 <AlertCircle className="text-red-500 mt-1" size={24} />
                 <div>
                     <h3 className="font-bold text-red-800 text-lg">Dashboard Error</h3>
@@ -103,7 +103,7 @@ const SellerHome = () => {
                 </div>
 
                 {/* Quick Advice Row */}
-                <div className="mt-8 bg-[linear-gradient(135deg,#fffbf8_0%,#fff5f0_100%)] rounded-none p-8 border border-primary/10 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="mt-8 bg-[linear-gradient(135deg,#fffbf8_0%,#fff5f0_100%)] rounded-xl p-8 border border-primary/10 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
                     <div className="flex-1">
                         <h3 className="text-xl font-bold text-secondary mb-2">Performance Insight</h3>
                         <p className="text-text-secondary leading-relaxed max-w-2xl">
@@ -121,17 +121,17 @@ const SellerHome = () => {
                         <h2 className="text-3xl font-bold text-secondary">My Portfolio</h2>
                         <p className="mt-2 text-text-secondary italic">List of properties managed by your account.</p>
                     </div>
-                    <div className="bg-white px-5 py-2 rounded-none border border-slate-100 font-bold text-sm text-secondary shadow-sm">
+                    <div className="bg-white px-5 py-2 rounded-xl border border-slate-100 font-bold text-sm text-secondary shadow-sm">
                         {myPropertiesCount} Active Listings
                     </div>
                 </div>
 
                 {myProperties.length === 0 ? (
-                    <div className="text-center py-20 bg-white rounded-none border border-dashed border-slate-200">
+                    <div className="text-center py-20 bg-white rounded-xl border border-dashed border-slate-200">
                         <Building2 size={48} className="mx-auto text-slate-200 mb-6" />
                         <h3 className="text-xl font-bold text-secondary">No listings yet</h3>
                         <p className="text-text-secondary mt-2 mb-8">Start adding properties to generate group buying deals.</p>
-                        <Button variant="outline" className="px-8 rounded-none" onClick={() => document.getElementById('add-property').scrollIntoView({ behavior: 'smooth'})}>
+                        <Button variant="outline" className="px-8 rounded-xl" onClick={() => document.getElementById('add-property').scrollIntoView({ behavior: 'smooth'})}>
                             Create Listing
                         </Button>
                     </div>
@@ -159,8 +159,8 @@ const SellerHome = () => {
                     <p className="mt-2 text-text-secondary">Fill in the form below to create a fresh property target in the marketplace.</p>
                 </div>
                 
-                <div className="bg-white rounded-none border border-slate-100 p-2 shadow-sm overflow-hidden">
-                    <div className="bg-neutral-50/50 rounded-none p-6 sm:p-10">
+                <div className="bg-white rounded-xl border border-slate-100 p-2 shadow-sm overflow-hidden">
+                    <div className="bg-neutral-50/50 rounded-xl p-6 sm:p-10">
                         <PropertyForm 
                             variant="dashboard"
                             cancelPath="/seller"
@@ -176,7 +176,7 @@ const SellerHome = () => {
                     <h2 className="text-3xl font-bold text-secondary">Account Profile</h2>
                     <p className="mt-2 text-text-secondary">Your seller identity and account settings.</p>
                 </div>
-                <div className="bg-white/40 backdrop-blur-sm rounded-none border border-white/70 overflow-hidden shadow-sm">
+                <div className="bg-white/40 backdrop-blur-sm rounded-xl border border-white/70 overflow-hidden shadow-sm">
                     <Profile isDashboard={true} />
                 </div>
             </section>
@@ -186,9 +186,9 @@ const SellerHome = () => {
 
 // Sub-components for cleaner structure
 const StatCard = ({ label, value, icon, color, shadow }) => (
-    <div className="bg-white rounded-none p-8 border border-slate-50 shadow-sm transition-transform hover:-translate-y-1">
+    <div className="bg-white rounded-xl p-8 border border-slate-50 shadow-sm transition-transform hover:-translate-y-1">
         <div className="flex items-center gap-5">
-            <div className={`w-14 h-14 ${color} text-white rounded-none flex items-center justify-center shadow-lg ${shadow}`}>
+            <div className={`w-14 h-14 ${color} text-white rounded-xl flex items-center justify-center shadow-lg ${shadow}`}>
                 {icon}
             </div>
             <div>
@@ -200,7 +200,7 @@ const StatCard = ({ label, value, icon, color, shadow }) => (
 );
 
 const PropertyMiniCard = ({ property, onDelete }) => (
-    <div className="group bg-white rounded-none border border-slate-100 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-secondary/10 transition-all">
+    <div className="group bg-white rounded-xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-secondary/10 transition-all">
         <div className="relative h-52 bg-slate-50">
             {property.imageUrl ? (
                 <img src={property.imageUrl} alt={property.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
@@ -208,10 +208,10 @@ const PropertyMiniCard = ({ property, onDelete }) => (
                 <div className="w-full h-full flex items-center justify-center text-slate-200"><Building2 size={40} /></div>
             )}
             <div className="absolute top-4 right-4 flex gap-2">
-                <Link to={`/properties/edit/${property.id}`} className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-none flex items-center justify-center text-secondary hover:bg-secondary hover:text-white transition-all shadow-sm">
+                <Link to={`/properties/edit/${property.id}`} className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center text-secondary hover:bg-secondary hover:text-white transition-all shadow-sm">
                     <Edit2 size={16} />
                 </Link>
-                <button onClick={onDelete} className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-none flex items-center justify-center text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm">
+                <button onClick={onDelete} className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm">
                     <Trash2 size={16} />
                 </button>
             </div>
@@ -228,7 +228,7 @@ const PropertyMiniCard = ({ property, onDelete }) => (
                     <p className="text-base font-bold text-secondary">₹{(property.price / 100000).toFixed(1)}L</p>
                 </div>
                 <Link to={`/properties/${property.id}`}>
-                    <Button variant="outline" className="h-9 px-4 rounded-none text-[10px] font-bold">View Public</Button>
+                    <Button variant="outline" className="h-9 px-4 rounded-xl text-[10px] font-bold">View Public</Button>
                 </Link>
             </div>
         </div>

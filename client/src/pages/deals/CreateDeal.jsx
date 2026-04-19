@@ -69,12 +69,12 @@ const CreateDeal = () => {
         </div>
 
         {error && (
-          <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-none mb-8 backdrop-blur-sm">
+          <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl mb-8 backdrop-blur-sm">
             {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-none p-8 border border-slate-200 shadow-xl space-y-6">
+        <form onSubmit={handleSubmit} className="bg-white rounded-xl p-8 border border-slate-200 shadow-xl space-y-6">
           
           <div className="space-y-2">
             <label className="text-sm font-medium text-slate-700">Target Product</label>
@@ -85,7 +85,7 @@ const CreateDeal = () => {
               value={formData.title}
               onChange={handleChange}
               placeholder="e.g. MacBook Pro M3 Max"
-              className="w-full bg-slate-50 border border-slate-200 rounded-none px-4 py-3 text-secondary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-secondary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
             />
           </div>
 
@@ -97,7 +97,7 @@ const CreateDeal = () => {
               value={formData.imageUrl}
               onChange={handleChange}
               placeholder="https://example.com/image.jpg"
-              className="w-full bg-slate-50 border border-slate-200 rounded-none px-4 py-3 text-secondary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-secondary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
             />
           </div>
 
@@ -109,7 +109,7 @@ const CreateDeal = () => {
               rows="4"
               value={formData.description}
               onChange={handleChange}
-              className="w-full bg-slate-50 border border-slate-200 rounded-none px-4 py-3 text-secondary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-secondary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none"
             />
           </div>
 
@@ -126,7 +126,7 @@ const CreateDeal = () => {
                 step="0.01"
                 value={formData.originalPrice}
                 onChange={handleChange}
-                className="w-full bg-slate-50 border border-slate-200 rounded-none px-4 py-3 text-secondary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-secondary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
               />
             </div>
 
@@ -142,7 +142,7 @@ const CreateDeal = () => {
                 step="0.01"
                 value={formData.groupPrice}
                 onChange={handleChange}
-                className="w-full bg-slate-50 border border-slate-200 rounded-none px-4 py-3 text-emerald-600 font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-emerald-600 font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all"
               />
             </div>
 
@@ -157,7 +157,7 @@ const CreateDeal = () => {
                 min="2"
                 value={formData.minBuyers}
                 onChange={handleChange}
-                className="w-full bg-slate-50 border border-slate-200 rounded-none px-4 py-3 text-secondary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-secondary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
               />
             </div>
 
@@ -172,7 +172,7 @@ const CreateDeal = () => {
                 value={formData.maxBuyers}
                 onChange={handleChange}
                 placeholder="Optional"
-                className="w-full bg-slate-50 border border-slate-200 rounded-none px-4 py-3 text-secondary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-secondary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
               />
             </div>
 
@@ -187,7 +187,7 @@ const CreateDeal = () => {
                 min="1"
                 value={formData.expiryDurationHours}
                 onChange={handleChange}
-                className="w-full bg-slate-50 border border-slate-200 rounded-none px-4 py-3 text-secondary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-secondary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
               />
               <p className="text-xs text-slate-400 mt-1">If the minimum buyers are not reached within this time, the group cancels.</p>
             </div>
@@ -197,7 +197,7 @@ const CreateDeal = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-4 bg-primary text-white font-bold rounded-none hover:bg-primary-dark transition-colors flex items-center justify-center gap-2 disabled:opacity-50 shadow-md"
+              className="w-full py-4 bg-primary text-white font-bold rounded-xl hover:bg-primary-dark transition-colors flex items-center justify-center gap-2 disabled:opacity-50 shadow-md"
             >
               {loading ? 'Creating Deal...' : (
                 <>

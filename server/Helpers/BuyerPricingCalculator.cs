@@ -1,3 +1,5 @@
+// PRICING CALCULATOR: This is a utility class that handles all the mathematical logic 
+// for calculating discounts, group sizes, and the final price-per-buyer for shared purchases.
 using BuyTogether.Server.Constants;
 using BuyTogether.Server.Models;
 

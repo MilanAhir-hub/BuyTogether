@@ -1,3 +1,4 @@
+// DATABASE MODEL: Represents a product or item (Deal) created by a Seller for group buying.
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

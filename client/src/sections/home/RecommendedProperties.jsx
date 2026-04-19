@@ -39,7 +39,7 @@ export default function RecommendedProperties() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {recommendations.map((property) => (
-            <div key={property.id} className="bg-white rounded-none overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 group flex flex-col sm:flex-row lg:flex-col xl:flex-row h-full">
+            <div key={property.id} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 group flex flex-col sm:flex-row lg:flex-col xl:flex-row h-full">
               
               {/* Image Container */}
               <div className="relative w-full sm:w-2/5 lg:w-full xl:w-2/5 aspect-4/3 sm:aspect-auto lg:aspect-4/3 xl:aspect-auto overflow-hidden">
@@ -52,11 +52,11 @@ export default function RecommendedProperties() {
 
               {/* Details Container */}
               <div className="p-5 flex-1 flex flex-col">
-                <div className="mb-1 text-sm font-semibold text-blue-600 flex items-center">
+                <div className="mb-1 text-sm font-semibold text-sky-600 flex items-center">
                   <Building className="h-3.5 w-3.5 mr-1" />
                   Match Score: 95%
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors line-clamp-1">
+                <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-sky-600 transition-colors line-clamp-1">
                   {property.name}
                 </h3>
                 <div className="flex items-center text-gray-500 mb-3 text-sm">
@@ -73,10 +73,10 @@ export default function RecommendedProperties() {
                 </p>
 
                 <div className="mt-auto flex gap-2">
-                  <button className="flex-1 py-2 px-3 bg-blue-50 text-blue-700 rounded-none text-sm font-semibold hover:bg-blue-100 transition-all text-center">
+                  <button className="flex-1 py-2 px-3 bg-blue-50 text-blue-700 rounded-xl text-sm font-semibold hover:bg-blue-100 transition-all text-center">
                     Join Group
                   </button>
-                  <button className="flex-none p-2 border border-gray-200 rounded-none text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all flex items-center justify-center">
+                  <button className="flex-none p-2 border border-gray-200 rounded-xl text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all flex items-center justify-center">
                     <ArrowRight className="h-4 w-4" />
                   </button>
                 </div>

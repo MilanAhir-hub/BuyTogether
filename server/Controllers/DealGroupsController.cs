@@ -1,3 +1,4 @@
+// DEAL GROUPS CONTROLLER: Manages the 'TogetherBuy' groups where users join together to get a better price on deals/products.
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;

@@ -16,7 +16,7 @@ const ImageGallery = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         
         {/* Main large image */}
-        <div className="md:col-span-3 h-[300px] md:h-[500px] rounded-none overflow-hidden shadow-sm relative group">
+        <div className="md:col-span-3 h-[300px] md:h-[500px] rounded-xl overflow-hidden shadow-sm relative group">
           <img
             src={images[activeImageIndex]}
             alt="Property Main View"
@@ -30,7 +30,7 @@ const ImageGallery = () => {
               <button
                 key={index}
                 onClick={() => setActiveImageIndex(index)}
-                className={`w-2 h-2 rounded-none transition-all duration-300 ${
+                className={`w-2 h-2 rounded-xl transition-all duration-300 ${
                   activeImageIndex === index ? 'bg-white w-4' : 'bg-white/50 hover:bg-white/80'
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
@@ -47,9 +47,9 @@ const ImageGallery = () => {
               <button
                 key={actualIndex}
                 onClick={() => setActiveImageIndex(actualIndex)}
-                className={`relative flex-1 rounded-none overflow-hidden focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 group ${
+                className={`relative flex-1 rounded-xl overflow-hidden focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 transition-all duration-200 group ${
                   activeImageIndex === actualIndex 
-                    ? 'ring-2 ring-indigo-500 ring-offset-2' 
+                    ? 'ring-2 ring-sky-500 ring-offset-2' 
                     : 'hover:opacity-90'
                 }`}
               >

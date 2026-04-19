@@ -1,3 +1,4 @@
+// DATABASE MODEL: Represents a general group (primarily for Properties) where multiple buyers join together.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

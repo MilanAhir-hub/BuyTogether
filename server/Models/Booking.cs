@@ -1,3 +1,4 @@
+// DATABASE MODEL: Represents a booking record for a property purchase once a group deal is ready.
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

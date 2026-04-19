@@ -1,3 +1,5 @@
+// CLAIMS EXTENSION: This is a helper class that "extends" the built-in User object.
+// It provides a simple way to extract the Unique User ID from the login token (JWT).
 using System.Security.Claims;
 
 namespace BuyTogether.Server.Extensions

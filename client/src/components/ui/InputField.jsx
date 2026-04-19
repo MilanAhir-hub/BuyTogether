@@ -11,7 +11,7 @@ const InputField = ({ label, id, type = "text", className = "", rightIcon, ...pr
                     id={id}
                     name={id}
                     type={type}
-                    className={`block w-full px-6 py-3.5 bg-white border border-gray-200 rounded-none text-sm text-secondary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300 ${rightIcon ? 'pr-12' : ''}`}
+                    className={`block w-full px-6 py-3.5 bg-white border border-gray-200 rounded-xl text-sm text-secondary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300 ${rightIcon ? 'pr-12' : ''}`}
                     {...props}
                 />
                 {rightIcon && (

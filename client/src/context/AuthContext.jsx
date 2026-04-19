@@ -1,45 +1,57 @@
 import { createContext, useState, useEffect } from 'react';
-import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import { authService } from '../services/authService';
+import { getCookie, setCookie, removeCookie } from '../utils/cookie';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [token, setToken] = useState(Cookies.get('token') || null);
+    const [token, setToken] = useState(getCookie('token'));
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        console.log('[AuthContext] Initializing. document.cookie presence:', !!document.cookie);
+        if (document.cookie) {
+            console.log('[AuthContext] Raw document.cookie length:', document.cookie.length);
+        }
+        
         const initializeAuth = () => {
-            const storedToken = Cookies.get('token');
-            const allCookies = document.cookie;
-            console.log('[AuthContext] Initializing. Raw document.cookie:', allCookies);
-            console.log('[AuthContext] Stored token retrieved:', storedToken ? 'YES' : 'NO');
-
+            const storedToken = getCookie('token');
+            console.log('[AuthContext] getCookie("token") result:', storedToken ? 'Token Found (len: ' + storedToken.length + ')' : 'Not Found');
+            
             if (storedToken) {
                 try {
                     const decoded = jwtDecode(storedToken);
-                    console.log('[AuthContext] Decoded token payload:', decoded);
+                    console.log('[AuthContext] Token Decoded Successfully. User:', decoded.unique_name || decoded.sub || 'unknown');
+                    
                     // Check token expiration
                     const currentTime = Date.now() / 1000;
-                    if (decoded.exp < currentTime) {
-                        handleLogout(); // Token expired
+                    if (decoded.exp && decoded.exp < currentTime) {
+                        console.warn('[AuthContext] Token expired. Logging out.');
+                        handleLogout();
                     } else {
-                        // Normally user info might be fetched from a /me endpoint or taken directly from payload
-                        setUser(normalizeUser({
-                            id: decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] || decoded.sub || decoded.id,
-                            email: decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'] || decoded.email,
-                            username: decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'] || decoded.unique_name || decoded.username,
-                            role: decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] || decoded.role || decoded.Role || 'User'
-                        }));
+                        // Extended claim mapping for .NET Identity
+                        const userData = {
+                            id: decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] || 
+                                decoded.nameid || decoded.sub || decoded.id || decoded.Id,
+                            email: decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'] || 
+                                   decoded.email || decoded.Email,
+                            username: decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'] || 
+                                      decoded.unique_name || decoded.username || decoded.Username,
+                            role: decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] || 
+                                  decoded.role || decoded.Role || 'User'
+                        };
+                        
+                        setUser(normalizeUser(userData));
                         setToken(storedToken);
                     }
                 } catch (error) {
-                    console.error('Failed to decode token on load', error);
+                    console.error('[AuthContext] Failed to decode token on load:', error);
                     handleLogout();
                 }
             } else {
+                console.log('[AuthContext] No token found during initializeAuth');
                 setUser(null);
                 setToken(null);
             }
@@ -57,7 +69,10 @@ export const AuthProvider = ({ children }) => {
                 const token = response.data.token || response.data.Token;
                 const user = response.data.user || response.data.User;
                 
-                Cookies.set('token', token, { expires: 7, path: '/', sameSite: 'lax' });
+                // Set token cookie
+                console.log('[AuthContext] Login success, setting cookie...');
+                setCookie('token', token);
+                
                 setToken(token);
                 setUser(normalizeUser(user));
                 return { success: true };
@@ -88,7 +103,8 @@ export const AuthProvider = ({ children }) => {
                 const token = response.data.token || response.data.Token;
                 const user = response.data.user || response.data.User;
                 
-                Cookies.set('token', token, { expires: 7, path: '/', sameSite: 'lax' });
+                setCookie('token', token);
+                
                 setToken(token);
                 setUser(normalizeUser(user));
                 return { success: true };
@@ -117,7 +133,8 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             // ignore backend logout failure
         } finally {
-            Cookies.remove('token');
+            removeCookie('token');
+            removeCookie('Token'); // also remove PascalCase version if exists
             setToken(null);
             setUser(null);
         }
@@ -154,3 +171,4 @@ const normalizeUser = (userData) => {
         role: role,
     };
 };
+

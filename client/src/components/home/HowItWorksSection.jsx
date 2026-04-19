@@ -14,7 +14,7 @@ const HowItWorksSection = () => {
             icon: <Building01Icon size={32} />,
             title: "1. Find Your Dream Property",
             description: "Browse our curated list of high-potential residential and commercial properties from trusted builders.",
-            color: "text-blue-600",
+            color: "text-sky-600",
             bg: "bg-blue-50"
         },
         {
@@ -42,7 +42,7 @@ const HowItWorksSection = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {steps.map((step, index) => (
                     <Card key={index} className="p-8 relative group hover:-translate-y-1">
-                        <div className={`w-16 h-16 ${step.bg} ${step.color} rounded-none flex items-center justify-center mb-8 transition-transform group-hover:scale-110`}>
+                        <div className={`w-16 h-16 ${step.bg} ${step.color} rounded-xl flex items-center justify-center mb-8 transition-transform group-hover:scale-110`}>
                             {step.icon}
                         </div>
                         <h3 className="text-xl font-bold text-secondary mb-4">{step.title}</h3>

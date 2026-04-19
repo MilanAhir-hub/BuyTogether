@@ -1,3 +1,4 @@
+// AUTHENTICATION CONTROLLER: Handles User Registration (Signup), Login, and Logout.
 using BuyTogether.Server.DTOs.Auth;
 using BuyTogether.Server.Interfaces;
 using Microsoft.AspNetCore.Authorization;

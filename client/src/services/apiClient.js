@@ -1,9 +1,9 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
+import { getCookie } from '../utils/cookie';
 
 const apiClient = axios.create({
     baseURL: 'http://localhost:8085/api',
-    withCredentials: true, // Important for CORS to send/receive cookies if set by backend, but we manage JWT manually in cookie for now
+    withCredentials: true,
     headers: {
         'Content-Type': 'application/json'
     }
@@ -12,7 +12,7 @@ const apiClient = axios.create({
 // Request interceptor to attach JWT token
 apiClient.interceptors.request.use(
     (config) => {
-        const token = Cookies.get('token');
+        const token = getCookie('token');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
             console.log(`[apiClient] Attaching token to ${config.url}`);

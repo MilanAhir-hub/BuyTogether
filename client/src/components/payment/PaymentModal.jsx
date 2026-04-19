@@ -87,7 +87,7 @@ const PaymentModal = ({ isOpen, onClose, item, type = "deal", onSuccess }) => {
                     reference_id: item.id
                 },
                 theme: {
-                    color: "#10b981" // Emerald-500
+                    color: "#0ea5e9" // Sky-500
                 },
                 modal: {
                     ondismiss: function () {
@@ -120,17 +120,17 @@ const PaymentModal = ({ isOpen, onClose, item, type = "deal", onSuccess }) => {
             />
             
             {/* Modal */}
-            <div className="relative w-full max-w-md overflow-hidden bg-[#1a1a1a]/95 backdrop-blur-xl border border-white/10 rounded-none shadow-2xl animate-in zoom-in-95 duration-200">
+            <div className="relative w-full max-w-md overflow-hidden bg-[#1a1a1a]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl animate-in zoom-in-95 duration-200">
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-white/10">
                     <div className="flex items-center gap-2">
-                        <div className="p-2 bg-emerald-500/20 rounded-none">
-                            <ShieldCheck size={24} className="text-emerald-400" />
+                        <div className="p-2 bg-sky-500/20 rounded-xl">
+                            <ShieldCheck size={24} className="text-sky-400" />
                         </div>
                         <h3 className="text-xl font-medium text-white tracking-wide">Join {type === 'property' ? 'Buyer' : 'Deal'} Group</h3>
                     </div>
                     {!loading && (
-                        <button onClick={onClose} className="p-2 text-neutral-400 hover:text-white rounded-none hover:bg-white/10 transition-colors">
+                        <button onClick={onClose} className="p-2 text-neutral-400 hover:text-white rounded-xl hover:bg-white/10 transition-colors">
                             <X size={20} />
                         </button>
                     )}
@@ -139,34 +139,34 @@ const PaymentModal = ({ isOpen, onClose, item, type = "deal", onSuccess }) => {
                 {/* Content */}
                 <div className="p-6">
                     <div className="text-center mb-6">
-                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-none bg-emerald-500/10 mb-4 animate-pulse">
-                            <Lock size={32} className="text-emerald-400" />
+                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-sky-500/10 mb-4 animate-pulse">
+                            <Lock size={32} className="text-sky-400" />
                         </div>
                         <h4 className="text-lg text-white mb-2 font-medium">Commitment Fee Required</h4>
                         <p className="text-neutral-400 text-sm leading-relaxed">
                             To maintain the high quality of our group deals and ensure all members are serious buyers, a fully refundable
-                            <span className="text-emerald-400 font-semibold mx-1">₹20</span>
+                            <span className="text-sky-400 font-semibold mx-1">₹500</span>
                             commitment fee is required to reserve your spot.
                         </p>
                     </div>
 
-                    <div className="bg-black/50 border border-white/5 rounded-none p-4 mb-6 space-y-3">
+                    <div className="bg-black/50 border border-white/5 rounded-xl p-4 mb-6 space-y-3">
                         <div className="flex justify-between text-sm">
                             <span className="text-neutral-400">{type === 'property' ? 'Property' : 'Deal'}:</span>
                             <span className="text-white font-medium text-right line-clamp-1">{item.title}</span>
                         </div>
                         <div className="flex justify-between text-sm">
                             <span className="text-neutral-400">Commitment Fee:</span>
-                            <span className="text-white font-medium text-right">₹20.00</span>
+                            <span className="text-white font-medium text-right">₹500.00</span>
                         </div>
                         <div className="border-t border-white/10 pt-3 flex justify-between text-sm font-medium">
                             <span className="text-neutral-300">Total to Pay Today:</span>
-                            <span className="text-emerald-400">₹20.00</span>
+                            <span className="text-sky-400">₹500.00</span>
                         </div>
                     </div>
 
                      {error && (
-                        <div className="mb-6 p-3 bg-red-500/10 border border-red-500/20 rounded-none text-red-400 text-sm text-center">
+                        <div className="mb-6 p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm text-center">
                             {error}
                         </div>
                     )}
@@ -175,17 +175,17 @@ const PaymentModal = ({ isOpen, onClose, item, type = "deal", onSuccess }) => {
                     <button
                         onClick={handlePayment}
                         disabled={loading}
-                        className="relative w-full overflow-hidden py-4 rounded-none font-medium bg-linear-to-r from-emerald-500 to-emerald-400 text-black shadow-[0_0_20px_-5px_rgba(16,185,129,0.5)] hover:from-emerald-400 hover:to-emerald-300 transition-all active:scale-[0.98] disabled:opacity-70 disabled:hover:from-emerald-500 disabled:hover:to-emerald-400 disabled:active:scale-100 group flex items-center justify-center gap-2"
+                        className="relative w-full overflow-hidden py-4 rounded-xl font-medium bg-linear-to-r from-sky-500 to-sky-400 text-black shadow-[0_0_20px_-5px_rgba(14,165,233,0.5)] hover:from-sky-400 hover:to-sky-300 transition-all active:scale-[0.98] disabled:opacity-70 disabled:hover:from-sky-500 disabled:hover:to-sky-400 disabled:active:scale-100 group flex items-center justify-center gap-2"
                     >
                         {loading ? (
                             <div className="flex items-center gap-3">
-                                <div className="w-5 h-5 border-2 border-black/30 border-t-black rounded-none animate-spin"></div>
+                                <div className="w-5 h-5 border-2 border-black/30 border-t-black rounded-xl animate-spin"></div>
                                 Processing...
                             </div>
                         ) : (
                             <>
                                 <CreditCard size={18} className="transition-transform group-hover:scale-110" />
-                                <span>Pay ₹20 & Join Securely</span>
+                                <span>Pay ₹500 & Join Securely</span>
                             </>
                         )}
                         

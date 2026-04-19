@@ -1,3 +1,4 @@
+// ORDERS CONTROLLER: Manages the final confirmation of orders once a group goal is reached.
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;

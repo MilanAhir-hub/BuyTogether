@@ -1,18 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-outfit: "Outfit", sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-inter: "Inter", sans-serif;
 
 
-  /* Primary Colors */
-  --color-primary: #D73B0B;
-  /* main brand */
-  --color-primary-dark: #A82E08;
-  /* hover */
-  --color-primary-light: #F26A3D;
-  /* light shade */
+  /* Primary Colors - Sky Palette */
+  --color-primary: #0ea5e9;
+  /* Sky 500 */
+  --color-primary-dark: #0284c7;
+  /* Sky 600 */
+  --color-primary-light: #e0f2fe;
+  /* Sky 100 */
 
   /* Secondary Colors (balanced contrast) */
   --color-secondary: #1F2937;
@@ -28,8 +28,8 @@
 
   /* Background Colors */
   --color-bg-main: #FFFFFF;
-  --color-bg-light: #FFF4F1;
-  /* very light orange tint */
+  --color-bg-light: #f0f9ff;
+  /* Sky 50 tint */
   --color-bg-dark: #111827;
 
   /* Text Colors */
@@ -42,24 +42,24 @@
   --color-card: #FFFFFF;
 
   /* Gradient */
-  --color-gradient-start: #D73B0B;
-  --color-gradient-end: #F26A3D;
+  --color-gradient-start: #0ea5e9;
+  --color-gradient-end: #38bdf8;
 
-  /* Global Rounding Overrides - Premium Rectangle Aesthetic */
-  --radius-xs: 0px;
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 0px;
-  --radius-2xl: 0px;
-  --radius-3xl: 0px;
-  --radius-4xl: 0px;
-  --radius-full: 0px;
+  /* Global Rounding Overrides - Modern Rounded Aesthetic */
+  --radius-xs: 0.125rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-4xl: 2rem;
+  --radius-full: 9999px;
 }
 
 html,
 body {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Inter', sans-serif;
   scroll-behavior: smooth;
 }
 

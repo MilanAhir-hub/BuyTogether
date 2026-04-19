@@ -3,17 +3,17 @@ import { Search, Users, Tag } from 'lucide-react';
 const HowItWorksSection = () => {
     const steps = [
         {
-            icon: <Search className="h-8 w-8 text-blue-600" />,
+            icon: <Search className="h-8 w-8 text-sky-600" />,
             title: "Browse Properties",
             description: "Explore a curated list of residential projects available for group buying."
         },
         {
-            icon: <Users className="h-8 w-8 text-blue-600" />,
+            icon: <Users className="h-8 w-8 text-sky-600" />,
             title: "Join a Buyer Group",
             description: "Join other interested buyers who want to purchase the same property."
         },
         {
-            icon: <Tag className="h-8 w-8 text-blue-600" />,
+            icon: <Tag className="h-8 w-8 text-sky-600" />,
             title: "Get Exclusive Discounts",
             description: "When enough buyers join, developers offer special discounted prices."
         }
@@ -35,9 +35,9 @@ const HowItWorksSection = () => {
                     {steps.map((step, index) => (
                         <div 
                             key={index} 
-                            className="bg-white p-8 rounded-none shadow-sm hover:shadow-xl transition-shadow duration-300 border border-slate-100 flex flex-col items-center text-center"
+                            className="bg-white p-8 rounded-xl shadow-sm hover:shadow-xl transition-shadow duration-300 border border-slate-100 flex flex-col items-center text-center"
                         >
-                            <div className="w-16 h-16 bg-blue-50 rounded-none flex items-center justify-center mb-6">
+                            <div className="w-16 h-16 bg-blue-50 rounded-xl flex items-center justify-center mb-6">
                                 {step.icon}
                             </div>
                             <h3 className="text-xl font-bold text-slate-900 mb-3">

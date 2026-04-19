@@ -33,7 +33,7 @@ const PropertiesNavbar = () => {
                 <a
                   key={link.name}
                   href={link.href}
-                  className={`px-4 py-2 text-sm font-semibold transition-all duration-300 rounded-none ${
+                  className={`px-4 py-2 text-sm font-semibold transition-all duration-300 rounded-xl ${
                     isActive 
                     ? 'bg-primary text-white shadow-lg shadow-primary/25 -translate-y-px' 
                     : 'text-gray-600 hover:text-primary hover:bg-primary/5'
@@ -47,7 +47,7 @@ const PropertiesNavbar = () => {
 
           {/* Right side icons */}
           <div className="hidden md:flex items-center space-x-4">
-            <button className="p-2 text-gray-500 hover:text-gray-900 transition-colors duration-200 rounded-none hover:bg-gray-100">
+            <button className="p-2 text-gray-500 hover:text-gray-900 transition-colors duration-200 rounded-xl hover:bg-gray-100">
               <Bell className="h-5 w-5" />
             </button>
             
@@ -55,9 +55,9 @@ const PropertiesNavbar = () => {
             <div className="relative">
               <button
                 onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
-                className="flex items-center space-x-2 p-1 rounded-none border border-gray-200 hover:bg-gray-50 transition-colors duration-200 focus:outline-none"
+                className="flex items-center space-x-2 p-1 rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors duration-200 focus:outline-none"
               >
-                <div className="h-8 w-8 rounded-none bg-blue-100 flex items-center justify-center text-blue-600 font-semibold text-sm">
+                <div className="h-8 w-8 rounded-xl bg-blue-100 flex items-center justify-center text-sky-600 font-semibold text-sm">
                   U
                 </div>
                 <ChevronDown className="h-4 w-4 text-gray-500 mr-1" />
@@ -65,13 +65,13 @@ const PropertiesNavbar = () => {
 
               {/* Dropdown Menu */}
               {isProfileDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-none shadow-lg border border-gray-100 py-1 overflow-hidden transform opacity-100 scale-100 transition-all duration-200 origin-top-right">
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1 overflow-hidden transform opacity-100 scale-100 transition-all duration-200 origin-top-right">
                   <a href="#" className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                     <User className="h-4 w-4 mr-3 text-gray-400" />
                     Profile
                   </a>
                   <a href="#" className="flex items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                    <div className="h-4 w-4 mr-3 rounded-none bg-indigo-100 flex items-center justify-center"><User className="h-2.5 w-2.5 text-indigo-500"/></div>
+                    <div className="h-4 w-4 mr-3 rounded-xl bg-sky-100 flex items-center justify-center"><User className="h-2.5 w-2.5 text-sky-500"/></div>
                     My Groups
                   </a>
                   <div className="border-t border-gray-100 my-1"></div>
@@ -88,7 +88,7 @@ const PropertiesNavbar = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-none justify-center text-gray-500 hover:text-gray-900 focus:outline-none transition-colors"
+              className="p-2 rounded-xl justify-center text-gray-500 hover:text-gray-900 focus:outline-none transition-colors"
             >
               {isMobileMenuOpen ? (
                 <X className="block h-6 w-6" />
@@ -108,14 +108,14 @@ const PropertiesNavbar = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="block px-3 py-3 rounded-none text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                className="block px-3 py-3 rounded-xl text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors"
               >
                 {link.name}
               </a>
             ))}
             <div className="border-t border-gray-100 my-2 pt-2 pb-1">
               <div className="px-3 flex items-center mt-2 mb-3">
-                 <div className="h-10 w-10 rounded-none bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-lg mr-3">
+                 <div className="h-10 w-10 rounded-xl bg-blue-100 flex items-center justify-center text-sky-600 font-bold text-lg mr-3">
                   U
                 </div>
                 <div>
@@ -123,15 +123,15 @@ const PropertiesNavbar = () => {
                   <div className="text-sm text-gray-500">user@example.com</div>
                 </div>
               </div>
-              <a href="#" className="flex items-center px-3 py-2.5 rounded-none text-base font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+              <a href="#" className="flex items-center px-3 py-2.5 rounded-xl text-base font-medium text-gray-700 hover:bg-gray-50 transition-colors">
                 <User className="h-5 w-5 mr-3 text-gray-400" />
                 Profile
               </a>
-              <a href="#" className="flex items-center px-3 py-2.5 rounded-none text-base font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                 <div className="h-5 w-5 mr-3 rounded-none bg-indigo-100 flex items-center justify-center"><User className="h-3 w-3 text-indigo-500"/></div>
+              <a href="#" className="flex items-center px-3 py-2.5 rounded-xl text-base font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                 <div className="h-5 w-5 mr-3 rounded-xl bg-sky-100 flex items-center justify-center"><User className="h-3 w-3 text-sky-500"/></div>
                 My Groups
               </a>
-              <a href="#" className="flex items-center px-3 py-2.5 rounded-none text-base font-medium text-red-600 hover:bg-red-50 transition-colors">
+              <a href="#" className="flex items-center px-3 py-2.5 rounded-xl text-base font-medium text-red-600 hover:bg-red-50 transition-colors">
                 <LogOut className="h-5 w-5 mr-3 text-red-400" />
                 Logout
               </a>

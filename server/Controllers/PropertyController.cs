@@ -1,3 +1,4 @@
+// PROPERTY CONTROLLER: Manages property listings, allowing sellers to create/delete properties and users to view them.
 using BuyTogether.Server.Constants;
 using BuyTogether.Server.DTOs.Properties;
 using BuyTogether.Server.Interfaces;
@@ -76,6 +77,39 @@ namespace BuyTogether.Server.Controllers
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to create property right now." });
+            }
+        }
+
+        [Authorize(Roles = UserRoles.Seller)]
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> UpdateProperty(Guid id, [FromBody] UpdatePropertyDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            if (!TryGetUserId(out var userId))
+            {
+                return Unauthorized(new { message = "Invalid user token." });
+            }
+
+            try
+            {
+                var updatedProperty = await _propertyService.UpdatePropertyAsync(id, dto, userId);
+                return Ok(updatedProperty);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return StatusCode(StatusCodes.Status403Forbidden, new { message = ex.Message });
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to update property right now." });
             }
         }
 

@@ -1,3 +1,4 @@
+// PAYMENT CONTROLLER (RAZORPAY): Handles secure online payments using the Razorpay gateway for joining deals and properties.
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -50,7 +51,7 @@ namespace BuyTogether.Server.Controllers
             }
 
             // Fixed commitment fee
-            decimal amount = 20.00m;
+            decimal amount = 500.00m;
             int amountInPaise = (int)(amount * 100);
 
             try
@@ -182,7 +183,7 @@ namespace BuyTogether.Server.Controllers
                 return BadRequest(new { success = false, message = "Property is not available." });
             }
 
-            decimal amount = 20.00m;
+            decimal amount = 500.00m;
             int amountInPaise = (int)(amount * 100);
 
             try

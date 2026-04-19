@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
-import Cookies from 'js-cookie';
+import { getCookie, setCookie } from '../../utils/cookie';
 import {
     BadgePercent,
     Building2,
@@ -39,9 +39,10 @@ const Profile = ({ isDashboard = false }) => {
     const becomeSellerMutation = useMutation({
         mutationFn: userService.becomeSeller,
         onSuccess: (response) => {
-            if (response.success && response.data.token) {
-                // Save new token
-                Cookies.set('token', response.data.token);
+            if (response.success && (response.data?.token || response.data?.Token)) {
+                const newToken = response.data.token || response.data.Token;
+                // Save new token with consistent options via utility
+                setCookie('token', newToken);
                 toast.success('Congratulations! You are now a Seller.');
                 // Hard refresh to update auth state and redirect properly
                 window.location.href = '/seller';
@@ -64,8 +65,8 @@ const Profile = ({ isDashboard = false }) => {
                 title="Your TogetherBuy profile"
                 description="Loading your account details, buying preferences, and live collaboration activity."
             >
-                <div className="flex min-h-[40vh] items-center justify-center rounded-none border border-white/70 bg-white/80">
-                    <div className="h-14 w-14 animate-spin rounded-none border-4 border-primary/20 border-t-primary" />
+                <div className="flex min-h-[40vh] items-center justify-center rounded-xl border border-white/70 bg-white/80">
+                    <div className="h-14 w-14 animate-spin rounded-xl border-4 border-primary/20 border-t-primary" />
                 </div>
             </ProfileShell>
         );
@@ -77,14 +78,14 @@ const Profile = ({ isDashboard = false }) => {
                 title="Your TogetherBuy profile"
                 description="We could not load your profile details right now."
             >
-                <div className="rounded-none border border-red-100 bg-white p-8 shadow-sm">
+                <div className="rounded-xl border border-red-100 bg-white p-8 shadow-sm">
                     <p className="text-lg font-semibold text-secondary">Profile unavailable</p>
                     <p className="mt-2 text-sm text-text-secondary">
                         {error?.response?.data?.message || 'Something went wrong while loading your profile.'}
                     </p>
                     <Link
                         to="/profile/edit"
-                        className="mt-5 inline-flex rounded-none bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:bg-primary-dark"
+                        className="mt-5 inline-flex rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:bg-primary-dark"
                     >
                         Open edit page
                     </Link>
@@ -128,11 +129,11 @@ const Profile = ({ isDashboard = false }) => {
     const profileContent = (
         <div className="grid gap-6 xl:grid-cols-[360px_minmax(0,1fr)]">
             <aside className="space-y-6">
-                <article className="overflow-hidden rounded-none border border-white/70 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.08)]">
+                <article className="overflow-hidden rounded-xl border border-white/70 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.08)]">
                     <div className="relative overflow-hidden bg-[linear-gradient(135deg,#d73b0b_0%,#f26a3d_60%,#ffb26b_100%)] px-6 pb-8 pt-7 text-white">
-                        <div className="absolute right-0 top-0 h-36 w-36 rounded-none bg-white/10 blur-3xl" />
+                        <div className="absolute right-0 top-0 h-36 w-36 rounded-xl bg-white/10 blur-3xl" />
                         <div className="relative flex items-center gap-4">
-                            <div className="flex h-20 w-20 items-center justify-center rounded-none border border-white/20 bg-white/15 text-2xl font-semibold backdrop-blur">
+                            <div className="flex h-20 w-20 items-center justify-center rounded-xl border border-white/20 bg-white/15 text-2xl font-semibold backdrop-blur">
                                 {getInitials(displayName)}
                             </div>
                             <div className="min-w-0">
@@ -144,7 +145,7 @@ const Profile = ({ isDashboard = false }) => {
                             </div>
                         </div>
 
-                        <div className="relative mt-6 inline-flex items-center gap-2 rounded-none bg-white/15 px-3 py-1.5 text-sm font-medium">
+                        <div className="relative mt-6 inline-flex items-center gap-2 rounded-xl bg-white/15 px-3 py-1.5 text-sm font-medium">
                             <ShieldCheck size={16} />
                             {userProfile?.role || 'User'}
                         </div>
@@ -162,7 +163,7 @@ const Profile = ({ isDashboard = false }) => {
                             />
                         </div>
 
-                        <div className="rounded-none bg-bg-light p-5">
+                        <div className="rounded-xl bg-bg-light p-5">
                             <div className="flex items-end justify-between gap-4">
                                 <div>
                                     <p className="text-sm font-medium text-text-secondary">Profile completion</p>
@@ -172,14 +173,14 @@ const Profile = ({ isDashboard = false }) => {
                                 </div>
                                 <Link
                                     to="/profile/edit"
-                                    className="rounded-none border border-primary/15 bg-white px-4 py-2 text-sm font-semibold text-primary transition hover:border-primary hover:bg-primary hover:text-white"
+                                    className="rounded-xl border border-primary/15 bg-white px-4 py-2 text-sm font-semibold text-primary transition hover:border-primary hover:bg-primary hover:text-white"
                                 >
                                     Complete profile
                                 </Link>
                             </div>
-                            <div className="mt-4 h-3 overflow-hidden rounded-none bg-white">
+                            <div className="mt-4 h-3 overflow-hidden rounded-xl bg-white">
                                 <div
-                                    className="h-full rounded-none bg-[linear-gradient(90deg,#d73b0b_0%,#f26a3d_100%)]"
+                                    className="h-full rounded-xl bg-[linear-gradient(90deg,#d73b0b_0%,#f26a3d_100%)]"
                                     style={{ width: `${userProfile?.stats?.profileCompletionPercentage ?? 0}%` }}
                                 />
                             </div>
@@ -187,9 +188,9 @@ const Profile = ({ isDashboard = false }) => {
                     </div>
                 </article>
 
-                <article className="rounded-none border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.05)]">
+                <article className="rounded-xl border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.05)]">
                     <div className="flex items-center gap-3">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-none bg-primary/10 text-primary">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
                             <WalletCards size={22} />
                         </div>
                         <div>
@@ -228,7 +229,7 @@ const Profile = ({ isDashboard = false }) => {
 
                 {/* Become a Seller CTA */}
                 {(userProfile?.role === 'User' || userProfile?.role === 'Buyer') && (
-                    <section className="rounded-none border border-primary/20 bg-[linear-gradient(135deg,#fffbf8_0%,#fff5f0_100%)] p-8 shadow-sm">
+                    <section className="rounded-xl border border-primary/20 bg-[linear-gradient(135deg,#fffbf8_0%,#fff5f0_100%)] p-8 shadow-sm">
                         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                             <div className="space-y-2">
                                 <h3 className="text-2xl font-bold text-secondary">Start Selling on TogetherBuy</h3>
@@ -239,7 +240,7 @@ const Profile = ({ isDashboard = false }) => {
                             <button
                                 onClick={handleBecomeSeller}
                                 disabled={becomeSellerMutation.isPending}
-                                className="whitespace-nowrap rounded-none bg-primary px-8 py-4 text-lg font-bold text-white shadow-xl shadow-primary/20 transition hover:bg-primary-dark disabled:opacity-50"
+                                className="whitespace-nowrap rounded-xl bg-primary px-8 py-4 text-lg font-bold text-white shadow-xl shadow-primary/20 transition hover:bg-primary-dark disabled:opacity-50"
                             >
                                 {becomeSellerMutation.isPending ? 'Upgrading...' : 'Become a Seller'}
                             </button>
@@ -248,7 +249,7 @@ const Profile = ({ isDashboard = false }) => {
                 )}
 
                 <section className="grid gap-6 2xl:grid-cols-[1.15fr_0.85fr]">
-                    <article className="rounded-none border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.05)]">
+                    <article className="rounded-xl border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.05)]">
                         <div className="mb-5 flex items-center justify-between gap-4">
                             <div>
                                 <p className="text-lg font-semibold text-secondary">About you</p>
@@ -256,20 +257,20 @@ const Profile = ({ isDashboard = false }) => {
                             </div>
                             <Link
                                 to="/profile/edit"
-                                className="rounded-none border border-primary/15 px-4 py-2 text-sm font-semibold text-primary transition hover:bg-primary hover:text-white"
+                                className="rounded-xl border border-primary/15 px-4 py-2 text-sm font-semibold text-primary transition hover:bg-primary hover:text-white"
                             >
                                 Update
                             </Link>
                         </div>
 
-                        <p className="rounded-none bg-bg-light/70 p-5 text-sm leading-7 text-text-secondary">
+                        <p className="rounded-xl bg-bg-light/70 p-5 text-sm leading-7 text-text-secondary">
                             {userProfile?.bio || 'Tell other buyers about your buying goals, location preference, and the kind of co-buying experience you want.'}
                         </p>
                     </article>
 
-                    <article className="rounded-none border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.05)]">
+                    <article className="rounded-xl border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.05)]">
                         <div className="flex items-center gap-3">
-                            <div className="flex h-12 w-12 items-center justify-center rounded-none bg-secondary/10 text-secondary">
+                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary/10 text-secondary">
                                 <Building2 size={22} />
                             </div>
                             <div>
@@ -288,13 +289,13 @@ const Profile = ({ isDashboard = false }) => {
                 </section>
 
                 <section className="grid gap-6 xl:grid-cols-2">
-                    <article className="rounded-none border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.05)]">
+                    <article className="rounded-xl border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.05)]">
                         <div className="mb-5 flex items-center justify-between gap-4">
                             <div>
                                 <p className="text-lg font-semibold text-secondary">Active groups</p>
                                 <p className="text-sm text-text-secondary">Groups you are currently part of</p>
                             </div>
-                            <span className="rounded-none bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+                            <span className="rounded-xl bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
                                 {userProfile?.activeGroups?.length ?? 0} shown
                             </span>
                         </div>
@@ -302,7 +303,7 @@ const Profile = ({ isDashboard = false }) => {
                         {userProfile?.activeGroups?.length ? (
                             <div className="space-y-4">
                                 {userProfile.activeGroups.map((group) => (
-                                    <div key={group.id} className="rounded-none border border-slate-100 bg-slate-50/60 p-5">
+                                    <div key={group.id} className="rounded-xl border border-slate-100 bg-slate-50/60 p-5">
                                         <div className="flex items-start justify-between gap-4">
                                             <div>
                                                 <p className="text-base font-semibold text-secondary">{group.propertyTitle}</p>
@@ -310,7 +311,7 @@ const Profile = ({ isDashboard = false }) => {
                                                     {group.propertyCity} · {group.propertyLocation}
                                                 </p>
                                             </div>
-                                            <span className={`rounded-none px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] ${getStatusClasses(group.groupStatus)}`}>
+                                            <span className={`rounded-xl px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] ${getStatusClasses(group.groupStatus)}`}>
                                                 {group.groupStatus}
                                             </span>
                                         </div>
@@ -335,13 +336,13 @@ const Profile = ({ isDashboard = false }) => {
                         )}
                     </article>
 
-                    <article className="rounded-none border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.05)]">
+                    <article className="rounded-xl border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.05)]">
                         <div className="mb-5 flex items-center justify-between gap-4">
                             <div>
                                 <p className="text-lg font-semibold text-secondary">Recent bookings</p>
                                 <p className="text-sm text-text-secondary">Bookings linked to your buying groups</p>
                             </div>
-                            <span className="rounded-none bg-secondary/8 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
+                            <span className="rounded-xl bg-secondary/8 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
                                 {userProfile?.recentBookings?.length ?? 0} shown
                             </span>
                         </div>
@@ -349,13 +350,13 @@ const Profile = ({ isDashboard = false }) => {
                         {userProfile?.recentBookings?.length ? (
                             <div className="space-y-4">
                                 {userProfile.recentBookings.map((booking) => (
-                                    <div key={booking.id} className="rounded-none border border-slate-100 bg-slate-50/60 p-5">
+                                    <div key={booking.id} className="rounded-xl border border-slate-100 bg-slate-50/60 p-5">
                                         <div className="flex items-start justify-between gap-4">
                                             <div>
                                                 <p className="text-base font-semibold text-secondary">{booking.propertyTitle}</p>
                                                 <p className="mt-1 text-sm text-text-secondary">{booking.propertyLocation}</p>
                                             </div>
-                                            <span className={`rounded-none px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] ${getStatusClasses(booking.status)}`}>
+                                            <span className={`rounded-xl px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] ${getStatusClasses(booking.status)}`}>
                                                 {booking.status}
                                             </span>
                                         </div>
@@ -381,7 +382,7 @@ const Profile = ({ isDashboard = false }) => {
                     </article>
                 </section>
 
-                <article className="rounded-none border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.05)]">
+                <article className="rounded-xl border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.05)]">
                     <div className="mb-5 flex items-center justify-between gap-4">
                         <div>
                             <p className="text-lg font-semibold text-secondary">Recent activity</p>
@@ -394,10 +395,10 @@ const Profile = ({ isDashboard = false }) => {
                             {userProfile.recentActivities.map((activity) => (
                                 <div
                                     key={activity.id}
-                                    className="flex flex-col gap-4 rounded-none border border-slate-100 bg-slate-50/60 p-5 sm:flex-row sm:items-center sm:justify-between"
+                                    className="flex flex-col gap-4 rounded-xl border border-slate-100 bg-slate-50/60 p-5 sm:flex-row sm:items-center sm:justify-between"
                                 >
                                     <div className="flex items-start gap-4">
-                                        <div className="mt-1 flex h-12 w-12 items-center justify-center rounded-none bg-primary/10 text-primary">
+                                        <div className="mt-1 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
                                             {activity.type === 'booking' ? <ClipboardList size={22} /> : <Users size={22} />}
                                         </div>
                                         <div>
@@ -415,7 +416,7 @@ const Profile = ({ isDashboard = false }) => {
                                                 ? formatCurrency(activity.amount)
                                                 : 'No amount'}
                                         </p>
-                                        <span className={`mt-2 inline-flex rounded-none px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] ${getStatusClasses(activity.status)}`}>
+                                        <span className={`mt-2 inline-flex rounded-xl px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] ${getStatusClasses(activity.status)}`}>
                                             {activity.status}
                                         </span>
                                     </div>
@@ -448,13 +449,13 @@ const Profile = ({ isDashboard = false }) => {
 
 const DetailRow = ({ icon, label, value }) => {
     return (
-        <div className="flex items-start gap-3 rounded-none border border-slate-100 p-4">
-            <div className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-none bg-primary/10 text-primary">
+        <div className="flex items-start gap-3 rounded-xl border border-slate-100 p-4">
+            <div className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
                 {icon}
             </div>
             <div className="min-w-0">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-text-secondary">{label}</p>
-                <p className="mt-1 break-words text-sm font-medium text-secondary">{value}</p>
+                <p className="mt-1 wrap-break-word text-sm font-medium text-secondary">{value}</p>
             </div>
         </div>
     );
@@ -462,7 +463,7 @@ const DetailRow = ({ icon, label, value }) => {
 
 const PreferenceRow = ({ label, value }) => {
     return (
-        <div className="rounded-none border border-white bg-white p-4 shadow-sm">
+        <div className="rounded-xl border border-white bg-white p-4 shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-text-secondary">{label}</p>
             <p className="mt-2 text-sm font-medium text-secondary">{value}</p>
         </div>
@@ -471,7 +472,7 @@ const PreferenceRow = ({ label, value }) => {
 
 const SnapshotTile = ({ label, value }) => {
     return (
-        <div className="rounded-none bg-bg-light/80 p-4">
+        <div className="rounded-xl bg-bg-light/80 p-4">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-text-secondary">{label}</p>
             <p className="mt-2 text-sm font-medium text-secondary">{value}</p>
         </div>
@@ -480,7 +481,7 @@ const SnapshotTile = ({ label, value }) => {
 
 const MiniMetric = ({ label, value }) => {
     return (
-        <div className="rounded-none bg-white p-3">
+        <div className="rounded-xl bg-white p-3">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-text-secondary">{label}</p>
             <p className="mt-2 text-sm font-medium text-secondary">{value}</p>
         </div>

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useState, useEffect } from 'react';
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { ImagePlus, MapPin, PencilLine } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,35 +7,35 @@ import { propertyService } from '../../services/propertyService';
 
 const FORM_VARIANTS = {
     default: {
-        formCard: 'rounded-none border border-white/70 bg-white p-7 shadow-[0_28px_90px_rgba(15,23,42,0.08)] sm:p-8',
-        infoCard: 'rounded-none border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.06)]',
-        listTile: 'rounded-none bg-bg-light/70 px-4 py-3',
-        input: 'mt-2 w-full rounded-none border border-slate-200 px-4 py-3 text-sm text-secondary outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10',
-        submitButton: 'inline-flex items-center justify-center rounded-none bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-70',
-        cancelButton: 'inline-flex items-center justify-center rounded-none border border-slate-200 px-6 py-3 text-sm font-semibold text-secondary transition hover:border-secondary hover:bg-secondary hover:text-white',
-        iconWrap: 'flex h-12 w-12 items-center justify-center rounded-none bg-primary/10',
+        formCard: 'rounded-xl border border-white/70 bg-white p-7 shadow-[0_28px_90px_rgba(15,23,42,0.08)] sm:p-8',
+        infoCard: 'rounded-xl border border-white/70 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.06)]',
+        listTile: 'rounded-xl bg-bg-light/70 px-4 py-3',
+        input: 'mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-secondary outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10',
+        submitButton: 'inline-flex items-center justify-center rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-70',
+        cancelButton: 'inline-flex items-center justify-center rounded-xl border border-slate-200 px-6 py-3 text-sm font-semibold text-secondary transition hover:border-secondary hover:bg-secondary hover:text-white',
+        iconWrap: 'flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10',
         iconText: 'text-primary',
         titleText: 'text-secondary',
         bodyText: 'text-text-secondary',
         previewBg: 'flex h-48 items-center justify-center bg-[linear-gradient(135deg,#f7d9cf_0%,#fff4ef_50%,#eef3ff_100%)]',
-        previewIcon: 'rounded-none border border-white/70 bg-white/75 p-5 text-primary/75 shadow-sm',
+        previewIcon: 'rounded-xl border border-white/70 bg-white/75 p-5 text-primary/75 shadow-sm',
         priceText: 'text-primary',
         headingText: 'text-secondary',
         supportingText: 'text-text-secondary',
     },
     dashboard: {
-        formCard: 'rounded-none border border-slate-200 bg-white p-6 shadow-[0_24px_80px_rgba(15,23,42,0.06)] sm:p-8',
-        infoCard: 'rounded-none border border-slate-200 bg-white p-6 shadow-[0_20px_70px_rgba(15,23,42,0.05)]',
-        listTile: 'rounded-none bg-bg-light px-4 py-3',
-        input: 'mt-2 w-full rounded-none border border-slate-200 px-4 py-3 text-sm text-secondary outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10',
-        submitButton: 'inline-flex items-center justify-center rounded-none bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-70',
-        cancelButton: 'inline-flex items-center justify-center rounded-none border border-slate-200 px-6 py-3 text-sm font-semibold text-secondary transition hover:border-secondary hover:bg-secondary hover:text-white',
-        iconWrap: 'flex h-12 w-12 items-center justify-center rounded-none bg-bg-light',
+        formCard: 'rounded-xl border border-slate-200 bg-white p-6 shadow-[0_24px_80px_rgba(15,23,42,0.06)] sm:p-8',
+        infoCard: 'rounded-xl border border-slate-200 bg-white p-6 shadow-[0_20px_70px_rgba(15,23,42,0.05)]',
+        listTile: 'rounded-xl bg-bg-light px-4 py-3',
+        input: 'mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-secondary outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10',
+        submitButton: 'inline-flex items-center justify-center rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-70',
+        cancelButton: 'inline-flex items-center justify-center rounded-xl border border-slate-200 px-6 py-3 text-sm font-semibold text-secondary transition hover:border-secondary hover:bg-secondary hover:text-white',
+        iconWrap: 'flex h-12 w-12 items-center justify-center rounded-xl bg-bg-light',
         iconText: 'text-primary',
         titleText: 'text-secondary',
         bodyText: 'text-text-secondary',
         previewBg: 'flex h-48 items-center justify-center bg-[linear-gradient(135deg,#f7d9cf_0%,#fff4ef_50%,#eef3ff_100%)]',
-        previewIcon: 'rounded-none border border-white/70 bg-white/80 p-5 text-primary shadow-sm',
+        previewIcon: 'rounded-xl border border-white/70 bg-white/80 p-5 text-primary shadow-sm',
         priceText: 'text-primary',
         headingText: 'text-secondary',
         supportingText: 'text-text-secondary',
@@ -54,6 +54,7 @@ const DEFAULT_FORM_DATA = {
 
 const PropertyForm = ({
     variant = 'default',
+    propertyId = null,
     cancelPath = '/properties',
     cancelLabel = 'Cancel',
     submitLabel = 'Create Property',
@@ -66,24 +67,52 @@ const PropertyForm = ({
     const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
     const styles = FORM_VARIANTS[variant] ?? FORM_VARIANTS.default;
 
-    const createPropertyMutation = useMutation({
-        mutationFn: propertyService.create,
-        onSuccess: async (createdProperty) => {
+    const isEditMode = !!propertyId;
+
+    // Fetch property data if in edit mode
+    const { data: existingProperty, isLoading: isLoadingProperty } = useQuery({
+        queryKey: ['property', propertyId],
+        queryFn: () => propertyService.getById(propertyId),
+        enabled: isEditMode,
+    });
+
+    // Sync form data when existing property is loaded
+    useEffect(() => {
+        if (existingProperty) {
+            setFormData({
+                title: existingProperty.title || '',
+                description: existingProperty.description || '',
+                price: existingProperty.price?.toString() || '',
+                location: existingProperty.location || '',
+                bedrooms: existingProperty.bedrooms?.toString() || '',
+                imageUrl: existingProperty.imageUrl || '',
+                discountTiers: existingProperty.discountTiers || [],
+            });
+        }
+    }, [existingProperty]);
+
+    const mutation = useMutation({
+        mutationFn: (data) => 
+            isEditMode 
+                ? propertyService.update(propertyId, data)
+                : propertyService.create(data),
+        onSuccess: async (resultProperty) => {
             await Promise.all([
                 queryClient.invalidateQueries({ queryKey: ['properties'] }),
                 queryClient.invalidateQueries({ queryKey: ['my-properties'] }),
+                queryClient.invalidateQueries({ queryKey: ['property', propertyId] }),
             ]);
 
-            toast.success(successMessage);
+            toast.success(isEditMode ? 'Property updated successfully.' : successMessage);
 
             const nextPath = typeof successRedirectPath === 'function'
-                ? successRedirectPath(createdProperty)
-                : successRedirectPath || `/properties/${createdProperty.id}`;
+                ? successRedirectPath(resultProperty)
+                : successRedirectPath || `/properties/${resultProperty.id}`;
 
             navigate(nextPath);
         },
         onError: (error) => {
-            toast.error(getErrorMessage(error));
+            toast.error(getErrorMessage(error, isEditMode));
         },
     });
 
@@ -99,7 +128,7 @@ const PropertyForm = ({
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        createPropertyMutation.mutate({
+        mutation.mutate({
             title: formData.title.trim(),
             description: formData.description.trim() || null,
             price: Number(formData.price),
@@ -224,7 +253,7 @@ const PropertyForm = ({
                         <button
                             type="button"
                             onClick={handleAddTier}
-                            className="flex items-center gap-2 px-4 py-2 bg-primary/5 text-primary rounded-none text-xs font-bold hover:bg-primary/10 transition-colors"
+                            className="flex items-center gap-2 px-4 py-2 bg-primary/5 text-primary rounded-xl text-xs font-bold hover:bg-primary/10 transition-colors"
                         >
                             <span>Add Tier</span>
                             <span className="text-lg">+</span>
@@ -233,7 +262,7 @@ const PropertyForm = ({
 
                     <div className="space-y-4">
                         {formData.discountTiers.length === 0 ? (
-                            <div className="p-8 border border-dashed border-slate-200 rounded-none text-center">
+                            <div className="p-8 border border-dashed border-slate-200 rounded-xl text-center">
                                 <p className="text-sm text-slate-400 italic">No discount tiers added yet. Individual pricing will be applied.</p>
                             </div>
                         ) : (
@@ -270,7 +299,7 @@ const PropertyForm = ({
                                     <button
                                         type="button"
                                         onClick={() => handleRemoveTier(index)}
-                                        className="h-[46px] w-[46px] flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-none transition-all mb-[1px]"
+                                        className="h-[46px] w-[46px] flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all mb-px"
                                         title="Remove tier"
                                     >
                                         <span className="text-xl">×</span>
@@ -281,19 +310,21 @@ const PropertyForm = ({
                     </div>
                 </div>
 
-                {createPropertyMutation.isError ? (
-                    <div className="mt-6 rounded-none border border-red-100 bg-red-50/70 px-4 py-3 text-sm text-red-600">
-                        {getErrorMessage(createPropertyMutation.error)}
+                {mutation.isError ? (
+                    <div className="mt-6 rounded-xl border border-red-100 bg-red-50/70 px-4 py-3 text-sm text-red-600">
+                        {getErrorMessage(mutation.error)}
                     </div>
                 ) : null}
 
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                     <button
                         type="submit"
-                        disabled={createPropertyMutation.isPending}
+                        disabled={mutation.isPending || (isEditMode && isLoadingProperty)}
                         className={styles.submitButton}
                     >
-                        {createPropertyMutation.isPending ? pendingLabel : submitLabel}
+                        {mutation.isPending 
+                            ? (isEditMode ? 'Updating...' : pendingLabel) 
+                            : (isEditMode ? 'Save Changes' : submitLabel)}
                     </button>
                     <Link
                         to={cancelPath}
@@ -315,7 +346,7 @@ const PropertyForm = ({
                     headingClassName={styles.headingText}
                     descriptionClassName={styles.supportingText}
                 >
-                    <div className="overflow-hidden rounded-none border border-slate-100 bg-white">
+                    <div className="overflow-hidden rounded-xl border border-slate-100 bg-white">
                         <div className={styles.previewBg}>
                             {formData.imageUrl ? (
                                 <img
@@ -428,8 +459,8 @@ const formatCurrency = (value) => {
     }).format(value ?? 0);
 };
 
-const getErrorMessage = (error) => {
-    return error?.response?.data?.message || 'Unable to create property right now.';
+const getErrorMessage = (error, isEditMode = false) => {
+    return error?.response?.data?.message || (isEditMode ? 'Unable to update property right now.' : 'Unable to create property right now.');
 };
 
 export default PropertyForm;

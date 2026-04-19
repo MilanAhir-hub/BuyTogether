@@ -15,7 +15,7 @@ const Navbar = () => {
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
-    const { user, isAuthenticated, logout } = useAuth();
+    const { user, isAuthenticated, loading, logout } = useAuth();
     const profileRef = useRef(null);
     const dashboardRoute = getDashboardRouteByRole(user?.role);
     const isSeller = user?.role === 'Seller' || user?.role === 'Admin';
@@ -106,8 +106,8 @@ const Navbar = () => {
                             onClick={() => setIsMenuOpen(false)}
                             className="w-10 h-10 flex flex-col items-center justify-center gap-1.5 transition-all focus:outline-none"
                         >
-                            <div className="w-6 h-0.5 bg-secondary rounded-none transition-all duration-300 rotate-45 translate-y-1"></div>
-                            <div className="w-6 h-0.5 bg-secondary rounded-none transition-all duration-300 -rotate-45 -translate-y-1"></div>
+                            <div className="w-6 h-0.5 bg-secondary rounded-xl transition-all duration-300 rotate-45 translate-y-1"></div>
+                            <div className="w-6 h-0.5 bg-secondary rounded-xl transition-all duration-300 -rotate-45 -translate-y-1"></div>
                         </button>
                     </div>
 
@@ -117,9 +117,9 @@ const Navbar = () => {
                                 <Link 
                                     to="/profile" 
                                     onClick={() => setIsMenuOpen(false)}
-                                    className="flex items-center gap-4 mb-4 p-4 bg-bg-light rounded-none group"
+                                    className="flex items-center gap-4 mb-4 p-4 bg-bg-light rounded-xl group"
                                 >
-                                    <div className="w-12 h-12 bg-primary/10 text-primary rounded-none flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
+                                    <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
                                         <UserIcon size={24} />
                                     </div>
                                     <div>
@@ -132,9 +132,9 @@ const Navbar = () => {
                                     <Link
                                         to={dashboardRoute}
                                         onClick={() => setIsMenuOpen(false)}
-                                        className="mb-4 flex items-center gap-4 rounded-none border border-primary/10 bg-white px-4 py-4 text-secondary transition hover:border-primary/20 hover:bg-primary/5 hover:text-primary"
+                                        className="mb-4 flex items-center gap-4 rounded-xl border border-primary/10 bg-white px-4 py-4 text-secondary transition hover:border-primary/20 hover:bg-primary/5 hover:text-primary"
                                     >
-                                        <div className="flex h-12 w-12 items-center justify-center rounded-none bg-primary/10 text-primary">
+                                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
                                             <LayoutDashboard size={22} />
                                         </div>
                                         <div>
@@ -168,16 +168,20 @@ const Navbar = () => {
                     </div>
 
                     <div className="mt-auto pt-10 border-t border-gray-100 flex flex-col gap-4">
-                        {isAuthenticated ? (
+                        {loading ? (
+                            <div className="w-full flex justify-center py-4">
+                                <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                            </div>
+                        ) : isAuthenticated ? (
                             <Button 
                                 onClick={handleLogout}
-                                className="w-full py-4 rounded-none bg-secondary hover:bg-black"
+                                className="w-full py-4 rounded-xl bg-secondary hover:bg-black"
                             >
                                 Logout
                             </Button>
                         ) : (
                             <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                                <Button className="w-full py-4 rounded-none">Login Now</Button>
+                                <Button className="w-full py-4 rounded-xl">Login Now</Button>
                             </Link>
                         )}
                     </div>
@@ -195,8 +199,8 @@ const Navbar = () => {
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                                 className="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 transition-all relative z-50 focus:outline-none"
                             >
-                                <div className={`w-6 h-0.5 bg-secondary rounded-none transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-1' : ''}`}></div>
-                                <div className={`w-6 h-0.5 bg-secondary rounded-none transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-1' : ''}`}></div>
+                                <div className={`w-6 h-0.5 bg-secondary rounded-xl transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-1' : ''}`}></div>
+                                <div className={`w-6 h-0.5 bg-secondary rounded-xl transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-1' : ''}`}></div>
                             </button>
 
                             {/* Logo Section */}
@@ -222,7 +226,7 @@ const Navbar = () => {
                                         key={link.name} 
                                         to={link.path}
                                         onClick={(e) => handleNavClick(e, link)}
-                                        className={`px-5 py-2 text-[15px] font-semibold transition-all duration-300 rounded-none cursor-pointer ${
+                                        className={`px-5 py-2 text-[15px] font-semibold transition-all duration-300 rounded-xl cursor-pointer ${
                                             isActive 
                                             ? 'bg-primary text-white shadow-lg shadow-primary/25 -translate-y-px' 
                                             : 'text-text-secondary hover:text-primary hover:bg-primary/5'
@@ -236,11 +240,15 @@ const Navbar = () => {
 
                         {/* Action Column */}
                         <div className="flex items-center gap-4 relative" ref={profileRef}>
-                            {isAuthenticated ? (
+                            {loading ? (
+                                <div className="w-11 h-11 flex items-center justify-center">
+                                    <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                                </div>
+                            ) : isAuthenticated ? (
                                 <>
                                     <button 
                                         onClick={() => setIsProfileOpen(!isProfileOpen)}
-                                        className={`w-11 h-11 rounded-none flex items-center justify-center transition-all duration-300 ${
+                                        className={`w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 ${
                                             isProfileOpen 
                                             ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-105' 
                                             : 'bg-bg-light text-secondary hover:text-primary hover:bg-primary/10'
@@ -250,7 +258,7 @@ const Navbar = () => {
                                     </button>
 
                                     {/* Profile Dropdown */}
-                                    <div className={`absolute top-full right-0 mt-3 w-64 bg-white border border-gray-100 rounded-none shadow-2xl shadow-primary/10 py-3 transition-all duration-300 origin-top-right ${
+                                    <div className={`absolute top-full right-0 mt-3 w-64 bg-white border border-gray-100 rounded-xl shadow-2xl shadow-primary/10 py-3 transition-all duration-300 origin-top-right ${
                                         isProfileOpen 
                                         ? 'opacity-100 scale-100 translate-y-0' 
                                         : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'

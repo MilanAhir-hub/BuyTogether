@@ -8,42 +8,42 @@ const GroupBuyingSection = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 font-['Inter']">
-      <div className="bg-linear-to-br from-indigo-900 to-indigo-800 rounded-none p-1 relative overflow-hidden shadow-2xl">
+      <div className="bg-linear-to-br from-sky-900 to-sky-800 rounded-xl p-1 relative overflow-hidden shadow-2xl">
         
         {/* Decorative background elements */}
         <div className="absolute top-0 right-0 -translate-y-12 translate-x-1/3">
-          <div className="w-64 h-64 bg-indigo-500 rounded-none mix-blend-multiply filter blur-3xl opacity-50 animate-blob"></div>
+          <div className="w-64 h-64 bg-sky-500 rounded-xl mix-blend-multiply filter blur-3xl opacity-50 animate-blob"></div>
         </div>
         <div className="absolute bottom-0 left-0 translate-y-1/3 -translate-x-1/3">
-          <div className="w-80 h-80 bg-purple-500 rounded-none mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
+          <div className="w-80 h-80 bg-purple-500 rounded-xl mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-xl rounded-none p-8 md:p-12 relative z-10 border border-white/20 flex flex-col md:flex-row items-center justify-between gap-10">
+        <div className="bg-white/10 backdrop-blur-xl rounded-xl p-8 md:p-12 relative z-10 border border-white/20 flex flex-col md:flex-row items-center justify-between gap-10">
           
           {/* Left Content */}
           <div className="flex-1 w-full text-center md:text-left">
-            <div className="inline-flex items-center py-1.5 px-3 rounded-none bg-indigo-500/20 border border-indigo-400/30 text-indigo-100 text-sm font-medium mb-6">
-              <span className="flex h-2 w-2 rounded-none bg-indigo-400 mr-2 animate-pulse"></span>
+            <div className="inline-flex items-center py-1.5 px-3 rounded-xl bg-sky-500/20 border border-sky-400/30 text-sky-100 text-sm font-medium mb-6">
+              <span className="flex h-2 w-2 rounded-xl bg-sky-400 mr-2 animate-pulse"></span>
               Active Group Pool
             </div>
             
             <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4 tracking-tight">
               Join the Buyer Group
             </h2>
-            <p className="text-indigo-100/80 text-lg max-w-xl mx-auto md:mx-0 leading-relaxed mb-6">
+            <p className="text-sky-100/80 text-lg max-w-xl mx-auto md:mx-0 leading-relaxed mb-6">
               Team up with other buyers to unlock exclusive discounts and priority allocations for this premium property.
             </p>
 
-            <div className="flex items-start bg-indigo-950/40 rounded-none p-4 border border-indigo-500/20 max-w-lg mx-auto md:mx-0">
-              <AlertCircle className="h-5 w-5 text-indigo-300 mt-0.5 shrink-0" />
-              <p className="ml-3 text-sm text-indigo-100/80 leading-relaxed">
+            <div className="flex items-start bg-sky-950/40 rounded-xl p-4 border border-sky-500/20 max-w-lg mx-auto md:mx-0">
+              <AlertCircle className="h-5 w-5 text-sky-300 mt-0.5 shrink-0" />
+              <p className="ml-3 text-sm text-sky-100/80 leading-relaxed">
                 <span className="font-semibold text-white">Note:</span> Once the group is full, all joined buyers will receive the final discounted pricing and next steps for booking.
               </p>
             </div>
           </div>
 
           {/* Right Content - Progress & Action Card */}
-          <div className="w-full md:w-[400px] bg-white rounded-none p-8 shadow-[0_20px_50px_rgba(8,112,184,0.1)] relative">
+          <div className="w-full md:w-[400px] bg-white rounded-xl p-8 shadow-[0_20px_50px_rgba(8,112,184,0.1)] relative">
             
             <div className="flex justify-between items-end mb-4">
               <div>
@@ -55,23 +55,23 @@ const GroupBuyingSection = () => {
                 </div>
               </div>
               <div className="text-right">
-                <div className="inline-flex items-center text-sm font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-none">
+                <div className="inline-flex items-center text-sm font-semibold text-sky-600 bg-sky-50 px-2.5 py-1 rounded-xl">
                   <Users className="h-4 w-4 mr-1.5" />
                   {progressPercentage}% Filled
                 </div>
               </div>
             </div>
 
-            <div className="w-full bg-gray-100 rounded-none h-3 mb-6 overflow-hidden">
+            <div className="w-full bg-gray-100 rounded-xl h-3 mb-6 overflow-hidden">
               <div
-                className="bg-linear-to-r from-indigo-500 to-indigo-600 h-full rounded-none transition-all duration-1000 ease-out relative"
+                className="bg-linear-to-r from-sky-500 to-sky-600 h-full rounded-xl transition-all duration-1000 ease-out relative"
                 style={{ width: `${progressPercentage}%` }}
               >
                   <div className="absolute inset-0 bg-white/20 w-full animate-[shimmer_2s_infinite]"></div>
               </div>
             </div>
 
-            <button className="w-full py-4 px-6 rounded-none bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-lg shadow-lg shadow-indigo-600/30 hover:shadow-indigo-600/50 transition-all duration-300 flex items-center justify-center group transform hover:-translate-y-0.5">
+            <button className="w-full py-4 px-6 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-lg shadow-lg shadow-sky-600/30 hover:shadow-sky-600/50 transition-all duration-300 flex items-center justify-center group transform hover:-translate-y-0.5">
               Reflect Interest
               <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1.5 transition-transform" />
             </button>

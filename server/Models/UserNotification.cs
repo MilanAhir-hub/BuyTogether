@@ -1,3 +1,4 @@
+// DATABASE MODEL: Represents a message or alert sent to a specific user about their account or groups.
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

@@ -37,7 +37,7 @@ const FeaturedPropertiesSection = () => {
                             Discover premium projects open for group buying.
                         </p>
                     </div>
-                    <a href="#" className="hidden md:block text-blue-600 font-medium hover:text-blue-700 transition-colors">
+                    <a href="#" className="hidden md:block text-sky-600 font-medium hover:text-blue-700 transition-colors">
                         View All Properties &rarr;
                     </a>
                 </div>
@@ -46,7 +46,7 @@ const FeaturedPropertiesSection = () => {
                     {properties.map((property) => (
                         <div 
                             key={property.id} 
-                            className="bg-white rounded-none overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 group"
+                            className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 group"
                         >
                             <div className="relative h-64 overflow-hidden">
                                 <img 
@@ -54,7 +54,7 @@ const FeaturedPropertiesSection = () => {
                                     alt={property.name} 
                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                 />
-                                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur block px-3 py-1 rounded-none text-xs font-semibold text-slate-900">
+                                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur block px-3 py-1 rounded-xl text-xs font-semibold text-slate-900">
                                     Pre-Launch
                                 </div>
                             </div>
@@ -71,7 +71,7 @@ const FeaturedPropertiesSection = () => {
                                         <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">Starting Price</p>
                                         <p className="text-lg font-bold text-slate-900">{property.price}</p>
                                     </div>
-                                    <button className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-900 text-sm font-semibold rounded-none transition-colors">
+                                    <button className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-900 text-sm font-semibold rounded-xl transition-colors">
                                         View Details
                                     </button>
                                 </div>
@@ -81,7 +81,7 @@ const FeaturedPropertiesSection = () => {
                 </div>
                 
                 <div className="mt-10 text-center md:hidden">
-                     <a href="#" className="inline-block text-blue-600 font-medium hover:text-blue-700 transition-colors">
+                     <a href="#" className="inline-block text-sky-600 font-medium hover:text-blue-700 transition-colors">
                         View All Properties &rarr;
                     </a>
                 </div>

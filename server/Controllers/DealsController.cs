@@ -1,3 +1,4 @@
+// DEALS CONTROLLER: Handles the display and creation of product deals (mainly for Sellers and Admins).
 using System;
 using System.Threading.Tasks;
 using BuyTogether.Server.Constants;

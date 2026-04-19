@@ -1,3 +1,4 @@
+// BUYER OWNERSHIP CONTROLLER: Displays the assets or properties that the buyer currently owns or has a share in.
 using BuyTogether.Server.Constants;
 using BuyTogether.Server.Extensions;
 using BuyTogether.Server.Interfaces;

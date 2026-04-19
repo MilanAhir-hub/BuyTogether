@@ -1,3 +1,4 @@
+// BUYER PROPERTIES CONTROLLER: Allows buyers to view available properties they might want to join or invest in.
 using BuyTogether.Server.Constants;
 using BuyTogether.Server.Extensions;
 using BuyTogether.Server.Interfaces;

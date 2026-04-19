@@ -49,7 +49,7 @@ const DealDetail = () => {
   };
 
   if (loading) {
-    return <div className="min-h-screen bg-white flex items-center justify-center text-secondary"><div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-none"></div></div>;
+    return <div className="min-h-screen bg-white flex items-center justify-center text-secondary"><div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-xl"></div></div>;
   }
 
   if (!deal) {
@@ -72,7 +72,7 @@ const DealDetail = () => {
         </button>
 
         {message && (
-          <div className={`p-4 rounded-none mb-8 flex items-center gap-3 backdrop-blur-sm ${message.type === 'success' ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-400' : 'bg-red-500/10 border border-red-500/20 text-red-400'}`}>
+          <div className={`p-4 rounded-xl mb-8 flex items-center gap-3 backdrop-blur-sm ${message.type === 'success' ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-400' : 'bg-red-500/10 border border-red-500/20 text-red-400'}`}>
             {message.type === 'success' ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
             {message.text}
           </div>
@@ -80,13 +80,13 @@ const DealDetail = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Left: Image */}
-          <div className="rounded-none overflow-hidden bg-white border border-slate-200 aspect-square relative flex items-center justify-center shadow-sm">
+          <div className="rounded-xl overflow-hidden bg-white border border-slate-200 aspect-square relative flex items-center justify-center shadow-sm">
             {deal.imageUrl ? (
               <img src={deal.imageUrl} alt={deal.title} className="w-full h-full object-cover" />
             ) : (
               <ShoppingBag size={80} className="text-slate-200" />
             )}
-            <div className="absolute top-6 right-6 bg-red-500 text-white text-lg font-bold px-4 py-2 rounded-none shadow-lg">
+            <div className="absolute top-6 right-6 bg-red-500 text-white text-lg font-bold px-4 py-2 rounded-xl shadow-lg">
               {discountPercent}% OFF
             </div>
           </div>
@@ -96,7 +96,7 @@ const DealDetail = () => {
             <h1 className="text-4xl md:text-5xl font-medium mb-4 leading-tight text-secondary">{deal.title}</h1>
             <p className="text-slate-500 text-lg leading-relaxed mb-8">{deal.description}</p>
             
-            <div className="bg-white rounded-none p-6 border border-slate-100 mb-8 shadow-sm">
+            <div className="bg-white rounded-xl p-6 border border-slate-100 mb-8 shadow-sm">
               <div className="flex justify-between items-end mb-6 border-b border-slate-100 pb-6">
                 <div>
                   <div className="text-sm text-slate-500 mb-1">Group Deal Price</div>
@@ -110,11 +110,11 @@ const DealDetail = () => {
 
               {/* Real-time Status Area */}
               {groupExpired ? (
-                <div className="text-red-400 bg-red-500/10 rounded-none p-4 flex items-center gap-2 border border-red-500/20">
+                <div className="text-red-400 bg-red-500/10 rounded-xl p-4 flex items-center gap-2 border border-red-500/20">
                   <AlertCircle size={20} /> The current grouping window expired. Join to start a new group!
                 </div>
               ) : isGroupActive ? (
-                <div className="text-emerald-400 bg-emerald-500/10 rounded-none p-4 border border-emerald-500/20">
+                <div className="text-emerald-400 bg-emerald-500/10 rounded-xl p-4 border border-emerald-500/20">
                   <div className="flex items-center gap-2 font-medium mb-2"><CheckCircle size={20} /> GROUP IS ACTIVE!</div>
                   <p className="text-sm text-emerald-400/80">The minimum buyer threshold has been met. Deals lock at checkout!</p>
                 </div>
@@ -129,9 +129,9 @@ const DealDetail = () => {
                   </div>
                   
                   {/* Progress Bar */}
-                  <div className="w-full bg-slate-100 rounded-none h-3 overflow-hidden relative">
+                  <div className="w-full bg-slate-100 rounded-xl h-3 overflow-hidden relative">
                     <div 
-                      className="bg-linear-to-r from-blue-500 to-emerald-400 h-full rounded-none transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(52,211,153,0.3)]" 
+                      className="bg-linear-to-r from-blue-500 to-emerald-400 h-full rounded-xl transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(52,211,153,0.3)]" 
                       style={{ width: `${progressPercent}%` }}
                     />
                     {/* Live pulse effect */}
@@ -150,7 +150,7 @@ const DealDetail = () => {
             <button
               onClick={handleJoinClick}
               disabled={deal.status === 'expired'}
-              className="w-full py-4.5 bg-primary text-white font-semibold text-lg rounded-none hover:bg-primary-dark transition-all shadow-[0_0_30px_-5px_rgba(215,59,11,0.2)] disabled:opacity-50 disabled:shadow-none flex justify-center items-center"
+              className="w-full py-4.5 bg-primary text-white font-semibold text-lg rounded-xl hover:bg-primary-dark transition-all shadow-[0_0_30px_-5px_rgba(215,59,11,0.2)] disabled:opacity-50 disabled:shadow-none flex justify-center items-center"
             >
               Join Deal Group
             </button>

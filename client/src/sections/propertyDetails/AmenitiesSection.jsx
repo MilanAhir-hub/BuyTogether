@@ -5,7 +5,7 @@ const AmenitiesSection = () => {
   const amenities = [
     { icon: <Waves className="h-6 w-6" />, label: 'Swimming Pool', color: 'text-cyan-600', bg: 'bg-cyan-50' },
     { icon: <Dumbbell className="h-6 w-6" />, label: 'Gym', color: 'text-orange-600', bg: 'bg-orange-50' },
-    { icon: <ShieldCheck className="h-6 w-6" />, label: '24/7 Security', color: 'text-indigo-600', bg: 'bg-indigo-50' },
+    { icon: <ShieldCheck className="h-6 w-6" />, label: '24/7 Security', color: 'text-sky-600', bg: 'bg-sky-50' },
     { icon: <Gamepad2 className="h-6 w-6" />, label: 'Children Park', color: 'text-pink-600', bg: 'bg-pink-50' },
     { icon: <Car className="h-6 w-6" />, label: 'Parking', color: 'text-slate-600', bg: 'bg-slate-50' },
     { icon: <Club className="h-6 w-6" />, label: 'Clubhouse', color: 'text-purple-600', bg: 'bg-purple-50' },
@@ -21,9 +21,9 @@ const AmenitiesSection = () => {
         {amenities.map((amenity, index) => (
           <div 
             key={index} 
-            className="flex items-center p-4 rounded-none bg-white border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group"
+            className="flex items-center p-4 rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group"
           >
-            <div className={`p-3 rounded-none ${amenity.bg} ${amenity.color} group-hover:scale-110 transition-transform duration-300`}>
+            <div className={`p-3 rounded-xl ${amenity.bg} ${amenity.color} group-hover:scale-110 transition-transform duration-300`}>
               {amenity.icon}
             </div>
             <span className="font-medium text-gray-700 text-sm sm:text-base">{amenity.label}</span>

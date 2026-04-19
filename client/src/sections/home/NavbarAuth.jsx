@@ -31,7 +31,7 @@ export default function NavbarAuth() {
                   <Link 
                     key={link.path}
                     to={link.path} 
-                    className={`px-4 py-2 text-sm font-semibold transition-all duration-300 rounded-none ${
+                    className={`px-4 py-2 text-sm font-semibold transition-all duration-300 rounded-xl ${
                       isActive 
                       ? 'bg-primary text-white shadow-lg shadow-primary/25 -translate-y-px' 
                       : 'text-gray-500 hover:text-primary hover:bg-primary/5'
@@ -46,24 +46,24 @@ export default function NavbarAuth() {
 
           {/* Right side Elements */}
           <div className="hidden md:flex items-center gap-4">
-            <button className="p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 rounded-none transition-colors relative">
-              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-none"></span>
+            <button className="p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 rounded-xl transition-colors relative">
+              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-xl"></span>
               <Bell className="h-5 w-5" />
             </button>
             
             <div className="relative">
               <button 
                 onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
-                className="flex text-sm bg-gray-100 rounded-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all hover:ring-2 hover:ring-blue-300 p-1"
+                className="flex text-sm bg-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all hover:ring-2 hover:ring-blue-300 p-1"
               >
-                <div className="h-8 w-8 rounded-none bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
+                <div className="h-8 w-8 rounded-xl bg-blue-100 flex items-center justify-center text-sky-600 font-bold">
                   M
                 </div>
               </button>
 
               {/* Profile Dropdown */}
               {isProfileDropdownOpen && (
-                <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-none shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 z-50 border border-gray-100">
+                <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-xl shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 z-50 border border-gray-100">
                   <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                     Profile
                   </Link>
@@ -83,7 +83,7 @@ export default function NavbarAuth() {
           <div className="flex items-center md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-none text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+              className="inline-flex items-center justify-center p-2 rounded-xl text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
             >
               <span className="sr-only">Open main menu</span>
               {isMobileMenuOpen ? (
@@ -126,7 +126,7 @@ export default function NavbarAuth() {
           <div className="pt-4 pb-3 border-t border-gray-200">
             <div className="flex items-center px-4">
               <div className="shrink-0">
-                <div className="h-10 w-10 rounded-none bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-lg">
+                <div className="h-10 w-10 rounded-xl bg-blue-100 flex items-center justify-center text-sky-600 font-bold text-lg">
                   M
                 </div>
               </div>
@@ -134,7 +134,7 @@ export default function NavbarAuth() {
                 <div className="text-base font-medium text-gray-800">Milan</div>
                 <div className="text-sm font-medium text-gray-500">milan@example.com</div>
               </div>
-              <button className="ml-auto shrink-0 bg-white p-1 rounded-none text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+              <button className="ml-auto shrink-0 bg-white p-1 rounded-xl text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                 <span className="sr-only">View notifications</span>
                 <Bell className="h-6 w-6" aria-hidden="true" />
               </button>

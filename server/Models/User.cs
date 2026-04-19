@@ -1,3 +1,4 @@
+// DATABASE MODEL: Represents a registered user in the system (Buyer, Seller, or Admin).
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

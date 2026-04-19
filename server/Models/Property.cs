@@ -1,3 +1,4 @@
+// DATABASE MODEL: Represents a real estate property listing created by a Seller.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

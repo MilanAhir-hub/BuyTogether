@@ -39,15 +39,15 @@ const DealsList = () => {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3].map(i => (
-              <div key={i} className="animate-pulse bg-slate-100 rounded-none h-96 border border-slate-200"></div>
+              <div key={i} className="animate-pulse bg-slate-100 rounded-xl h-96 border border-slate-200"></div>
             ))}
           </div>
         ) : deals.length === 0 ? (
-          <div className="text-center py-32 bg-white rounded-none border border-slate-200 shadow-sm">
+          <div className="text-center py-32 bg-white rounded-xl border border-slate-200 shadow-sm">
             <ShoppingBag size={48} className="mx-auto text-slate-200 mb-6" />
             <h3 className="text-2xl font-light mb-2 text-secondary">No active deals right now</h3>
             <p className="text-slate-400">Check back later or become a seller to post one.</p>
-            <Link to="/deals/create" className="inline-block mt-8 text-primary hover:text-primary-dark border border-primary/30 px-6 py-2 rounded-none transition-colors font-medium">
+            <Link to="/deals/create" className="inline-block mt-8 text-primary hover:text-primary-dark border border-primary/30 px-6 py-2 rounded-xl transition-colors font-medium">
               Create a Deal
             </Link>
           </div>
@@ -57,7 +57,7 @@ const DealsList = () => {
               const discountPercent = Math.round((1 - deal.groupPrice / deal.originalPrice) * 100);
 
               return (
-                <div key={deal.id} className="group flex flex-col bg-white hover:bg-slate-50 border border-slate-200 rounded-none overflow-hidden transition-all duration-300 hover:shadow-xl shadow-sm">
+                <div key={deal.id} className="group flex flex-col bg-white hover:bg-slate-50 border border-slate-200 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl shadow-sm">
                   <div className="h-48 bg-slate-100 relative overflow-hidden">
                     {deal.imageUrl ? (
                       <img src={deal.imageUrl} alt={deal.title} className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500" />
@@ -66,7 +66,7 @@ const DealsList = () => {
                         <ShoppingBag size={48} className="text-slate-200" />
                       </div>
                     )}
-                    <div className="absolute top-4 right-4 bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-none shadow-lg">
+                    <div className="absolute top-4 right-4 bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow-lg">
                       -{discountPercent}%
                     </div>
                   </div>
@@ -81,7 +81,7 @@ const DealsList = () => {
                         <div className="text-slate-400 line-through text-lg mb-1">${deal.originalPrice}</div>
                       </div>
 
-                      <div className="flex items-center justify-between text-xs font-semibold text-slate-500 mb-6 bg-slate-50 rounded-none p-3 border border-slate-100">
+                      <div className="flex items-center justify-between text-xs font-semibold text-slate-500 mb-6 bg-slate-50 rounded-xl p-3 border border-slate-100">
                         <div className="flex items-center gap-1.5">
                           <Users size={14} className="text-primary" />
                           <span>{deal.minBuyers} Required</span>
@@ -94,7 +94,7 @@ const DealsList = () => {
 
                       <Link 
                         to={`/deals/${deal.id}`}
-                        className="w-full py-3.5 bg-white hover:bg-primary border border-slate-200 hover:border-primary text-secondary hover:text-white font-bold rounded-none flex items-center justify-center gap-2 transition-all shadow-sm"
+                        className="w-full py-3.5 bg-white hover:bg-primary border border-slate-200 hover:border-primary text-secondary hover:text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm"
                       >
                         Join Deal <ArrowRight size={16} />
                       </Link>

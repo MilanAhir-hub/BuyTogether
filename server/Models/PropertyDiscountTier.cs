@@ -1,3 +1,4 @@
+// DATABASE MODEL: Defines different discount levels for properties based on the number of people in a group.
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

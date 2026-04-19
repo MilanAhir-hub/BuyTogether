@@ -1,3 +1,4 @@
+// DATABASE MODEL: Represents the link between a User and a Property Group.
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

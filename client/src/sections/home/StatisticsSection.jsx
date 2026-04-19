@@ -3,17 +3,17 @@ import { Users, Building2, TrendingDown, Map } from "lucide-react";
 const stats = [
   {
     id: 1,
-    icon: <Users className="h-8 w-8 text-blue-600" />,
+    icon: <Users className="h-8 w-8 text-sky-600" />,
     number: "10,000+",
     label: "Buyers Registered",
     bgClass: "bg-blue-50",
   },
   {
     id: 2,
-    icon: <Building2 className="h-8 w-8 text-indigo-600" />,
+    icon: <Building2 className="h-8 w-8 text-sky-600" />,
     number: "150+",
     label: "Properties Listed",
-    bgClass: "bg-indigo-50",
+    bgClass: "bg-sky-50",
   },
   {
     id: 3,
@@ -45,8 +45,8 @@ export default function StatisticsSection() {
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {stats.map((stat) => (
-            <div key={stat.id} className="text-center p-6 rounded-none bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
-              <div className={`mx-auto w-16 h-16 flex items-center justify-center rounded-none mb-4 ${stat.bgClass}`}>
+            <div key={stat.id} className="text-center p-6 rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+              <div className={`mx-auto w-16 h-16 flex items-center justify-center rounded-xl mb-4 ${stat.bgClass}`}>
                 {stat.icon}
               </div>
               <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-2">{stat.number}</h3>

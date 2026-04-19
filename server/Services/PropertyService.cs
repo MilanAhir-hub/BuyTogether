@@ -96,6 +96,65 @@ namespace BuyTogether.Server.Services
             return MapToResponse(property);
         }
 
+        public async Task<PropertyResponseDto> UpdatePropertyAsync(Guid id, UpdatePropertyDto dto, Guid userId)
+        {
+            var property = await _context.Properties
+                .Include(p => p.DiscountTiers)
+                .SingleOrDefaultAsync(p => p.Id == id);
+
+            if (property == null)
+            {
+                throw new KeyNotFoundException("Property not found.");
+            }
+
+            if (property.OwnerId != userId)
+            {
+                throw new UnauthorizedAccessException("You are not authorized to update this property.");
+            }
+
+            // Update simple fields
+            if (dto.Title != null) property.Title = dto.Title.Trim();
+            if (dto.Description != null) property.Description = dto.Description.Trim();
+            if (dto.Price.HasValue) 
+            {
+                property.Price = dto.Price.Value;
+                property.DiscountPrice = dto.Price.Value; // Reset discount price for now
+            }
+            if (dto.Location != null) 
+            {
+                var location = Normalize(dto.Location);
+                property.Location = location ?? string.Empty;
+                property.City = ExtractCity(location);
+            }
+            if (dto.Bedrooms.HasValue) 
+            {
+                property.Bedrooms = dto.Bedrooms.Value;
+                property.MaxPeopleAllowed = Math.Max(dto.Bedrooms.Value, 1);
+                property.RequiredGroupSize = Math.Max(dto.Bedrooms.Value, 1);
+            }
+            if (dto.ImageUrl != null) property.ImageUrl = dto.ImageUrl.Trim();
+
+            // Update Tiers if provided
+            if (dto.DiscountTiers != null)
+            {
+                // Remove existing tiers
+                _context.PropertyDiscountTiers.RemoveRange(property.DiscountTiers);
+                
+                // Add new tiers
+                property.DiscountTiers = dto.DiscountTiers.Select(t => new PropertyDiscountTier
+                {
+                    PropertyId = property.Id,
+                    MinBuyers = t.MinBuyers,
+                    DiscountPercentage = t.DiscountPercentage
+                }).ToList();
+            }
+
+            await _context.SaveChangesAsync();
+
+            // Reload property with owner for response
+            return await GetPropertyByIdAsync(id) ?? throw new Exception("Failed to reload property after update.");
+        }
+
         public async Task<PropertyDeleteResult> DeletePropertyAsync(Guid id, Guid userId)
         {
             var property = await _context.Properties

@@ -45,7 +45,7 @@ const NavbarSection = () => {
                         </Link>
                         <Link
                             to="/signup"
-                            className="bg-slate-900 hover:bg-slate-800 text-white font-medium px-5 py-2.5 rounded-none transition-colors shadow-sm"
+                            className="bg-slate-900 hover:bg-slate-800 text-white font-medium px-5 py-2.5 rounded-xl transition-colors shadow-sm"
                         >
                             Sign Up
                         </Link>
@@ -71,7 +71,7 @@ const NavbarSection = () => {
                             <a
                                 key={link.name}
                                 href={link.href}
-                                className="block px-3 py-3 text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-none"
+                                className="block px-3 py-3 text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-xl"
                                 onClick={() => setIsOpen(false)}
                             >
                                 {link.name}
@@ -80,14 +80,14 @@ const NavbarSection = () => {
                         <div className="pt-4 flex flex-col space-y-3 px-3">
                             <Link
                                 to="/login"
-                                className="w-full text-center text-slate-700 hover:text-slate-900 font-medium py-3 border border-slate-200 rounded-none"
+                                className="w-full text-center text-slate-700 hover:text-slate-900 font-medium py-3 border border-slate-200 rounded-xl"
                                 onClick={() => setIsOpen(false)}
                             >
                                 Login
                             </Link>
                             <Link
                                 to="/signup"
-                                className="w-full text-center bg-slate-900 hover:bg-slate-800 text-white font-medium py-3 rounded-none"
+                                className="w-full text-center bg-slate-900 hover:bg-slate-800 text-white font-medium py-3 rounded-xl"
                                 onClick={() => setIsOpen(false)}
                             >
                                 Sign Up

@@ -27,7 +27,7 @@ const BuyerHome = () => {
 
     if (isError) {
         return (
-            <div className="rounded-none bg-red-50 p-6 border border-red-100 flex items-start gap-4">
+            <div className="rounded-xl bg-red-50 p-6 border border-red-100 flex items-start gap-4">
                 <AlertCircle className="text-red-500 mt-1" />
                 <div>
                     <h3 className="font-bold text-red-800">Error loading dashboard</h3>
@@ -49,9 +49,9 @@ const BuyerHome = () => {
 
             {/* Quick Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white rounded-none p-6 border border-slate-100 shadow-sm shadow-slate-200/50">
+                <div className="bg-white rounded-xl p-6 border border-slate-100 shadow-sm shadow-slate-200/50">
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-none flex items-center justify-center">
+                        <div className="w-12 h-12 bg-blue-50 text-sky-600 rounded-xl flex items-center justify-center">
                             <Building size={24} />
                         </div>
                         <div>
@@ -61,9 +61,9 @@ const BuyerHome = () => {
                     </div>
                 </div>
 
-                <div className="bg-white rounded-none p-6 border border-slate-100 shadow-sm shadow-slate-200/50">
+                <div className="bg-white rounded-xl p-6 border border-slate-100 shadow-sm shadow-slate-200/50">
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-none flex items-center justify-center">
+                        <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center">
                             <TrendingUp size={24} />
                         </div>
                         <div>
@@ -73,13 +73,13 @@ const BuyerHome = () => {
                     </div>
                 </div>
 
-                <div className="bg-white rounded-none p-6 border border-slate-100 shadow-sm shadow-slate-200/50 flex flex-col justify-center">
+                <div className="bg-white rounded-xl p-6 border border-slate-100 shadow-sm shadow-slate-200/50 flex flex-col justify-center">
                     <Link to="/buyer/properties" className="group flex items-center justify-between">
                         <div>
                             <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Marketplace</p>
                             <p className="text-sm font-bold text-primary mt-1">Browse new deals</p>
                         </div>
-                        <div className="w-10 h-10 rounded-none bg-primary/5 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                        <div className="w-10 h-10 rounded-xl bg-primary/5 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
                             <ArrowRight size={18} />
                         </div>
                     </Link>
@@ -87,7 +87,7 @@ const BuyerHome = () => {
             </div>
 
             {/* Recent Activity / Next Steps */}
-            <div className="bg-white rounded-none border border-slate-100 p-8 shadow-sm">
+            <div className="bg-white rounded-xl border border-slate-100 p-8 shadow-sm">
                 <div className="flex items-center justify-between mb-8">
                     <h2 className="text-xl font-bold text-slate-900">Your Active Deals</h2>
                     <Link to="/buyer/activity" className="text-sm font-bold text-primary hover:underline">View all</Link>
@@ -96,9 +96,9 @@ const BuyerHome = () => {
                 {activeDeals.length > 0 ? (
                     <div className="space-y-4">
                         {activeDeals.slice(0, 3).map(deal => (
-                            <div key={deal.id} className="flex items-center justify-between p-4 rounded-none border border-slate-100 bg-slate-50/50 hover:bg-slate-50 transition-colors">
+                            <div key={deal.id} className="flex items-center justify-between p-4 rounded-xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 transition-colors">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 rounded-none bg-orange-100 flex items-center justify-center text-orange-600">
+                                    <div className="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center text-orange-600">
                                         <Users size={20} />
                                     </div>
                                     <div>
@@ -113,8 +113,8 @@ const BuyerHome = () => {
                         ))}
                     </div>
                 ) : (
-                    <div className="text-center py-12 px-4 rounded-none bg-slate-50 border border-slate-100 border-dashed">
-                        <div className="w-16 h-16 bg-white rounded-none flex items-center justify-center text-slate-300 mx-auto mb-4 shadow-sm">
+                    <div className="text-center py-12 px-4 rounded-xl bg-slate-50 border border-slate-100 border-dashed">
+                        <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center text-slate-300 mx-auto mb-4 shadow-sm">
                             <Search size={28} />
                         </div>
                         <h3 className="text-lg font-bold text-slate-800 mb-2">No active deals yet</h3>

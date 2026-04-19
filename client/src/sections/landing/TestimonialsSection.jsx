@@ -39,13 +39,13 @@ const TestimonialsSection = () => {
                     {testimonials.map((testimonial) => (
                         <div 
                             key={testimonial.id} 
-                            className="bg-white p-8 rounded-none shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                            className="bg-white p-8 rounded-xl shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                         >
                             <div className="flex items-center mb-6">
                                 <img 
                                     src={testimonial.image} 
                                     alt={testimonial.name} 
-                                    className="w-14 h-14 rounded-none object-cover mr-4"
+                                    className="w-14 h-14 rounded-xl object-cover mr-4"
                                 />
                                 <div>
                                     <h4 className="text-lg font-bold text-slate-900">{testimonial.name}</h4>

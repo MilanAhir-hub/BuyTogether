@@ -92,7 +92,7 @@ const BuyerLayout = () => {
 
                     <button
                         onClick={handleCloseSidebar}
-                        className="flex h-8 w-8 items-center justify-center rounded-none bg-slate-100 text-slate-600 lg:hidden"
+                        className="flex h-8 w-8 items-center justify-center rounded-xl bg-slate-100 text-slate-600 lg:hidden"
                     >
                         <X size={18} />
                     </button>
@@ -101,7 +101,7 @@ const BuyerLayout = () => {
                 {/* User Info */}
                 <div className="px-6 py-6 border-b border-slate-100">
                     <div className="flex items-start gap-3">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-none bg-primary/10 text-primary">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
                             <UserCircle size={24} />
                         </div>
                         <div className="min-w-0">
@@ -124,7 +124,7 @@ const BuyerLayout = () => {
                                 end={item.end}
                                 onClick={handleCloseSidebar}
                                 className={({ isActive }) =>
-                                    `group flex items-center gap-3 rounded-none px-4 py-3.5 transition-all ${
+                                    `group flex items-center gap-3 rounded-xl px-4 py-3.5 transition-all ${
                                         isActive
                                             ? 'bg-primary text-white shadow-md shadow-primary/20'
                                             : 'text-slate-600 hover:bg-slate-100'
@@ -134,7 +134,7 @@ const BuyerLayout = () => {
                                 {({ isActive }) => (
                                     <>
                                         <div
-                                            className={`flex h-10 w-10 items-center justify-center rounded-none transition-all ${
+                                            className={`flex h-10 w-10 items-center justify-center rounded-xl transition-all ${
                                                 isActive ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500 group-hover:bg-white'
                                             }`}
                                         >
@@ -155,14 +155,14 @@ const BuyerLayout = () => {
                 <div className="p-4 border-t border-slate-100 space-y-2">
                     <Link
                         to="/properties"
-                        className="flex items-center justify-center gap-2 rounded-none bg-slate-50 border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+                        className="flex items-center justify-center gap-2 rounded-xl bg-slate-50 border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
                     >
                         <ArrowLeft size={16} />
                         Exit to Marketplace
                     </Link>
                     <button
                         onClick={handleLogout}
-                        className="flex w-full items-center justify-center gap-2 rounded-none bg-red-50 px-4 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-100"
+                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-100"
                     >
                         <LogOut size={16} />
                         Sign Out
@@ -176,7 +176,7 @@ const BuyerLayout = () => {
                 <header className="sticky top-0 z-20 flex h-16 items-center border-b border-slate-200 bg-white px-4 lg:hidden">
                     <button
                         onClick={() => setIsSidebarOpen(true)}
-                        className="flex h-10 w-10 items-center justify-center rounded-none border border-slate-200 text-slate-600"
+                        className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600"
                     >
                         <Menu size={20} />
                     </button>

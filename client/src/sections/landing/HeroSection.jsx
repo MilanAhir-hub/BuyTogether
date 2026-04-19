@@ -8,7 +8,7 @@ const HeroSection = () => {
                     {/* Left text content */}
                     <div className="w-full lg:w-1/2 space-y-8 text-center lg:text-left">
                         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                            Buy Property <span className="text-blue-600 block sm:inline">Together</span><br className="hidden lg:block"/>
+                            Buy Property <span className="text-sky-600 block sm:inline">Together</span><br className="hidden lg:block"/>
                             Save More with Group Buying
                         </h1>
                         <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto lg:mx-0">
@@ -17,13 +17,13 @@ const HeroSection = () => {
                         <div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-4 pt-4">
                             <a
                                 href="#properties"
-                                className="w-full sm:w-auto px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white text-lg font-medium rounded-none shadow-lg hover:shadow-xl transition-all duration-300"
+                                className="w-full sm:w-auto px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white text-lg font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                             >
                                 Browse Properties
                             </a>
                             <a
                                 href="#how-it-works"
-                                className="w-full sm:w-auto px-8 py-4 bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-900 text-lg font-medium rounded-none shadow-sm transition-all duration-300"
+                                className="w-full sm:w-auto px-8 py-4 bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-900 text-lg font-medium rounded-xl shadow-sm transition-all duration-300"
                             >
                                 How It Works
                             </a>
@@ -32,7 +32,7 @@ const HeroSection = () => {
 
                     {/* Right side image */}
                     <div className="w-full lg:w-1/2">
-                        <div className="relative rounded-none overflow-hidden shadow-2xl group">
+                        <div className="relative rounded-xl overflow-hidden shadow-2xl group">
                             <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
                             <img
                                 src="https://images.unsplash.com/photo-1560518883-ce09059eeefa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"

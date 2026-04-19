@@ -1,3 +1,4 @@
+// DATABASE MODEL: Represents the final confirmed purchase after a group becomes active or full.
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

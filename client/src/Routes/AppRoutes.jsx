@@ -21,6 +21,7 @@ import SellerLayout from "../pages/seller/SellerLayout"
 import SellerHome from "../pages/seller/SellerHome"
 import MyProperties from "../pages/seller/MyProperties"
 import AddProperty from "../pages/AddProperty"
+import EditProperty from "../pages/seller/EditProperty"
 
 const AppRoutes = () => {
     return (
@@ -30,6 +31,7 @@ const AppRoutes = () => {
             <Route path="/how-it-works" element={<HowItWorks />} />
             <Route path="/properties" element={<PropertyList />} />
             <Route path="/properties/:id" element={<PropertyDetails />} />
+            <Route path="/properties/edit/:id" element={<RoleProtectedRoute allowedRoles={['Seller', 'Admin']}><EditProperty /></RoleProtectedRoute>} />
             <Route path="/deals" element={<DealsList />} />
             <Route path="/deals/:id" element={<DealDetail />} />
             <Route path="/about" element={<About />} />

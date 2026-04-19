@@ -36,7 +36,7 @@ const MyProperties = () => {
     if (isLoading) return <p className="text-center py-20 text-text-secondary">Loading your listings...</p>;
 
     if (isError) return (
-        <div className="bg-red-50 text-red-500 p-6 rounded-none border border-red-100 flex items-center gap-3">
+        <div className="bg-red-50 text-red-500 p-6 rounded-xl border border-red-100 flex items-center gap-3">
             <AlertCircle size={20} />
             <span className="font-bold">Failed to load listings. Please try again.</span>
         </div>
@@ -50,7 +50,7 @@ const MyProperties = () => {
                     <p className="mt-2 text-text-secondary">You have {properties.length} properties listed on TogetherBuy.</p>
                 </div>
                 <Link to="/seller/add-property">
-                    <Button className="rounded-none px-8 py-4 shadow-xl shadow-primary/20 flex items-center gap-2">
+                    <Button className="rounded-xl px-8 py-4 shadow-xl shadow-primary/20 flex items-center gap-2">
                         <Plus size={20} />
                         List New Property
                     </Button>
@@ -58,18 +58,18 @@ const MyProperties = () => {
             </div>
 
             {properties.length === 0 ? (
-                <div className="text-center py-24 bg-white rounded-none border border-dashed border-slate-300">
+                <div className="text-center py-24 bg-white rounded-xl border border-dashed border-slate-300">
                     <Building2 size={48} className="mx-auto text-slate-200 mb-6" />
                     <h2 className="text-2xl font-bold text-secondary mb-3">No listings found</h2>
                     <p className="text-text-secondary mb-8 max-w-sm mx-auto">You haven't added any properties to TogetherBuy yet. Start listing now to attract group buyers!</p>
                     <Link to="/seller/add-property">
-                        <Button variant="outline" className="rounded-none px-10 py-4">Create First Listing</Button>
+                        <Button variant="outline" className="rounded-xl px-10 py-4">Create First Listing</Button>
                     </Link>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {properties.map((property) => (
-                        <div key={property.id} className="group bg-white rounded-none border border-slate-100 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-secondary/10 transition-all">
+                        <div key={property.id} className="group bg-white rounded-xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-secondary/10 transition-all">
                             <div className="relative h-56 bg-slate-100 overflow-hidden">
                                 {property.imageUrl ? (
                                     <img src={property.imageUrl} alt={property.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
@@ -80,7 +80,7 @@ const MyProperties = () => {
                                 )}
                                 <div className="absolute top-4 right-4 flex gap-2">
                                     <Link to={`/properties/edit/${property.id}`}>
-                                        <button className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-none flex items-center justify-center text-secondary hover:bg-secondary hover:text-white transition-all shadow-sm">
+                                        <button className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center text-secondary hover:bg-secondary hover:text-white transition-all shadow-sm">
                                             <Edit2 size={16} />
                                         </button>
                                     </Link>
@@ -90,7 +90,7 @@ const MyProperties = () => {
                                                 deleteMutation.mutate(property.id);
                                             }
                                         }}
-                                        className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-none flex items-center justify-center text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm"
+                                        className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm"
                                     >
                                         <Trash2 size={16} />
                                     </button>
@@ -108,7 +108,7 @@ const MyProperties = () => {
                                         <p className="text-lg font-bold text-secondary">₹{(property.price / 100000).toFixed(1)}L</p>
                                     </div>
                                     <Link to={`/properties/${property.id}`}>
-                                        <Button variant="outline" className="h-10 px-5 rounded-none text-xs font-bold border-slate-200">View Public</Button>
+                                        <Button variant="outline" className="h-10 px-5 rounded-xl text-xs font-bold border-slate-200">View Public</Button>
                                     </Link>
                                 </div>
                             </div>

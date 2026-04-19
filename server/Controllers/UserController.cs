@@ -1,3 +1,4 @@
+// USER CONTROLLER: Manages user profiles (viewing/updating) and allows regular users to upgrade to 'Seller' status.
 using BuyTogether.Server.DTOs.Profile;
 using BuyTogether.Server.Interfaces;
 using Microsoft.AspNetCore.Authorization;

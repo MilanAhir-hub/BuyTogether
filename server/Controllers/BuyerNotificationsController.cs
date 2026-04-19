@@ -1,3 +1,4 @@
+// BUYER NOTIFICATIONS CONTROLLER: Manages notifications sent to buyers, such as updates on their group status or new deals.
 using BuyTogether.Server.Constants;
 using BuyTogether.Server.Extensions;
 using BuyTogether.Server.Interfaces;

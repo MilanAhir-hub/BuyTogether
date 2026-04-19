@@ -12,7 +12,7 @@ const PropertyHeader = () => {
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
               Skyline Residency
             </h1>
-            <div className="hidden sm:flex items-center bg-green-50 px-2.5 py-1 rounded-none border border-green-100">
+            <div className="hidden sm:flex items-center bg-green-50 px-2.5 py-1 rounded-xl border border-green-100">
               <Star className="h-3.5 w-3.5 text-green-600 fill-current mr-1" />
               <span className="text-sm font-semibold text-green-700">4.8</span>
             </div>
@@ -27,7 +27,7 @@ const PropertyHeader = () => {
         {/* Pricing */}
         <div className="flex flex-col md:items-end mt-2 md:mt-0">
           <p className="text-sm text-gray-500 font-medium mb-1 uppercase tracking-wider">Starting Price</p>
-          <div className="flex items-baseline text-indigo-600">
+          <div className="flex items-baseline text-sky-600">
             <span className="text-3xl md:text-4xl font-extrabold tracking-tight">₹85 Lakhs</span>
             <span className="ml-2 text-gray-500 text-sm font-medium">onwards</span>
           </div>

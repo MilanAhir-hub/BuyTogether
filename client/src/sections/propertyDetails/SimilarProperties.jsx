@@ -37,7 +37,7 @@ const SimilarProperties = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 font-['Inter']">
       <div className="flex justify-between items-end mb-8">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">Similar Properties in Gurgaon</h2>
-        <a href="#" className="hidden sm:flex items-center text-sm font-semibold text-indigo-600 hover:text-indigo-700 transition-colors">
+        <a href="#" className="hidden sm:flex items-center text-sm font-semibold text-sky-600 hover:text-sky-700 transition-colors">
           View all properties
           <ArrowRight className="h-4 w-4 ml-1" />
         </a>
@@ -48,7 +48,7 @@ const SimilarProperties = () => {
           const progressPercentage = Math.min((property.buyersJoined / property.maxBuyers) * 100, 100);
 
           return (
-            <div key={property.id} className="group bg-white rounded-none border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col h-full font-['Inter']">
+            <div key={property.id} className="group bg-white rounded-xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col h-full font-['Inter']">
               
               {/* Top: Property Image */}
               <div className="relative aspect-4/3 overflow-hidden">
@@ -68,7 +68,7 @@ const SimilarProperties = () => {
 
               {/* Middle: Details */}
               <div className="p-5 flex-1 flex flex-col">
-                <h3 className="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition-colors line-clamp-1 mb-2">
+                <h3 className="text-lg font-bold text-gray-900 group-hover:text-sky-600 transition-colors line-clamp-1 mb-2">
                   {property.title}
                 </h3>
                 
@@ -81,7 +81,7 @@ const SimilarProperties = () => {
                 <div className="mt-auto pt-4 border-t border-gray-50">
                   <div className="flex justify-between items-center mb-2">
                     <div className="flex items-center text-sm font-medium text-gray-700">
-                      <Users className="h-4 w-4 mr-1.5 text-indigo-500" />
+                      <Users className="h-4 w-4 mr-1.5 text-sky-500" />
                       <span>Buyers Joined</span>
                     </div>
                     <span className="text-sm font-bold text-gray-900">
@@ -90,9 +90,9 @@ const SimilarProperties = () => {
                   </div>
                   
                   {/* Progress Bar */}
-                  <div className="w-full bg-gray-100 rounded-none h-2 mb-1 overflow-hidden">
+                  <div className="w-full bg-gray-100 rounded-xl h-2 mb-1 overflow-hidden">
                     <div
-                      className="bg-indigo-600 h-2 rounded-none transition-all duration-1000 ease-out"
+                      className="bg-sky-600 h-2 rounded-xl transition-all duration-1000 ease-out"
                       style={{ width: `${progressPercentage}%` }}
                     ></div>
                   </div>
@@ -104,7 +104,7 @@ const SimilarProperties = () => {
 
               {/* Bottom: Buttons */}
               <div className="px-5 pb-5 pt-0 mt-auto flex gap-3">
-                <button className="flex-1 px-4 py-2.5 bg-white border border-gray-200 rounded-none text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-900 transition-all text-center">
+                <button className="flex-1 px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-900 transition-all text-center">
                   View Details
                 </button>
               </div>
@@ -115,7 +115,7 @@ const SimilarProperties = () => {
       </div>
       
        <div className="mt-8 text-center sm:hidden">
-        <button className="px-6 py-3 border border-gray-200 rounded-none text-sm font-semibold text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+        <button className="px-6 py-3 border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 bg-white hover:bg-gray-50 transition-colors">
           View all properties
         </button>
       </div>

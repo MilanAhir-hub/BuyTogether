@@ -1,3 +1,4 @@
+// BUYER GROUPS CONTROLLER: Handles everything a buyer does with their groups, like viewing joined groups, leaving groups, and processing internal payments.
 using BuyTogether.Server.Constants;
 using BuyTogether.Server.DTOs.Buyer;
 using BuyTogether.Server.Extensions;

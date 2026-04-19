@@ -48,7 +48,7 @@ const MyDeals = () => {
   };
 
   const handleLeaveGroup = async (dealId) => {
-    if (!window.confirm("Are you sure you want to leave this deal? Your ₹20 commitment fee is NON-REFUNDABLE.")) return;
+    if (!window.confirm("Are you sure you want to leave this deal? Your ₹500 commitment fee is NON-REFUNDABLE.")) return;
     setProcessing(true);
     try {
       const res = await leaveDealGroup(dealId);
@@ -70,7 +70,7 @@ const MyDeals = () => {
         <h1 className="text-4xl font-light mb-12 text-secondary">My <span className="font-medium text-primary">Deals</span></h1>
 
         {loading ? (
-          <div className="flex justify-center"><div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-none" /></div>
+          <div className="flex justify-center"><div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-xl" /></div>
         ) : (
           <div className="space-y-16">
             
@@ -78,7 +78,7 @@ const MyDeals = () => {
             <section>
               <h2 className="text-2xl font-medium mb-6 flex items-center gap-2 text-secondary"><Users className="text-primary"/> Current Groups</h2>
               {groups.length === 0 ? (
-                <div className="bg-white border border-slate-200 rounded-none p-8 text-slate-500 text-center">
+                <div className="bg-white border border-slate-200 rounded-xl p-8 text-slate-500 text-center">
                   You haven't joined any active deal groups yet. <Link to="/deals" className="text-primary hover:underline">Browse Deals</Link>
                 </div>
               ) : (
@@ -87,7 +87,7 @@ const MyDeals = () => {
                     const isOrderPlaced = orders.some(o => o.dealGroupId === group.id);
                     
                     return (
-                      <div key={group.id} className="bg-white border border-slate-200 rounded-none p-6 flex flex-col md:flex-row justify-between items-center gap-6 shadow-sm">
+                      <div key={group.id} className="bg-white border border-slate-200 rounded-xl p-6 flex flex-col md:flex-row justify-between items-center gap-6 shadow-sm">
                         <div>
                           <h3 className="text-xl font-medium mb-1"><Link to={`/deals/${group.dealId}`} className="hover:text-primary text-secondary">{group.dealTitle}</Link></h3>
                           <div className="flex gap-4 text-sm">
@@ -98,12 +98,12 @@ const MyDeals = () => {
 
                         <div className="flex items-center gap-4 w-full md:w-auto mt-4 md:mt-0">
                           {group.status === 'waiting' && (
-                            <div className="flex items-center gap-2 text-orange-400 bg-orange-500/10 px-4 py-2 rounded-none text-sm border border-orange-500/20 whitespace-nowrap">
+                            <div className="flex items-center gap-2 text-orange-400 bg-orange-500/10 px-4 py-2 rounded-xl text-sm border border-orange-500/20 whitespace-nowrap">
                               <Clock size={16} /> Waiting for members
                             </div>
                           )}
                           {group.status === 'expired' && (
-                            <div className="flex items-center gap-2 text-red-400 bg-red-500/10 px-4 py-2 rounded-none text-sm border border-red-500/20 whitespace-nowrap">
+                            <div className="flex items-center gap-2 text-red-400 bg-red-500/10 px-4 py-2 rounded-xl text-sm border border-red-500/20 whitespace-nowrap">
                               <AlertCircle size={16} /> Group Expired
                             </div>
                           )}
@@ -111,13 +111,13 @@ const MyDeals = () => {
                             <button
                               onClick={() => handleConfirmOrder(group.id)}
                               disabled={processing}
-                              className="w-full md:w-auto px-6 py-2.5 bg-primary text-white font-semibold rounded-none hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
+                              className="w-full md:w-auto px-6 py-2.5 bg-primary text-white font-semibold rounded-xl hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
                             >
                               Confirm & Pay checkout
                             </button>
                           )}
                           {(group.status === 'active' || group.status === 'completed') && isOrderPlaced && (
-                            <div className="flex items-center gap-2 text-emerald-400 bg-emerald-500/10 px-4 py-2 rounded-none text-sm border border-emerald-500/20 whitespace-nowrap">
+                            <div className="flex items-center gap-2 text-emerald-400 bg-emerald-500/10 px-4 py-2 rounded-xl text-sm border border-emerald-500/20 whitespace-nowrap">
                               <CheckCircle size={16} /> Order Placed
                             </div>
                           )}
@@ -125,8 +125,8 @@ const MyDeals = () => {
                             <button
                               onClick={() => handleLeaveGroup(group.dealId)}
                               disabled={processing}
-                              className="w-full md:w-auto px-4 py-2.5 text-red-500 font-medium hover:text-red-400 hover:bg-red-500/10 rounded-none transition-colors"
-                              title="Leave this group. Note: The ₹20 commitment fee is non-refundable."
+                              className="w-full md:w-auto px-4 py-2.5 text-red-500 font-medium hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-colors"
+                              title="Leave this group. Note: The ₹500 commitment fee is non-refundable."
                             >
                               Leave
                             </button>
@@ -143,13 +143,13 @@ const MyDeals = () => {
             <section>
               <h2 className="text-2xl font-medium mb-6 flex items-center gap-2 text-secondary"><ShoppingBag className="text-primary"/> My Orders</h2>
               {orders.length === 0 ? (
-                <div className="bg-white border border-slate-200 rounded-none p-8 text-slate-500 text-center">
+                <div className="bg-white border border-slate-200 rounded-xl p-8 text-slate-500 text-center">
                   You don't have any confirmed orders yet.
                 </div>
               ) : (
                 <div className="grid gap-4">
                   {orders.map(order => (
-                    <div key={order.id} className="bg-white border border-slate-200 rounded-none p-6 flex flex-col md:flex-row justify-between items-center shadow-sm">
+                    <div key={order.id} className="bg-white border border-slate-200 rounded-xl p-6 flex flex-col md:flex-row justify-between items-center shadow-sm">
                       <div>
                         <h3 className="text-lg font-medium text-secondary mb-1">{order.dealTitle}</h3>
                         <p className="text-sm text-slate-400">Order ID: {order.id.slice(0, 8)}...</p>

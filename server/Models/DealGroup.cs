@@ -1,3 +1,4 @@
+// DATABASE MODEL: Represents a 'TogetherBuy' group specifically for product deals.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

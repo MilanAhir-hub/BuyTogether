@@ -1,3 +1,6 @@
+// SIGNALR HUB: This class handles real-time communication between the server and the browser.
+// It allows the application to update the 'Member Count' and 'Group Status' instantly 
+// on everyone's screen without them needing to refresh the page.
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;

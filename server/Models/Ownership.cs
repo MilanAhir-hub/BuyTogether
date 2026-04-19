@@ -1,3 +1,4 @@
+// DATABASE MODEL: Tracks the ownership share of a property or asset belonging to a specific buyer.
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

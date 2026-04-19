@@ -36,14 +36,14 @@ const AboutSection = () => {
         <Section id="about">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div className="relative">
-                    <div className="aspect-4/3 rounded-none overflow-hidden shadow-md relative">
+                    <div className="aspect-4/3 rounded-xl overflow-hidden shadow-md relative">
                         <img 
                             src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=800" 
                             alt="Modern building"
                             className="w-full h-full object-cover"
                         />
                     </div>
-                    <div className="absolute -bottom-6 -left-6 bg-primary p-10 rounded-none shadow-lg max-w-[280px] hidden lg:block z-10">
+                    <div className="absolute -bottom-6 -left-6 bg-primary p-10 rounded-xl shadow-lg max-w-[280px] hidden lg:block z-10">
                         <p className="text-white text-lg font-bold leading-tight">
                             "Our mission is to save 10,000+ families over ₹10 Lakhs each on their first home."
                         </p>
@@ -51,7 +51,7 @@ const AboutSection = () => {
                 </div>
 
                 <div className="text-left">
-                    <span className="bg-primary/10 text-primary px-4 py-1.5 rounded-none text-xs font-bold uppercase tracking-widest mb-6 inline-block">
+                    <span className="bg-primary/10 text-primary px-4 py-1.5 rounded-xl text-xs font-bold uppercase tracking-widest mb-6 inline-block">
                         Our Mission
                     </span>
                     <h2 className="text-3xl md:text-5xl font-bold text-secondary mb-10 leading-tight">
@@ -61,7 +61,7 @@ const AboutSection = () => {
                     <div className="space-y-8">
                         {values.map((value, index) => (
                             <div key={index} className="flex gap-6 group">
-                                <div className="shrink-0 w-14 h-14 bg-secondary text-white rounded-none flex items-center justify-center transition-all group-hover:bg-primary group-hover:-translate-y-1">
+                                <div className="shrink-0 w-14 h-14 bg-secondary text-white rounded-xl flex items-center justify-center transition-all group-hover:bg-primary group-hover:-translate-y-1">
                                     {value.icon}
                                 </div>
                                 <div>

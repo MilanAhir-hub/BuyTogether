@@ -21,6 +21,11 @@ export const propertyService = {
         return response.data;
     },
 
+    update: async (id, propertyData) => {
+        const response = await apiClient.put(`/properties/${id}`, propertyData);
+        return response.data;
+    },
+
     remove: async (id) => {
         const response = await apiClient.delete(`/properties/${id}`);
         return response.data;

@@ -1,3 +1,4 @@
+// DATABASE MODEL: Stores payment transaction details (Razorpay Order ID, Status, Amount) for security and auditing.
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

@@ -1,3 +1,6 @@
+// BACKGROUND SERVICE: This class runs continuously in the background. 
+// It checks the database every minute to see if any deal groups have reached 
+// their expiration date and automatically marks them as 'Expired'.
 using System;
 using System.Linq;
 using System.Threading;
